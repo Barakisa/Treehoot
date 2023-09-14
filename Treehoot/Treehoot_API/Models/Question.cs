@@ -6,5 +6,5 @@ public class Question
 {
     public long Id { get; set; }
     public string ? QuestionSentence{ get; set; }
-    public Dictionary <String, Boolean> ? Answers { get; set; }
+    public  Answer? Answers { get; set; }
 }
