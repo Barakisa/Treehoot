@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treehoot", "Treehoot\Treehoot.csproj", "{BF6BE729-1B01-4FF0-AAAD-7B50ABB8A938}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treehoot_API_plus_React", "Treehoot_API_Plus_React\Treehoot_API_plus_React.csproj", "{BF6BE729-1B01-4FF0-AAAD-7B50ABB8A938}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
