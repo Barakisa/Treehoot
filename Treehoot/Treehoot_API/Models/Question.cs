@@ -4,11 +4,10 @@ namespace Treehoot_API.Models;
 
 public class Question
 {
-    public Question(int id, string questionText, List<Answer> answers)
+    public Question(int id, string questionText)
     {
         Id = id;
         QuestionText = questionText;
-        Answers = answers;
     }
 
     public int Id { get; set; }

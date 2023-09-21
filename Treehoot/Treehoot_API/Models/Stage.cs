@@ -3,11 +3,11 @@
 public class Stage
 {
 
-    public Stage(int id, string name, List<Question> questions)
+    public Stage(int id, string name)
     {
         Id = id;
         Name = name;
-        Questions = questions;
+   
     }
 
     public int Id { get; set; }

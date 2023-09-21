@@ -2,13 +2,12 @@
 
 public class Quiz
 {
-    public Quiz(int id, string name, string description, int timer, List<Stage> stages)
+    public Quiz(int id, string name, string description, int timer)
     {
         Id = id;
         Name = name;
         Description = description;
         Timer = timer;
-        Stages = stages;
     }
 
     public int Id { get; set; }
