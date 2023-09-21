@@ -1,0 +1,212 @@
+{
+  "quizes": [
+    {
+      "Id": 1,
+      "Name": "quiz 1",
+      "Description": "first quiz",
+      "Timer": 300,
+      "Stages": [
+        {
+          "Id": 11,
+          "Name": "stage 1",
+          "Questions": [
+            {
+              "Id": 111,
+              "QuestionText": "Which is the first answer",
+              "Answers": [
+                {
+                  "Id": 1111,
+                  "IsCorrect": true,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 1112,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 1113,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 1114,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                }
+              ]
+            },
+            {
+              "Id": 112,
+              "QuestionText": "Which is the second answer",
+              "Answers": [
+                {
+                  "Id": 1121,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 1122,
+                  "IsCorrect": true,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 1123,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 1124,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Id": 12,
+          "Name": "stage 2",
+          "Questions": [
+            {
+              "Id": 121,
+              "QuestionText": "Which is the third answer",
+              "Answers": [
+                {
+                  "Id": 1211,
+                  "IsCorrect": false,
+                  "Text": "This is the third answer"
+                },
+                {
+                  "Id": 1212,
+                  "IsCorrect": false,
+                  "Text": "This is the third answer"
+                },
+                {
+                  "Id": 1213,
+                  "IsCorrect": true,
+                  "Text": "This is the third answer"
+                },
+                {
+                  "Id": 1214,
+                  "IsCorrect": false,
+                  "Text": "This is the third answer"
+                }
+              ]
+            },
+            {
+              "Id": 122,
+              "QuestionText": "Which is the fourth answer",
+              "Answers": [
+                {
+                  "Id": 1221,
+                  "IsCorrect": false,
+                  "Text": "This is the fourth answer"
+                },
+                {
+                  "Id": 1222,
+                  "IsCorrect": false,
+                  "Text": "This is the fourth answer"
+                },
+                {
+                  "Id": 1223,
+                  "IsCorrect": false,
+                  "Text": "This is the fourth answer"
+                },
+                {
+                  "Id": 1224,
+                  "IsCorrect": true,
+                  "Text": "This is the fourth answer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Id": 13,
+          "Name": "stage 3",
+          "Questions": [
+            {
+              "Id": 131,
+              "QuestionText": "Which is the first answer",
+              "Answers": [
+                {
+                  "Id": 1311,
+                  "IsCorrect": true,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 1312,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                }
+              ]
+            },
+            {
+              "Id": 132,
+              "QuestionText": "WHich is the second answer",
+              "Answers": [
+                {
+                  "Id": 1321,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 1322,
+                  "IsCorrect": true,
+                  "Text": "This is the second answer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": 2,
+      "Name": "quiz 2",
+      "Description": "second quiz",
+      "Timer": 240,
+      "Stages": [
+        {
+          "Id": 21,
+          "Name": "stage 1",
+          "Questions": [
+            {
+              "Id": 211,
+              "QuestionText": "Which is the first answer?",
+              "Answers": [
+                {
+                  "Id": 2111,
+                  "IsCorrect": true,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 2112,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                }
+              ]
+            },
+            {
+              "Id": 212,
+              "QuestionText": "Which is the second answer",
+              "Answers": [
+                {
+                  "Id": 2121,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 2122,
+                  "IsCorrect": true,
+                  "Text": "This is the second answer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
