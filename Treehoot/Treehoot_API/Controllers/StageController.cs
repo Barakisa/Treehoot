@@ -14,7 +14,7 @@ namespace Treehoot_API.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetStage")]
+       /* [HttpGet(Name = "GetStage")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -24,6 +24,6 @@ namespace Treehoot_API.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
-        }
+        }*/
     }
 }

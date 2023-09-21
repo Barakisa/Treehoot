@@ -2,10 +2,18 @@
 
 public class Quiz
 {
-    public long Guid { get; set; }
+    public Quiz(int id, string name, string description, int timer)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        Timer = timer;
+    }
+
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public string Timer { get; set; }
+    public int Timer { get; set; }
 
-    public Stage? Stages { get; set; }
+    public List<Stage> Stages { get; set; }
 }

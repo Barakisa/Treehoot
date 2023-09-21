@@ -2,9 +2,17 @@
 
 public class Stage
 {
-    public Guid Id { get; set; }
+
+    public Stage(int id, string name)
+    {
+        Id = id;
+        Name = name;
+   
+    }
+
+    public int Id { get; set; }
 
     public string Name { get; set; }
-    public Question[] Questions { get; set; }
+    public List<Question> Questions { get; set; }
 }
 
