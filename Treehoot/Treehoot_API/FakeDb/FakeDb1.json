@@ -1,0 +1,72 @@
+{
+  "quizes": [
+    {
+      "Id":  1,
+      "Name": "quiz 1",
+      "Description": "first quiz",
+      "Timer": 300,
+      "Stages": [
+        {
+          "Id":  11,
+          "Name": "stage 1",
+          "Questions": [
+            {
+              "Id": 111,
+              "QuestionText": "Which is the first answer"
+              "Answers": [
+                {
+                  "Id": 1111,
+                  "IsCorrect": true,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 1112,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 1113,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                },
+                {
+                  "Id": 1114,
+                  "IsCorrect": false,
+                  "Text": "This is the first answer"
+                }
+              ]
+            },
+            {
+              "Id": 112,
+              "QuestionText": "Which is the second answer",
+              "Answers": [
+                {
+                  "Id": 1121,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 1122,
+                  "IsCorrect": true,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 1123,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                },
+                {
+                  "Id": 1124,
+                  "IsCorrect": false,
+                  "Text": "This is the second answer"
+                }
+              ]
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+    }
+  ]
+}
