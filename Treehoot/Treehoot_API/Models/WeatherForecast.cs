@@ -1,4 +1,4 @@
-namespace Treehoot_API
+namespace Treehoot_API.Models
 {
     public class WeatherForecast
     {
