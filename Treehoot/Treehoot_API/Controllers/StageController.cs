@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using Treehoot_API.Models;
 
 namespace Treehoot_API.Controllers
 {
@@ -6,6 +8,41 @@ namespace Treehoot_API.Controllers
     [Route("[controller]")]
     public class StageController : ControllerBase
     {
+
+        private Stage GetSpecificStage(int stageId)
+        {
+            try
+            {
+                string jsonText = System.IO.File.ReadAllText("FakeDb/FakeDb1.json");
+
+                var jsonDb = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+
+                Stage specificStage = new Stage();
+                foreach (Quiz quiz in jsonDb.Quizes)
+                {
+                    foreach (Stage stage in quiz.Stages)
+                    {
+                        if (stage.Id == stageId)
+                        {
+                            specificStage = stage;
+                            break;
+                        }
+                    }
+                }
+
+                return specificStage;
+            }
+            catch (FileNotFoundException) 
+            { 
+                Console.WriteLine("File not found"); 
+                return null; 
+            }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine($"An error occurred: {ex.Message}"); 
+                return null; 
+            }
+        }
 
         private readonly ILogger<StageController> _logger;
 
@@ -15,15 +52,9 @@ namespace Treehoot_API.Controllers
         }
 
         [HttpGet(Name = "GetStage")]
-        public IEnumerable<WeatherForecast> Get()
+        public Stage Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return GetSpecificStage(13);
         }
     }
 }
