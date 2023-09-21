@@ -5,6 +5,6 @@ namespace Treehoot_API.Models;
 public class Question
 {
     public long Guid { get; set; }
-    public string QuestionSentence{ get; set; }
+    public string QuestionText{ get; set; }
     public Answer[]? Answers { get; set; }
 }

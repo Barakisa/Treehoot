@@ -2,7 +2,7 @@
 
 public class Answer
 {
-    public long Guid { get; set; }
+    public Guid Id { get; set; }
 
     public bool IsCorrect { get; set; }
     public string Text { get; set; }
