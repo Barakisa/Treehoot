@@ -18,7 +18,7 @@ namespace Treehoot_API.Controllers
         {
             try
             {
-                string jsonText = System.IO.File.ReadAllText("FakeDb/FakeDb1.json");
+                var jsonText = System.IO.File.ReadAllText("FakeDb/FakeDb1.json");
          
                 var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
                 var allQuestions = data.quizes
