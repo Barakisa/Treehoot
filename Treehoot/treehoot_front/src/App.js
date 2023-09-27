@@ -1,12 +1,7 @@
 import logo from "./logo.svg";
-import Question from "./components/Question/Question.js";
 
 function App() {
-  return (
-    <div className="p-2">
-      <Question />
-    </div>
-  );
+  return <div className="p-2"></div>;
 }
 
 export default App;
