@@ -2,6 +2,7 @@
 
 ##example project for dev purposes and not for source control
 Treehoot_API_Plus_React/
+*.local
 
 
 ## Ignore Visual Studio temporary files, build results, and
