@@ -1,0 +1,26 @@
+{
+  "Stages": [
+    {
+      "Id": 11,
+      "Name": "stage 1",
+      "Questions": [ 111, 112 ]
+    },
+    {
+      "Id": 12,
+      "Name": "stage 2",
+      "Questions": [ 121, 122 ]
+    },
+    {
+      "Id": 13,
+      "Name": "stage 3",
+      "Questions": [ 131, 132 ]
+
+    },
+    {
+      "Id": 21,
+      "Name": "stage 1",
+      "Questions": [211, 212]
+        
+    }
+  ]
+}

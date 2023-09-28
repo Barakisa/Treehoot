@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using Treehoot_API.Models;
 
 namespace Treehoot_API.Controllers
 {
@@ -14,16 +16,29 @@ namespace Treehoot_API.Controllers
             _logger = logger;
         }
 
-       /* [HttpGet(Name = "GetStage")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet(Name = "GetSpecificStage")]
+        public ActionResult<Stage> Get(int stageId)
+
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            try
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }*/
+                string jsonText = System.IO.File.ReadAllText("FakeDb/StagesTable.json");
+
+                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                var specificStage = data.Stages.FirstOrDefault(s => s.Id == stageId);
+
+                return Ok(specificStage);
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("File not found");
+                return BadRequest("Db not opened");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return BadRequest("Some other problem");
+            }  
+        }
     }
 }
