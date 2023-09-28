@@ -1,7 +1,7 @@
 import React from "react";
 
 export const INITIAL_STATE = {
-  questionInfo: null,
+  data: null,
   isLoading: true,
   errorMessage: null,
 };
@@ -14,10 +14,10 @@ export const reducer = (state, action) => {
         isLoading: false,
       };
 
-    case "SET_QUESTION_INFO":
+    case "SET_DATA":
       return {
         ...state,
-        questionInfo: action.payload,
+        data: action.payload,
       };
 
     case "SET_ERROR":
