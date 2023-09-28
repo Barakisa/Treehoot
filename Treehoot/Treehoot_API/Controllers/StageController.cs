@@ -18,6 +18,7 @@ namespace Treehoot_API.Controllers
 
         [HttpGet(Name = "GetSpecificStage")]
         public ActionResult<Stage> Get(int stageId)
+
         {
             try
             {

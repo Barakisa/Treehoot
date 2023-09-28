@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Treehoot_API.Models;
 
@@ -14,6 +14,7 @@ namespace Treehoot_API.Controllers
         {
             try
             {
+
                 var jsonText = System.IO.File.ReadAllText("FakeDb/QuestionsTable.json");
 
                 var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
@@ -35,3 +36,4 @@ namespace Treehoot_API.Controllers
         }
     }
 }
+
