@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import Question from "./components/Question/Question.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home.js";
+import Play from "./components/Play";
 
 function App() {
   return (
@@ -16,10 +17,10 @@ function App() {
             </div>
           }
         />
+        <Route path="/play" element={<Play />} />
       </Routes>
     </Router>
   );
-
 }
 
 export default App;
