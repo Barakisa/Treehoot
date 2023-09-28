@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using System.Xml.Linq;
 using Treehoot_API.Models;
 
 namespace Treehoot_API.Controllers
