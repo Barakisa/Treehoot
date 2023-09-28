@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace Treehoot_API.Models;
+﻿namespace Treehoot_API.Models;
 
 public class Question
 {
