@@ -12,7 +12,7 @@ namespace Treehoot_API.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Connection String Here");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=QuizzesDb;Trusted_Connection=True;");
 
         }
 
