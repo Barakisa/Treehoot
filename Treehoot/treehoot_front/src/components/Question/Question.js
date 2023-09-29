@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import Timer from "./Timer";
-import { reducer, INITIAL_STATE } from "./QuestionReducer";
+import { reducer, INITIAL_STATE } from "../Reducers/FetchDataReducer";
+import LoadingCircle from "../LoadingCircle";
 
 export default function Question() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -12,7 +13,7 @@ export default function Question() {
       const response = await fetch(url);
       if (response.ok) {
         const responseData = await response.json();
-        dispatch({ type: "SET_QUESTION_INFO", payload: responseData });
+        dispatch({ type: "SET_DATA", payload: responseData });
         dispatch({ type: "NOT_LOADING" });
       } else {
         dispatch({ type: "NOT_LOADING" });
@@ -31,7 +32,7 @@ export default function Question() {
   return (
     <div className="d-flex flex-row justify-content-center align-items-center p-5 border border-3 border-primary-subtle rounded-4">
       {!state.isLoading ? (
-        state.questionInfo ? (
+        state.data ? (
           <div className="d-flex flex-column justify-content-between align-items-center">
             <div className="d-flex flex-row mb-3 mt-3">
               {/* Going to pass time from questionInfo object */}
@@ -73,9 +74,7 @@ export default function Question() {
           </span>
         )
       ) : (
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+        <LoadingCircle />
       )}
     </div>
   );
