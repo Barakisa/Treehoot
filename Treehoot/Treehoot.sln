@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Treehoot_API", "Treehoot_API\Treehoot_API.csproj", "{F3B9FE03-220E-440A-823E-E20945BC7B29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21FCED5C-F09E-4776-88AB-441B894D0E44} = {21FCED5C-F09E-4776-88AB-441B894D0E44}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treehoot_DataAccess", "Treehoot_DataAccess\Treehoot_DataAccess.csproj", "{21FCED5C-F09E-4776-88AB-441B894D0E44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Treehoot_DataAccess", "Treehoot_DataAccess\Treehoot_DataAccess.csproj", "{21FCED5C-F09E-4776-88AB-441B894D0E44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
