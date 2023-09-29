@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProgressBar from "../components/ProgressBar";
+import { useNavigate } from "react-router";
 
 export default function QuestionPreview() {
+  const remainingTime = 7;
+  const navigate = useNavigate();
+
+  setTimeout(() => {
+    navigate("/choose_topic");
+  }, remainingTime * 1000 + 500);
+
   return (
-    <div className="container justify-content-center">
-      <div className="col-12">
-        <div className="row justify-content-center text-center fs-1 py-5">
-          Prepare to choose the topic for your next question!
-        </div>
-        <div className="row justify-content-center">
-          <ProgressBar remainingTime={7} />
-        </div>
+    <div className="container" style={{ height: "100vh" }}>
+      <div className="row justify-content-center align-items-center text-center fs-1 py-5">
+        Prepare to choose the topic for your next question!
+      </div>
+      <div className="row justify-content-center">
+        <ProgressBar remainingTime={remainingTime} />
       </div>
     </div>
   );
