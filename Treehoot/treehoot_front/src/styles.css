@@ -17,7 +17,7 @@
 }
 
 body {
-    background-image: url('./retro.jpg');
+    background-image: url('./Pictures/retro.jpg');
     background-size: cover; /* Adjust the size of the background image */
     background-repeat: no-repeat; /* Prevent image repetition */
     background-attachment: fixed; /* Keep the background fixed while scrolling */

@@ -1,8 +1,8 @@
 import logo from "./logo.svg";
 import Question from "./components/Question/Question.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/Home.js";
-import Play from "./components/Play";
+import Home from "./Pages/Home.js";
+import Play from "./Pages/Play";
 import ChooseTopicPage from "./Pages/ChooseTopicPage";
 import QuestionPreview from "./Pages/QuestionPreview";
 

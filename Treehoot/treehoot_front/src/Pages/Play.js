@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.css";
+import "../styles.css";
 export default function Play() {
   return (
     <div className="d-flex flex-column justify-content-center align-items-center vh-100">

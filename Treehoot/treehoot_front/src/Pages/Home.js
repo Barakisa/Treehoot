@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import "./styles.css";
-import profile from "./profile.png";
+import "../styles.css";
+import profile from "../Pictures/profile.png";
 
 export default function Home() {
   const [formData, setFormData] = useState({
