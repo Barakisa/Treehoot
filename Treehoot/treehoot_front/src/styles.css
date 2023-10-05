@@ -1,0 +1,55 @@
+.host-join-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    width:250px;
+    height: 150px;
+    background-color:azure;
+    border-radius: 30px
+    
+}
+.home-page-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: azure;
+    border-radius: 12px;
+    width:170px;
+    height: 80px;
+    line-height: 25px;
+}
+.new-game-button{
+    width:300px;
+    background-color: rgb(210, 221, 226);
+    
+}
+.text{
+    color:lightgrey
+}
+.input-box{
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+}
+.scroll-box{
+overflow-y: auto;
+width:300px;
+height:200px;
+background-color: rgba(255, 255, 255, 0.2);
+border-radius: 10px;
+
+}
+
+.scroll-box-content{
+    color:lightgray;
+    padding: 10px;
+
+}
+
+body {
+    background-image: url('./Pictures/retro.jpg');
+    background-size: cover; /* Adjust the size of the background image */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-attachment: fixed; /* Keep the background fixed while scrolling */
+  }

@@ -30,7 +30,7 @@ export default function Question() {
   }, []);
 
   return (
-    <div className="d-flex flex-row justify-content-center align-items-center p-5 border border-3 border-primary-subtle rounded-4">
+    <div className="d-flex flex-row justify-content-center align-items-center border border-3 border-primary-subtle rounded-4">
       {!state.isLoading ? (
         state.data ? (
           <div className="d-flex flex-column justify-content-between align-items-center">
