@@ -7,6 +7,7 @@ import ChooseTopicPage from "./Pages/ChooseTopicPage";
 import QuestionPreview from "./Pages/QuestionPreview";
 import Host from "./Pages/Host";
 import Join from "./Pages/Join";
+import NewGame from "./Pages/NewGame";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/choose_topic" element={<ChooseTopicPage />} />
         <Route path="/host" element={<Host />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/new-game" element={<NewGame />} />
       </Routes>
     </Router>
   );
