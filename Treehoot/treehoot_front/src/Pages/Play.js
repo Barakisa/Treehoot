@@ -1,17 +1,18 @@
 import React from "react";
 import "../styles.css";
+import { Link } from "react-router-dom";
 export default function Play() {
   return (
     <div className="d-flex flex-column justify-content-center align-items-center vh-100">
       <div className="text-center mb-5">
-        <button className="btn host-join-button btn-outline-primary ">
+        <Link to="/host" className="btn host-join-button btn-outline-primary ">
           Host
-        </button>
+        </Link>
       </div>
       <div className="text-center p-5 ">
-        <button className="btn btn-outline-success host-join-button ">
+        <Link to="/join" className="btn btn-outline-success host-join-button ">
           Join
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import LoadingCircle from "../components/LoadingCircle";
 import ProgressBar from "../components/ProgressBar";
+import "../styles.css";
 import {
   reducer,
   INITIAL_STATE,
@@ -42,7 +43,7 @@ export default function ChooseTopicPage() {
   }, []);
 
   return (
-    <div className="container text-center">
+    <div className="text container text-center">
       {!state.isLoading && state.data ? (
         <div className="col-12 justify-content-center align-items-center">
           <div className="row justify-content-center align-items-center text-center">

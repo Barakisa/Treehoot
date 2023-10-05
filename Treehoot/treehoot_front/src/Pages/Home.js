@@ -39,14 +39,12 @@ export default function Home() {
       <div className=" d-flex flex-row  mb-3 mt-5">
         <img src={profile} />
       </div>
-      <div className="mb-5 fs-4 username-text">
-        {formData.username.username}
-      </div>
+      <div className="mb-5 fs-4 text">{formData.username.username}</div>
       <div className="d-flex flex-row mt-5">
-        <div className="mt-5">
+        <div className="mt-5 ">
           <Link
             to="/settings"
-            className="home-page-buttons btn btn-outline-primary me-5 fs-1"
+            className="home-page-buttons btn btn-outline-primary me-5 fs-2"
           >
             Settings
           </Link>
@@ -54,9 +52,17 @@ export default function Home() {
         <div className="mt-5">
           <Link
             to="/play"
-            className=" home-page-buttons btn btn-outline-primary fs-1"
+            className=" home-page-buttons btn btn-outline-primary me-5 fs-2"
           >
             Play
+          </Link>
+        </div>
+        <div className="mt-5">
+          <Link
+            to="/new-game"
+            className="home-page-buttons btn btn-outline-primary fs-2 "
+          >
+            New Game
           </Link>
         </div>
       </div>
