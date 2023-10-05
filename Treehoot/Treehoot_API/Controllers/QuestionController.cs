@@ -4,12 +4,13 @@ using Treehoot_API.Models;
 
 namespace Treehoot_API.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class QuestionController : ControllerBase
     {
 
-        [HttpGet(Name  = "GetSpecificQuestion")]
+        //read about rest endpoint path
+        [HttpGet("{questionId}/answer")]
         public ActionResult<Question> Get(int questionId)
         {
             try
@@ -20,8 +21,8 @@ namespace Treehoot_API.Controllers
                 var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
                 var allQuestions = data.Questions.ToList();
 
-                var question = allQuestions.FirstOrDefault(q => q.Id == questionId);
-
+                var question = allQuestions.SingleOrDefault(q => q.Id == questionId);
+                //handle question == null
                 return Ok(question);
             }
             catch (FileNotFoundException)
