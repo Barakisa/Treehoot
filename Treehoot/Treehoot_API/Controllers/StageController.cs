@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Treehoot_API.Helpers;
 using Treehoot_API.Models;
 
 namespace Treehoot_API.Controllers

@@ -1,4 +1,6 @@
-﻿namespace Treehoot_API.Models
+﻿using Treehoot_API.Models;
+
+namespace Treehoot_API.Helpers
 {
     public class JsonConversion
     {

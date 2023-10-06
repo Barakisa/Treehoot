@@ -4,23 +4,23 @@ using Treehoot_API.Models;
 
 namespace Treehoot_API.Services
 {
-    public class QuestionService
+    public class QuizService
     {
-        private string fakeDbPath = "FakeDb/QuestionsTable.json";
+        private string fakeDbPath = "FakeDb/QuizesTable.json";
 
         // single question
-        public Question GetQuestion(int questionId)
+        public Quiz GetQuiz(int quizId)
         {
             try
             {
                 var jsonText = File.ReadAllText(fakeDbPath);
 
                 var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var allQuestions = data.Questions.ToList();
+                var allQuizes = data.Quizes.ToList();
 
-                var question = allQuestions.SingleOrDefault(q => q.Id == questionId);
+                var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
                 
-                return question;
+                return quiz;
             }
             catch (FileNotFoundException)
             {
@@ -34,23 +34,23 @@ namespace Treehoot_API.Services
         }
 
         // muiltiple questions
-        public List<Question> GetQuestions(string questionIdsString)
+        public List<Quiz> GetQuizes(string quizIdsString)
         {
             try
             {
-                var questionIds = questionIdsString.Split(',').Select(int.Parse).ToList();
-                var questions = new List<Question>();
-                foreach(var id in questionIds)
+                var quizIds = quizIdsString.Split(',').Select(int.Parse).ToList();
+                var quizes = new List<Quiz>();
+                foreach(var id in quizIds)
                 {
                     // can i call the other method, or should this be self contained?
-                    var question = GetQuestion(id);
-                    if(question != null)
+                    var quiz = GetQuiz(id);
+                    if(quiz != null)
                     { 
-                        questions.Add(question);
+                        quizes.Add(quiz);
                     }
                 }
 
-                return questions;
+                return quizes;
             }
             catch (FileNotFoundException)
             {
