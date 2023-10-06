@@ -31,12 +31,12 @@ namespace Treehoot_API.Controllers
         }
 
         // multiple questions
-        [HttpGet("multiple/{questionIds}")]
-        public ActionResult<Question> GetMultiple(string questionIds)
+        [HttpGet("multiple/{questionIdsString}")]
+        public ActionResult<Question> GetMultiple(string questionIdsString)
         {
             try
             {
-                var question = questionService.GetQuestions(questionIds);
+                var question = questionService.GetQuestions(questionIdsString);
                 return Ok(question);
             }
             catch (NullReferenceException)
