@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using Treehoot_API.Models;
 using Treehoot_API.Services;
 
@@ -11,18 +10,39 @@ namespace Treehoot_API.Controllers
     {
         private QuestionService questionService = new QuestionService();
 
-        [HttpGet("{questionId}/answer")]
-        public ActionResult<Question> Get(int questionId)
+        // single question
+        [HttpGet("single/{questionId}")]
+        public ActionResult<Question> GetSingle(int questionId)
         {
             try
             {
                 var question = questionService.GetQuestion(questionId);
                 return Ok(question);
             }
-            catch (FileNotFoundException)
+            catch (NullReferenceException)
             {
-                Console.WriteLine("File not found");
-                return BadRequest("File not found");
+                Console.WriteLine($"Question is null - question by this id ({questionId}) wasn't found");
+                return BadRequest($"Question is null - question by this id ({questionId}) wasn't found");
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Error: {e.Message}");
+            }
+        }
+
+        // multiple questions
+        [HttpGet("multiple/{questionIds}")]
+        public ActionResult<Question> GetMultiple(string questionIds)
+        {
+            try
+            {
+                var question = questionService.GetQuestions(questionIds);
+                return Ok(question);
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine($"Question is null - question wasn't found");
+                return BadRequest($"Question is null - question wasn't found");
             }
             catch (Exception e)
             {
