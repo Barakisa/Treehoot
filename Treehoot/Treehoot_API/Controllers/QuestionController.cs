@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Treehoot_API.Models;
+using Treehoot_API.Services;
 
 namespace Treehoot_API.Controllers
 {
@@ -8,21 +9,14 @@ namespace Treehoot_API.Controllers
     [ApiController]
     public class QuestionController : ControllerBase
     {
+        private QuestionService questionService = new QuestionService();
 
-        //read about rest endpoint path
         [HttpGet("{questionId}/answer")]
         public ActionResult<Question> Get(int questionId)
         {
             try
             {
-
-                var jsonText = System.IO.File.ReadAllText("FakeDb/QuestionsTable.json");
-
-                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var allQuestions = data.Questions.ToList();
-
-                var question = allQuestions.SingleOrDefault(q => q.Id == questionId);
-                //handle question == null
+                var question = questionService.GetQuestion(questionId);
                 return Ok(question);
             }
             catch (FileNotFoundException)
