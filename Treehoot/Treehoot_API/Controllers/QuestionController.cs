@@ -14,21 +14,8 @@ namespace Treehoot_API.Controllers
         [HttpGet("{questionIdsString}")]
         public ActionResult<Question> Get(string questionIdsString)
         {
-            try
-            {
                 var questions = questionService.GetQuestions(questionIdsString);
-                return Ok(questions);
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine($"Question is null - question wasn't found");
-                return BadRequest($"Question is null - question wasn't found");
-            }
-            catch (Exception e)
-            {
-                return BadRequest($"Error: {e.Message}");
-            }
+                return Ok(questions);           
         }
     }
 }
-

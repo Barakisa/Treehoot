@@ -21,25 +21,12 @@ namespace Treehoot_API.Controllers
         public ActionResult<StageFull> Get(int stageId)
 
         {
-            try
-            {
                 string jsonText = System.IO.File.ReadAllText("FakeDb/StagesTable.json");
 
                 var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
                 var specificStage = data.Stages.FirstOrDefault(s => s.Id == stageId);
 
-                return Ok(specificStage);
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("File not found");
-                return BadRequest("Db not opened");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return BadRequest("Some other problem");
-            }  
+                return Ok(specificStage);           
         }
     }
 }

@@ -16,20 +16,8 @@ namespace Treehoot_API.Controllers
         [HttpGet("{quizIdsString}")]
         public ActionResult<Quiz> Get(string quizIdsString)
         {
-            try
-            {
                 var quiz = quizService.GetQuizes(quizIdsString);
                 return Ok(quiz);
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine($"Quiz is null - quiz wasn't found");
-                return BadRequest($"Quiz is null - quiz wasn't found");
-            }
-            catch (Exception e)
-            {
-                return BadRequest($"Error: {e.Message}");
-            }
         }
 
         // handles single / multiple quiz requests
@@ -37,20 +25,8 @@ namespace Treehoot_API.Controllers
         [HttpGet("{quizIdsString}/full")]
         public ActionResult<QuizFull> GetFull(string quizIdsString)
         {
-            try
-            {
                 var quizes = quizService.GetQuizesFull(quizIdsString);
                 return Ok(quizes);
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine($"Quiz is null - quiz wasn't found");
-                return BadRequest($"Quiz is null - quiz wasn't found");
-            }
-            catch (Exception e)
-            {
-                return BadRequest($"Error: {e.Message}");
-            }
         }
     }
 }
