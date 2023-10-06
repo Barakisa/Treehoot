@@ -1,2 +1,5 @@
 read about rest endpoint path
 handle repsonses from services == null
+
+
+add validation to object gatherer

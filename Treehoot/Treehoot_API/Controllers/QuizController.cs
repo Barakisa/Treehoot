@@ -11,19 +11,20 @@ namespace Treehoot_API.Controllers
     {
         private QuizService quizService = new QuizService();
 
-        // single quiz
-        [HttpGet("single/{quizId}")]
-        public ActionResult<Quiz> GetSingle(int quizId)
+        // handles single / multiple quiz requests
+        // quizes have stageIds, not full stages
+        [HttpGet("{quizIdsString}")]
+        public ActionResult<Quiz> Get(string quizIdsString)
         {
             try
             {
-                var quiz = quizService.GetQuiz(quizId);
+                var quiz = quizService.GetQuizes(quizIdsString);
                 return Ok(quiz);
             }
             catch (NullReferenceException)
             {
-                Console.WriteLine($"Quiz is null - quiz by this id ({quizId}) wasn't found");
-                return BadRequest($"Quiz is null - quiz by this id ({quizId}) wasn't found");
+                Console.WriteLine($"Quiz is null - quiz wasn't found");
+                return BadRequest($"Quiz is null - quiz wasn't found");
             }
             catch (Exception e)
             {
@@ -31,14 +32,15 @@ namespace Treehoot_API.Controllers
             }
         }
 
-        // multiple quizes
-        [HttpGet("multiple/{quizIdsString}")]
-        public ActionResult<Quiz> GetMultiple(string quizIdsString)
+        // handles single / multiple quiz requests
+        // quizes have full stages, not stageIds
+        [HttpGet("{quizIdsString}/full")]
+        public ActionResult<QuizFull> GetFull(string quizIdsString)
         {
             try
             {
-                var quiz = quizService.GetQuizes(quizIdsString);
-                return Ok(quiz);
+                var quizes = quizService.GetQuizesFull(quizIdsString);
+                return Ok(quizes);
             }
             catch (NullReferenceException)
             {

@@ -8,19 +8,31 @@ namespace Treehoot_API.Services
     {
         private string fakeDbPath = "FakeDb/QuizesTable.json";
 
-        // single question
-        public Quiz GetQuiz(int quizId)
+        // can handle single / multiple quiz requests
+        // quizes have stageIds, not full stages
+        public List<Quiz> GetQuizes(string quizIdsString)
         {
             try
             {
-                var jsonText = File.ReadAllText(fakeDbPath);
+                var quizIds = quizIdsString.Split(',').Select(int.Parse).ToList();
+                var quizes = new List<Quiz>();
+                foreach(var quizId in quizIds)
+                {
+                    // can i call the other method, or should this be self contained?
+                    var jsonText = File.ReadAllText(fakeDbPath);
 
-                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var allQuizes = data.Quizes.ToList();
+                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                    var allQuizes = data.Quizes.ToList();
 
-                var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
-                
-                return quiz;
+                    var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
+
+                    if (quiz != null)
+                    { 
+                        quizes.Add(quiz);
+                    }
+                }
+
+                return quizes;
             }
             catch (FileNotFoundException)
             {
@@ -33,20 +45,28 @@ namespace Treehoot_API.Services
             }
         }
 
-        // muiltiple questions
-        public List<Quiz> GetQuizes(string quizIdsString)
+        // can handle single / multiple quiz requests
+        // quizes have stageIds, not full stages
+        public List<QuizFull> GetQuizesFull(string quizIdsString)
         {
             try
             {
                 var quizIds = quizIdsString.Split(',').Select(int.Parse).ToList();
-                var quizes = new List<Quiz>();
-                foreach(var id in quizIds)
+                var quizes = new List<QuizFull>();
+                var gatherer = new ObjectGatherer();
+                foreach (var quizId in quizIds)
                 {
                     // can i call the other method, or should this be self contained?
-                    var quiz = GetQuiz(id);
-                    if(quiz != null)
-                    { 
-                        quizes.Add(quiz);
+                    var jsonText = File.ReadAllText(fakeDbPath);
+
+                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                    var allQuizes = data.Quizes.ToList();
+
+                    var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
+
+                    if (quiz != null)
+                    {
+                        quizes.Add(gatherer.GatherQuiz(quizId));
                     }
                 }
 

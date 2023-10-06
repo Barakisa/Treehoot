@@ -4,36 +4,34 @@ using Treehoot_API.Models;
 
 namespace Treehoot_API.Services
 {
-    public class QuestionService
+    public class AnswerService
     {
-        private string fakeDbPath = "FakeDb/QuestionsTable.json";
+        private string fakeDbPath = "FakeDb/AnswersTable.json";
 
-
-        // can handle single / multiple questions
-        public List<Question> GetQuestions(string questionIdsString)
+        // can handle single / multiple answer requests
+        public List<Answer> GetAnswers(string answerIdsString)
         {
             try
             {
-                var questionIds = questionIdsString.Split(',').Select(int.Parse).ToList();
-                var questions = new List<Question>();
-
-                foreach(var questionId in questionIds)
+                var answerIds = answerIdsString.Split(',').Select(int.Parse).ToList();
+                var answers = new List<Answer>();
+                foreach(var answerId in answerIds)
                 {
                     // can i call the other method, or should this be self contained?
                     var jsonText = File.ReadAllText(fakeDbPath);
 
                     var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                    var allQuestions = data.Questions.ToList();
+                    var allAnswers = data.Answers.ToList();
 
-                    var question = allQuestions.SingleOrDefault(q => q.Id == questionId);
-                    
-                    if (question != null)
+                    var answer = allAnswers.SingleOrDefault(a => a.Id == answerId);
+
+                    if (answer != null)
                     { 
-                        questions.Add(question);
+                        answers.Add(answer);
                     }
                 }
 
-                return questions;
+                return answers;
             }
             catch (FileNotFoundException)
             {

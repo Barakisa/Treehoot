@@ -10,34 +10,14 @@ namespace Treehoot_API.Controllers
     {
         private QuestionService questionService = new QuestionService();
 
-        // single question
-        [HttpGet("single/{questionId}")]
-        public ActionResult<Question> GetSingle(int questionId)
+        // handles single / multiple question requests
+        [HttpGet("{questionIdsString}")]
+        public ActionResult<Question> Get(string questionIdsString)
         {
             try
             {
-                var question = questionService.GetQuestion(questionId);
-                return Ok(question);
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine($"Question is null - question by this id ({questionId}) wasn't found");
-                return BadRequest($"Question is null - question by this id ({questionId}) wasn't found");
-            }
-            catch (Exception e)
-            {
-                return BadRequest($"Error: {e.Message}");
-            }
-        }
-
-        // multiple questions
-        [HttpGet("multiple/{questionIdsString}")]
-        public ActionResult<Question> GetMultiple(string questionIdsString)
-        {
-            try
-            {
-                var question = questionService.GetQuestions(questionIdsString);
-                return Ok(question);
+                var questions = questionService.GetQuestions(questionIdsString);
+                return Ok(questions);
             }
             catch (NullReferenceException)
             {
