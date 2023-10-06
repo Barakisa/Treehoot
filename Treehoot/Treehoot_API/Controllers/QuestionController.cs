@@ -1,33 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using Treehoot_API.Models;
+using Treehoot_API.Services;
 
 namespace Treehoot_API.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class QuestionController : ControllerBase
     {
+        private QuestionService questionService = new QuestionService();
 
-        [HttpGet(Name  = "GetSpecificQuestion")]
-        public ActionResult<Question> Get(int questionId)
+        // handles single / multiple question requests
+        [HttpGet("{questionIdsString}")]
+        public ActionResult<Question> Get(string questionIdsString)
         {
             try
             {
-
-                var jsonText = System.IO.File.ReadAllText("FakeDb/QuestionsTable.json");
-
-                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var allQuestions = data.Questions.ToList();
-
-                var question = allQuestions.FirstOrDefault(q => q.Id == questionId);
-
-                return Ok(question);
+                var questions = questionService.GetQuestions(questionIdsString);
+                return Ok(questions);
             }
-            catch (FileNotFoundException)
+            catch (NullReferenceException)
             {
-                Console.WriteLine("File not found");
-                return BadRequest("File not found");
+                Console.WriteLine($"Question is null - question wasn't found");
+                return BadRequest($"Question is null - question wasn't found");
             }
             catch (Exception e)
             {

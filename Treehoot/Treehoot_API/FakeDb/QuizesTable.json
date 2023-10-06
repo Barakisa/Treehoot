@@ -1,0 +1,18 @@
+{
+  "Quizes": [
+    {
+      "Id": 1,
+      "Name": "quiz 1",
+      "Description": "first quiz",
+      "Timer": 300,
+      "Stages": [ 11, 12, 13 ]
+    },
+    {
+      "Id": 2,
+      "Name": "quiz 2",
+      "Description": "second quiz",
+      "Timer": 240,
+      "Stages": [ 21 ]
+    }
+  ]
+}

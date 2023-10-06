@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Treehoot_API.Helpers;
 using Treehoot_API.Models;
 
 namespace Treehoot_API.Controllers
@@ -17,7 +18,7 @@ namespace Treehoot_API.Controllers
         }
 
         [HttpGet(Name = "GetSpecificStage")]
-        public ActionResult<Stage> Get(int stageId)
+        public ActionResult<StageFull> Get(int stageId)
 
         {
             try
