@@ -6,8 +6,8 @@ using Treehoot_API.Services;
 
 namespace Treehoot_API.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class StageController : ControllerBase
     {
         private StageService stageService = new StageService();

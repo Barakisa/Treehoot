@@ -4,13 +4,12 @@ using Treehoot_API.Services;
 
 namespace Treehoot_API.Controllers
 {
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class QuestionController : ControllerBase
     {
         private QuestionService questionService = new QuestionService();
 
-        // handles single / multiple question requests
         [HttpGet("{questionId}")]
         public ActionResult<Question> Get(int questionId)
         {
