@@ -13,18 +13,18 @@ namespace Treehoot_API.Controllers
 
         // handles single / multiple quiz requests
         // quizes have stageIds, not full stages
-        [HttpGet("{quizIdsString}")]
-        public ActionResult<Quiz> Get(string quizIdsString)
+        [HttpGet("{quizId}")]
+        public ActionResult<Quiz> Get(int quizId)
         {
-                return Ok(quizService.GetQuizes(quizIdsString));
+                return Ok(quizService.GetQuiz(quizId));
         }
 
         // handles single / multiple quiz requests
         // quizes have full stages, not stageIds
-        [HttpGet("{quizIdsString}/full")]
-        public ActionResult<QuizFull> GetFull(string quizIdsString)
+        [HttpGet("{quizId}/full")]
+        public ActionResult<QuizFull> GetFull(int quizId)
         {
-                return Ok(quizService.GetQuizesFull(quizIdsString));
+                return Ok(quizService.GetQuizFull(quizId));
         }
     }
 }

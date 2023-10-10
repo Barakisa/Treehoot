@@ -10,7 +10,7 @@ namespace Treehoot_API.Helpers
         {
             // gatherable quiz
             var gQuiz = new QuizFull();
-            var baseQuiz = new QuizService().GetQuizes(quizId.ToString())[0];
+            var baseQuiz = new QuizService().GetQuiz(quizId);
 
             gQuiz.Id = baseQuiz.Id;
             gQuiz.Timer = baseQuiz.Timer;
