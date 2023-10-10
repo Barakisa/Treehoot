@@ -2,44 +2,26 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Treehoot_API.Helpers;
 using Treehoot_API.Models;
+using Treehoot_API.Services;
 
 namespace Treehoot_API.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class StageController : ControllerBase
     {
+        private StageService stageService = new StageService();
 
-        private readonly ILogger<StageController> _logger;
-
-        public StageController(ILogger<StageController> logger)
+        [HttpGet("{stageId}")]
+        public ActionResult<Stage> Get(int stageId)
         {
-            _logger = logger;
+            return Ok(stageService.GetStage(stageId));
         }
 
-        [HttpGet(Name = "GetSpecificStage")]
-        public ActionResult<StageFull> Get(int stageId)
-
+        [HttpGet("{stageId}/full")]
+        public ActionResult<StageFull> GetFull(int stageId)
         {
-            try
-            {
-                string jsonText = System.IO.File.ReadAllText("FakeDb/StagesTable.json");
-
-                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var specificStage = data.Stages.FirstOrDefault(s => s.Id == stageId);
-
-                return Ok(specificStage);
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("File not found");
-                return BadRequest("Db not opened");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return BadRequest("Some other problem");
-            }  
+                return Ok(stageService.GetStageFull(stageId));
         }
     }
 }
