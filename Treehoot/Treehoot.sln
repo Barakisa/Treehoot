@@ -5,10 +5,10 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Treehoot_API", "Treehoot_API\Treehoot_API.csproj", "{F3B9FE03-220E-440A-823E-E20945BC7B29}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C3E4F09E-C50D-4D56-9DA4-BD919C69AFDA} = {C3E4F09E-C50D-4D56-9DA4-BD919C69AFDA}
+		{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9} = {DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treehoot.Domain", "Treehoot.Domain\Treehoot.Domain.csproj", "{C3E4F09E-C50D-4D56-9DA4-BD919C69AFDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treehoot.Domain", "Treehoot.Domain\Treehoot.Domain.csproj", "{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +20,10 @@ Global
 		{F3B9FE03-220E-440A-823E-E20945BC7B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3B9FE03-220E-440A-823E-E20945BC7B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3B9FE03-220E-440A-823E-E20945BC7B29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3E4F09E-C50D-4D56-9DA4-BD919C69AFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3E4F09E-C50D-4D56-9DA4-BD919C69AFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3E4F09E-C50D-4D56-9DA4-BD919C69AFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3E4F09E-C50D-4D56-9DA4-BD919C69AFDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
