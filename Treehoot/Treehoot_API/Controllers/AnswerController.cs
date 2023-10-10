@@ -11,10 +11,10 @@ namespace Treehoot_API.Controllers
         private AnswerService answerService = new AnswerService();
 
         // handles single / multiple answer requests
-        [HttpGet("{answerIdsString}")]
-        public ActionResult<Answer> Get(string answerIdsString)
+        [HttpGet("{answerId}")]
+        public ActionResult<Answer> Get(int answerId)
         {
-            return Ok(answerService.GetAnswers(answerIdsString));
+            return Ok(answerService.GetAnswer(answerId));
         }
     }
 }

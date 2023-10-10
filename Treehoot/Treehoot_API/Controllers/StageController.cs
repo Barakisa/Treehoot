@@ -12,16 +12,16 @@ namespace Treehoot_API.Controllers
     {
         private StageService stageService = new StageService();
 
-        [HttpGet("{stageIdsString}")]
-        public ActionResult<Stage> Get(string stageIdsString)
+        [HttpGet("{stageId}")]
+        public ActionResult<Stage> Get(int stageId)
         {
-            return Ok(stageService.GetStages(stageIdsString));
+            return Ok(stageService.GetStage(stageId));
         }
 
-        [HttpGet("{stageIdsString}/full")]
-        public ActionResult<StageFull> GetFull(string stageIdsString)
+        [HttpGet("{stageId}/full")]
+        public ActionResult<StageFull> GetFull(int stageId)
         {
-                return Ok(stageService.GetStagesFull(stageIdsString));           
+                return Ok(stageService.GetStageFull(stageId));
         }
     }
 }

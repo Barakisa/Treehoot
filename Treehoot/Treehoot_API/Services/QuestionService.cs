@@ -8,32 +8,43 @@ namespace Treehoot_API.Services
     {
         private string fakeDbPath = "FakeDb/QuestionsTable.json";
 
-
-        // can handle single / multiple questions
-        public List<Question> GetQuestions(string questionIdsString)
+        public Question GetQuestion(int questionId)
         {
             try
             {
-                var questionIds = questionIdsString.Split(',').Select(int.Parse).ToList();
-                var questions = new List<Question>();
+                var jsonText = File.ReadAllText(fakeDbPath);
 
-                foreach(var questionId in questionIds)
-                {
-                    // can i call the other method, or should this be self contained?
-                    var jsonText = File.ReadAllText(fakeDbPath);
+                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                var allQuestions = data.Questions.ToList();
 
-                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                    var allQuestions = data.Questions.ToList();
+                var question = allQuestions.SingleOrDefault(q => q.Id == questionId);
+                
+                return question;
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("File not found");
+                throw; // rethrow the exception so it can be handled in the controller
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error: {e.Message}");
+            }
+        }
+        public QuestionFull GetQuestionFull(int questionId)
+        {
+            try
+            {
+                var gatherer = new ObjectGatherer();
 
-                    var question = allQuestions.SingleOrDefault(q => q.Id == questionId);
-                    
-                    if (question != null)
-                    { 
-                        questions.Add(question);
-                    }
-                }
+                var jsonText = File.ReadAllText(fakeDbPath);
 
-                return questions;
+                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                var allQuestiones = data.Questions.ToList();
+
+                var question = allQuestiones.SingleOrDefault(q => q.Id == questionId);
+
+                return gatherer.GatherQuestion(questionId);
             }
             catch (FileNotFoundException)
             {

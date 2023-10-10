@@ -8,8 +8,6 @@ namespace Treehoot_API.Services
     {
         private string fakeDbPath = "FakeDb/QuizesTable.json";
 
-        // can handle single / multiple quiz requests
-        // quizes have stageIds, not full stages
         public Quiz GetQuiz(int quizId)
         {
             try
@@ -34,8 +32,6 @@ namespace Treehoot_API.Services
             }
         }
 
-        // can handle single / multiple quiz requests
-        // quizes have stageIds, not full stages
         public QuizFull GetQuizFull(int quizId)
         {
             try

@@ -8,31 +8,18 @@ namespace Treehoot_API.Services
     {
         private string fakeDbPath = "FakeDb/StagesTable.json";
 
-        // can handle single / multiple stage requests
-        // quizes have stageIds, not full stages
-        public List<Stage> GetStages(string stageIdsString)
+        public Stage GetStage(int stageId)
         {
             try
             {
-                var stageIds = stageIdsString.Split(',').Select(int.Parse).ToList();
-                var stages = new List<Stage>();
-                foreach(var stageId in stageIds)
-                {
-                    // can i call the other method, or should this be self contained?
-                    var jsonText = File.ReadAllText(fakeDbPath);
+                var jsonText = File.ReadAllText(fakeDbPath);
 
-                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                    var allStages = data.Stages.ToList();
+                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                var allStages = data.Stages.ToList();
 
-                    var stage = allStages.SingleOrDefault(q => q.Id == stageId);
+                var stage = allStages.SingleOrDefault(q => q.Id == stageId);
 
-                    if (stage != null)
-                    {
-                        stages.Add(stage);
-                    }
-                }
-
-                return stages;
+                return stage;
             }
             catch (FileNotFoundException)
             {
@@ -45,32 +32,20 @@ namespace Treehoot_API.Services
             }
         }
 
-        // can handle single / multiple stage requests
-        // stages have questionIds, not full questions
-        public List<StageFull> GetStagesFull(string stageIdsString)
+        public StageFull GetStageFull(int stageId)
         {
             try
             {
-                var stageIds = stageIdsString.Split(',').Select(int.Parse).ToList();
-                var stages = new List<StageFull>();
                 var gatherer = new ObjectGatherer();
-                foreach (var stageId in stageIds)
-                {
-                    // can i call the other method, or should this be self contained?
-                    var jsonText = File.ReadAllText(fakeDbPath);
 
-                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                    var allStages = data.Stages.ToList();
+                var jsonText = File.ReadAllText(fakeDbPath);
 
-                    var stage = allStages.SingleOrDefault(q => q.Id == stageId);
+                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                var allStages = data.Stages.ToList();
 
-                    if (stage != null)
-                    {
-                        stages.Add(gatherer.GatherStage(stageId));
-                    }
-                }
+                var stage = allStages.SingleOrDefault(q => q.Id == stageId);
 
-                return stages;
+                return gatherer.GatherStage(stageId);
             }
             catch (FileNotFoundException)
             {

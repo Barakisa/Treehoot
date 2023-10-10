@@ -11,10 +11,17 @@ namespace Treehoot_API.Controllers
         private QuestionService questionService = new QuestionService();
 
         // handles single / multiple question requests
-        [HttpGet("{questionIdsString}")]
-        public ActionResult<Question> Get(string questionIdsString)
+        [HttpGet("{questionId}")]
+        public ActionResult<Question> Get(int questionId)
         {
-                return Ok(questionService.GetQuestions(questionIdsString));           
+                return Ok(questionService.GetQuestion(questionId));           
         }
+        
+        [HttpGet("{questionId}/full")]
+        public ActionResult<QuestionFull> GetFull(int questionId)
+        {
+            return Ok(questionService.GetQuestionFull(questionId));
+        }
+        
     }
 }
