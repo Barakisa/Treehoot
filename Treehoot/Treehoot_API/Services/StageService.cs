@@ -44,5 +44,43 @@ namespace Treehoot_API.Services
                 throw new Exception($"Error: {e.Message}");
             }
         }
+
+        // can handle single / multiple stage requests
+        // stages have questionIds, not full questions
+        public List<StageFull> GetStagesFull(string stageIdsString)
+        {
+            try
+            {
+                var stageIds = stageIdsString.Split(',').Select(int.Parse).ToList();
+                var stages = new List<StageFull>();
+                var gatherer = new ObjectGatherer();
+                foreach (var stageId in stageIds)
+                {
+                    // can i call the other method, or should this be self contained?
+                    var jsonText = File.ReadAllText(fakeDbPath);
+
+                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                    var allStages = data.Stages.ToList();
+
+                    var stage = allStages.SingleOrDefault(q => q.Id == stageId);
+
+                    if (stage != null)
+                    {
+                        stages.Add(gatherer.GatherStage(stageId));
+                    }
+                }
+
+                return stages;
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("File not found");
+                throw; // rethrow the exception so it can be handled in the controller
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error: {e.Message}");
+            }
+        }
     }
 }

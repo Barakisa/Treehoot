@@ -16,8 +16,7 @@ namespace Treehoot_API.Controllers
         [HttpGet("{quizIdsString}")]
         public ActionResult<Quiz> Get(string quizIdsString)
         {
-                var quiz = quizService.GetQuizes(quizIdsString);
-                return Ok(quiz);
+                return Ok(quizService.GetQuizes(quizIdsString));
         }
 
         // handles single / multiple quiz requests
@@ -25,8 +24,7 @@ namespace Treehoot_API.Controllers
         [HttpGet("{quizIdsString}/full")]
         public ActionResult<QuizFull> GetFull(string quizIdsString)
         {
-                var quizes = quizService.GetQuizesFull(quizIdsString);
-                return Ok(quizes);
+                return Ok(quizService.GetQuizesFull(quizIdsString));
         }
     }
 }

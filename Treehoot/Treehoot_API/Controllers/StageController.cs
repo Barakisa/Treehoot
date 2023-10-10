@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Treehoot_API.Helpers;
 using Treehoot_API.Models;
+using Treehoot_API.Services;
 
 namespace Treehoot_API.Controllers
 {
@@ -9,24 +10,18 @@ namespace Treehoot_API.Controllers
     [Route("[controller]")]
     public class StageController : ControllerBase
     {
+        private StageService stageService = new StageService();
 
-        private readonly ILogger<StageController> _logger;
-
-        public StageController(ILogger<StageController> logger)
+        [HttpGet("{stageIdsString}")]
+        public ActionResult<Stage> Get(string stageIdsString)
         {
-            _logger = logger;
+            return Ok(stageService.GetStages(stageIdsString));
         }
 
-        [HttpGet(Name = "GetSpecificStage")]
-        public ActionResult<StageFull> Get(int stageId)
-
+        [HttpGet("{stageIdsString}/full")]
+        public ActionResult<StageFull> GetFull(string stageIdsString)
         {
-                string jsonText = System.IO.File.ReadAllText("FakeDb/StagesTable.json");
-
-                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var specificStage = data.Stages.FirstOrDefault(s => s.Id == stageId);
-
-                return Ok(specificStage);           
+                return Ok(stageService.GetStagesFull(stageIdsString));           
         }
     }
 }

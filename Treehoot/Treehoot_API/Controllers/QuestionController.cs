@@ -14,8 +14,7 @@ namespace Treehoot_API.Controllers
         [HttpGet("{questionIdsString}")]
         public ActionResult<Question> Get(string questionIdsString)
         {
-                var questions = questionService.GetQuestions(questionIdsString);
-                return Ok(questions);           
+                return Ok(questionService.GetQuestions(questionIdsString));           
         }
     }
 }
