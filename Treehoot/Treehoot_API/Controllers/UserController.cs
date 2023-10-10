@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Treehoot_API.Models;
+using Treehoot.Domain.Models;
 
-namespace Treehoot_API.Controllers
+namespace Treehoot_API.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class UserController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class UserController : ControllerBase
-    {
-        [HttpGet]
+    [HttpGet]
 
-        public ActionResult<Question> Get(Guid Id)
-        {
-            return Ok();
-        }
+    public ActionResult<Question> Get(Guid Id)
+    {
+        return Ok();
     }
 }

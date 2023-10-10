@@ -1,45 +1,44 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using Treehoot_API.Helpers;
-using Treehoot_API.Models;
+using Treehoot.Application.Helpers;
+using Treehoot.Domain.Models;
 
-namespace Treehoot_API.Controllers
+namespace Treehoot_API.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class StageController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class StageController : ControllerBase
+
+    private readonly ILogger<StageController> _logger;
+
+    public StageController(ILogger<StageController> logger)
     {
+        _logger = logger;
+    }
 
-        private readonly ILogger<StageController> _logger;
+    [HttpGet(Name = "GetSpecificStage")]
+    public ActionResult<StageFull> Get(int stageId)
 
-        public StageController(ILogger<StageController> logger)
+    {
+        try
         {
-            _logger = logger;
+            string jsonText = System.IO.File.ReadAllText("FakeDb/StagesTable.json");
+
+            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+            var specificStage = data.Stages.FirstOrDefault(s => s.Id == stageId);
+
+            return Ok(specificStage);
         }
-
-        [HttpGet(Name = "GetSpecificStage")]
-        public ActionResult<StageFull> Get(int stageId)
-
+        catch (FileNotFoundException)
         {
-            try
-            {
-                string jsonText = System.IO.File.ReadAllText("FakeDb/StagesTable.json");
-
-                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var specificStage = data.Stages.FirstOrDefault(s => s.Id == stageId);
-
-                return Ok(specificStage);
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("File not found");
-                return BadRequest("Db not opened");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return BadRequest("Some other problem");
-            }  
+            Console.WriteLine("File not found");
+            return BadRequest("Db not opened");
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            return BadRequest("Some other problem");
+        }  
     }
 }

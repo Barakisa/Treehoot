@@ -1,34 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
-using Treehoot_API.Models;
-using Treehoot_API.Services;
+using Treehoot.Domain.Models;
+using Treehoot.Application.Services;
 
 
-namespace Treehoot_API.Controllers
+namespace Treehoot_API.Controllers;
+
+[Route("/api/[controller]")]
+[ApiController]
+public class QuestionController : ControllerBase
 {
-    [Route("/api/[controller]")]
-    [ApiController]
-    public class QuestionController : ControllerBase
-    {
-        private QuestionService questionService = new QuestionService();
+    private QuestionService questionService = new QuestionService();
 
-        // handles single / multiple question requests
-        [HttpGet("{questionIdsString}")]
-        public ActionResult<Question> Get(string questionIdsString)
+    // handles single / multiple question requests
+    [HttpGet("{questionIdsString}")]
+    public ActionResult<Question> Get(string questionIdsString)
+    {
+        try
         {
-            try
-            {
-                var questions = questionService.GetQuestions(questionIdsString);
-                return Ok(questions);
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine($"Question is null - question wasn't found");
-                return BadRequest($"Question is null - question wasn't found");
-            }
-            catch (Exception e)
-            {
-                return BadRequest($"Error: {e.Message}");
-            }
+            var questions = questionService.GetQuestions(questionIdsString);
+            return Ok(questions);
+        }
+        catch (NullReferenceException)
+        {
+            Console.WriteLine($"Question is null - question wasn't found");
+            return BadRequest($"Question is null - question wasn't found");
+        }
+        catch (Exception e)
+        {
+            return BadRequest($"Error: {e.Message}");
         }
     }
 }
