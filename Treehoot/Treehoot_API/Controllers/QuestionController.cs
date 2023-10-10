@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-//using Treehoot_API.Models;
+using Treehoot_API.Models;
 using Treehoot_API.Services;
-
-using Treehoot.Domain.Models;
 
 
 namespace Treehoot_API.Controllers

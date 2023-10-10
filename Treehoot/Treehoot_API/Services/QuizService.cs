@@ -10,29 +10,19 @@ namespace Treehoot_API.Services
 
         // can handle single / multiple quiz requests
         // quizes have stageIds, not full stages
-        public List<Quiz> GetQuizes(string quizIdsString)
+        public Quiz GetQuiz(int quizId)
         {
             try
             {
-                var quizIds = quizIdsString.Split(',').Select(int.Parse).ToList();
-                var quizes = new List<Quiz>();
-                foreach(var quizId in quizIds)
-                {
-                    // can i call the other method, or should this be self contained?
-                    var jsonText = File.ReadAllText(fakeDbPath);
+                // can i call the other method, or should this be self contained?
+                var jsonText = File.ReadAllText(fakeDbPath);
 
-                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                    var allQuizes = data.Quizes.ToList();
+                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                var allQuizes = data.Quizes.ToList();
 
-                    var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
+                var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
 
-                    if (quiz != null)
-                    { 
-                        quizes.Add(quiz);
-                    }
-                }
-
-                return quizes;
+                return quiz;
             }
             catch (FileNotFoundException)
             {
@@ -47,30 +37,14 @@ namespace Treehoot_API.Services
 
         // can handle single / multiple quiz requests
         // quizes have stageIds, not full stages
-        public List<QuizFull> GetQuizesFull(string quizIdsString)
+        public QuizFull GetQuizFull(int quizId)
         {
             try
             {
-                var quizIds = quizIdsString.Split(',').Select(int.Parse).ToList();
-                var quizes = new List<QuizFull>();
                 var gatherer = new ObjectGatherer();
-                foreach (var quizId in quizIds)
-                {
-                    // can i call the other method, or should this be self contained?
-                    var jsonText = File.ReadAllText(fakeDbPath);
+                var quizFull = gatherer.GatherQuiz(quizId);
 
-                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                    var allQuizes = data.Quizes.ToList();
-
-                    var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
-
-                    if (quiz != null)
-                    {
-                        quizes.Add(gatherer.GatherQuiz(quizId));
-                    }
-                }
-
-                return quizes;
+                return quizFull;
             }
             catch (FileNotFoundException)
             {
