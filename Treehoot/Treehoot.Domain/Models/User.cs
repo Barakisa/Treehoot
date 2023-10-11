@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Treehoot_API.Models;
+namespace Treehoot.Domain.Models;
 public class User
 {
     public Guid Id { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Treehoot_API.Models;
+﻿namespace Treehoot.Domain.Models;
 
 public class Stage
 {
