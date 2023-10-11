@@ -8,31 +8,44 @@ public class StageService
 {
     private string fakeDbPath = "FakeDb/StagesTable.json";
 
-    // can handle single / multiple stage requests
-    // quizes have stageIds, not full stages
-    public List<Stage> GetStages(string stageIdsString)
+    public Stage GetStage(int stageId)
     {
         try
         {
-            var stageIds = stageIdsString.Split(',').Select(int.Parse).ToList();
-            var stages = new List<Stage>();
-            foreach(var stageId in stageIds)
-            {
-                // can i call the other method, or should this be self contained?
-                var jsonText = File.ReadAllText(fakeDbPath);
+            var jsonText = File.ReadAllText(fakeDbPath);
 
-                var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                var allStages = data.Stages.ToList();
+            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+            var allStages = data.Stages.ToList();
 
-                var stage = allStages.SingleOrDefault(q => q.Id == stageId);
+            var stage = allStages.SingleOrDefault(q => q.Id == stageId);
 
-                if (stage != null)
-                {
-                    stages.Add(stage);
-                }
-            }
+            return stage;
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("File not found");
+            throw; // rethrow the exception so it can be handled in the controller
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Error: {e.Message}");
+        }
+    }
 
-            return stages;
+    public StageFull GetStageFull(int stageId)
+    {
+        try
+        {
+            var gatherer = new ObjectGatherer();
+
+            var jsonText = File.ReadAllText(fakeDbPath);
+
+            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+            var allStages = data.Stages.ToList();
+
+            var stage = allStages.SingleOrDefault(q => q.Id == stageId);
+
+            return gatherer.GatherStage(stageId);
         }
         catch (FileNotFoundException)
         {

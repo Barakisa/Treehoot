@@ -32,7 +32,7 @@ public class ObjectGatherer
     {
         // gatherable stage
         var gStage = new StageFull();
-        var baseStage = new StageService().GetStages(stageId.ToString())[0];
+        var baseStage = new StageService().GetStage(stageId);
 
         gStage.Id = baseStage.Id;
         gStage.Name = baseStage.Name;
@@ -52,7 +52,7 @@ public class ObjectGatherer
     {
         // gatherable stage
         var gQuestion = new QuestionFull();
-        var baseQuestion = new QuestionService().GetQuestions(questionId.ToString())[0];
+        var baseQuestion = new QuestionService().GetQuestion(questionId);
 
         gQuestion.Id = baseQuestion.Id;
         gQuestion.QuestionText = baseQuestion.QuestionText;
@@ -61,7 +61,7 @@ public class ObjectGatherer
         var answerService = new AnswerService();
         foreach (int answerId in baseQuestion.Answers)
         {
-            var answer = answerService.GetAnswers(answerId.ToString())[0];
+            var answer = answerService.GetAnswer(answerId);
             gQuestion.Answers.Add(answer);
         }
 

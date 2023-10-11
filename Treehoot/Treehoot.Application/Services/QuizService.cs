@@ -8,13 +8,10 @@ public class QuizService
 {
     private string fakeDbPath = "FakeDb/QuizesTable.json";
 
-    // can handle single / multiple quiz requests
-    // quizes have stageIds, not full stages
     public Quiz GetQuiz(int quizId)
     {
         try
         {
-            // can i call the other method, or should this be self contained?
             var jsonText = File.ReadAllText(fakeDbPath);
 
             var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
@@ -35,16 +32,20 @@ public class QuizService
         }
     }
 
-    // can handle single / multiple quiz requests
-    // quizes have stageIds, not full stages
     public QuizFull GetQuizFull(int quizId)
     {
         try
         {
             var gatherer = new ObjectGatherer();
-            var quizFull = gatherer.GatherQuiz(quizId);
 
-            return quizFull;
+            var jsonText = File.ReadAllText(fakeDbPath);
+
+            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+            var allQuizes = data.Quizes.ToList();
+
+            var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
+
+            return gatherer.GatherQuiz(quizId);
         }
         catch (FileNotFoundException)
         {
