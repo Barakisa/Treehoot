@@ -6,16 +6,10 @@ export default function Host() {
   const [game, setGame] = useState([]);
 
   const fetchGame = async () => {
-    const data = [
-      "viktorina1",
-      "viktorina2",
-      "viktorina3",
-      "viktorina4",
-      "viktorina5",
-      "viktorina6",
-    ];
-    console.log(data);
+    const response = await fetch("https://localhost:7219/api/Quiz");
+    const data = await response.json();
     setGame(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -26,9 +20,14 @@ export default function Host() {
     <div className="d-flex flex-column vh-100 justify-content-center align-items-center">
       <div className="text fs-3 mb-3">Select your game:</div>
       <div className="scroll-box">
-        <div className="scroll-box-content fs-3">
-          {game.map((value, index) => (
-            <div key={index}>{value}</div>
+        <div className="scroll-box-content">
+          {game.map((quiz) => (
+            <div key={quiz.id}>
+              <div className="fs-3">{quiz.name}</div>
+              <div className="d-flex flex-row align-items-start fs-6 mb-3">
+                {quiz.description}
+              </div>
+            </div>
           ))}
         </div>
       </div>

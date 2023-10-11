@@ -10,10 +10,10 @@ public class QuizController : ControllerBase
 {
     private QuizService quizService = new QuizService();
 
-    [HttpGet("{quizId}")]
-    public ActionResult<Quiz> Get(int quizId)
+    [HttpGet]//to be continued...
+    public ActionResult<Quiz> Get()
     {
-        return Ok(quizService.GetQuiz(quizId));
+        return Ok(quizService.GetQuizes());
     }
 
     [HttpGet("{quizId}/full")]

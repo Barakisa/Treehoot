@@ -31,6 +31,25 @@ public class QuizService
             throw new Exception($"Error: {e.Message}");
         }
     }
+    public List<Quiz> GetQuizes() {
+        try
+        {
+            var jsonText = File.ReadAllText(fakeDbPath);
+            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+            var allQuizes = data.Quizes.ToList();
+            return allQuizes;
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("File not found");
+            throw; 
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Error: {e.Message}");
+        }
+        
+    }
 
     public QuizFull GetQuizFull(int quizId)
     {
