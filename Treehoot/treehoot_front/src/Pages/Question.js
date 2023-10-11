@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
-import Timer from "./Timer";
-import { reducer, INITIAL_STATE } from "../Reducers/FetchDataReducer";
-import LoadingCircle from "../LoadingCircle";
+import Timer from "../components/Timer";
+import { reducer, INITIAL_STATE } from "../components/Reducers/FetchDataReducer";
+import LoadingCircle from "../components/LoadingCircle";
 
 export default function Question() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
