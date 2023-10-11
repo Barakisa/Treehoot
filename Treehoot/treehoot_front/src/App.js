@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import Question from "./components/Question/Question.js";
+import Question from "./Pages/Question.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home.js";
 import Play from "./Pages/Play";
