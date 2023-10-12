@@ -16,6 +16,12 @@ public class QuizController : ControllerBase
         return Ok(quizService.GetQuizes());
     }
 
+    [HttpGet("{quizId}")]
+    public ActionResult<Quiz> Get(int quizId)
+    {
+        return Ok(quizService.GetQuiz(quizId));
+    }
+
     [HttpGet("{quizId}/full")]
     public ActionResult<QuizFull> GetFull(int quizId)
     {
