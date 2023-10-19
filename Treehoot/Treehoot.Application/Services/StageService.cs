@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 using Treehoot.Application.Helpers;
 using Treehoot.Domain.Models;
 
@@ -12,14 +13,19 @@ public class StageService
     {
         try
         {
-            var jsonText = File.ReadAllText(fakeDbPath);
+            using (FileStream fileStream = new FileStream(fakeDbPath, FileMode.Open, FileAccess.Read))
+            {
+                using (StreamReader streamReader = new StreamReader(fileStream))
+                {
+                    var jsonText = streamReader.ReadToEnd();
+                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+                    var allStages = data.Stages.ToList();
 
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allStages = data.Stages.ToList();
+                    var stage = allStages.SingleOrDefault(q => q.Id == stageId);
 
-            var stage = allStages.SingleOrDefault(q => q.Id == stageId);
-
-            return stage;
+                    return stage;
+                }
+            }
         }
         catch (FileNotFoundException)
         {

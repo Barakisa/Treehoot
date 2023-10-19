@@ -1,6 +1,6 @@
 ﻿namespace Treehoot.Domain.Models;
 
-public class QuestionFull
+public struct QuestionFull
 {
     public int Id { get; set; }
     
