@@ -10,26 +10,7 @@ public class QuizService
 
     public Quiz GetQuiz(int quizId)
     {
-        try
-        {
-            var jsonText = File.ReadAllText(fakeDbPath);
-
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allQuizes = data.Quizes.ToList();
-
-            var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
-
-            return quiz;
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
-        }
+        return DataLoader.GetEntity<Quiz>(fakeDbPath, quizId);
     }
     public List<Quiz> GetQuizes() {
         try
@@ -56,14 +37,6 @@ public class QuizService
         try
         {
             var gatherer = new ObjectGatherer();
-
-            var jsonText = File.ReadAllText(fakeDbPath);
-
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allQuizes = data.Quizes.ToList();
-
-            var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
-
             return gatherer.GatherQuiz(quizId);
         }
         catch (FileNotFoundException)
