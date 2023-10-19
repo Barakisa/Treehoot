@@ -10,7 +10,7 @@ public class StageService
 
     public Stage GetStage(int stageId)
     {
-        return DataLoader.GetEntity<Stage>("FakeDb/StagesTable.json", stageId);
+        return DataLoader.GetEntity<Stage>(fakeDbPath, stageId);
     }
 
     public StageFull GetStageFull(int stageId)

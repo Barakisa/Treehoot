@@ -10,7 +10,7 @@ public class QuizService
 
     public Quiz GetQuiz(int quizId)
     {
-        return DataLoader.GetEntity<Quiz>("FakeDb/QuizesTable.json", quizId);
+        return DataLoader.GetEntity<Quiz>(fakeDbPath, quizId);
     }
     public List<Quiz> GetQuizes() {
         try

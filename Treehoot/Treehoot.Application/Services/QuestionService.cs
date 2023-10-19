@@ -10,7 +10,7 @@ public class QuestionService
 
     public Question GetQuestion(int questionId)
     {
-        return DataLoader.GetEntity<Question>("FakeDb/QuestionsTable.json", questionId);
+        return DataLoader.GetEntity<Question>(fakeDbPath, questionId);
     }
     public QuestionFull GetQuestionFull(int questionId)
     {

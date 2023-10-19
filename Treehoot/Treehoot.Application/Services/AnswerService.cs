@@ -10,6 +10,6 @@ public class AnswerService
 
     public Answer GetAnswer(int answerId)
     {
-        return DataLoader.GetEntity<Answer>("FakeDb/AnswersTable.json", answerId);
+        return DataLoader.GetEntity<Answer>(fakeDbPath, answerId);
     }
 }
