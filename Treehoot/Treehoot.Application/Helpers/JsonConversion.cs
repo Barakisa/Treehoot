@@ -16,7 +16,6 @@ public class JsonConversion
 
     public List<T> GetEntities<T>() where T : IEntity
     {
-        // Implement logic to extract and return entities of type T
         if (typeof(T) == typeof(Quiz))
         {
             return Quizes.Cast<T>().ToList();
@@ -33,10 +32,6 @@ public class JsonConversion
         {
             return Answers.Cast<T>().ToList();
         }
-
-        // Add similar logic for other entity types
-
-        // Return an empty list if the entity type is not supported
         return new List<T>();
     }
 }
