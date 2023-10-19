@@ -37,14 +37,6 @@ public class QuizService
         try
         {
             var gatherer = new ObjectGatherer();
-
-            var jsonText = File.ReadAllText(fakeDbPath);
-
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allQuizes = data.Quizes.ToList();
-
-            var quiz = allQuizes.SingleOrDefault(q => q.Id == quizId);
-
             return gatherer.GatherQuiz(quizId);
         }
         catch (FileNotFoundException)

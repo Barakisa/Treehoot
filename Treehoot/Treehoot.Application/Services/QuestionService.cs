@@ -17,14 +17,6 @@ public class QuestionService
         try
         {
             var gatherer = new ObjectGatherer();
-
-            var jsonText = File.ReadAllText(fakeDbPath);
-
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allQuestiones = data.Questions.ToList();
-
-            var question = allQuestiones.SingleOrDefault(q => q.Id == questionId);
-
             return gatherer.GatherQuestion(questionId);
         }
         catch (FileNotFoundException)
