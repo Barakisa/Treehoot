@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
 using Treehoot.Domain.Models;
 
@@ -11,31 +10,7 @@ public class StageService
 
     public Stage GetStage(int stageId)
     {
-        try
-        {
-            using (FileStream fileStream = new FileStream(fakeDbPath, FileMode.Open, FileAccess.Read))
-            {
-                using (StreamReader streamReader = new StreamReader(fileStream))
-                {
-                    var jsonText = streamReader.ReadToEnd();
-                    var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-                    var allStages = data.Stages.ToList();
-
-                    var stage = allStages.SingleOrDefault(q => q.Id == stageId);
-
-                    return stage;
-                }
-            }
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
-        }
+        return DataLoader.GetEntity<Stage>(fakeDbPath, stageId);
     }
 
     public StageFull GetStageFull(int stageId)
@@ -43,14 +18,6 @@ public class StageService
         try
         {
             var gatherer = new ObjectGatherer();
-
-            var jsonText = File.ReadAllText(fakeDbPath);
-
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allStages = data.Stages.ToList();
-
-            var stage = allStages.SingleOrDefault(q => q.Id == stageId);
-
             return gatherer.GatherStage(stageId);
         }
         catch (FileNotFoundException)
