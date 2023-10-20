@@ -57,6 +57,7 @@ public class ObjectGatherer
         gQuestion.Id = baseQuestion.Id;
         gQuestion.QuestionText = baseQuestion.QuestionText;
         gQuestion.Answers = new List<Answer>();
+        gQuestion.QuestionType = baseQuestion.QuestionType;
 
         var answerService = new AnswerService();
         foreach (int answerId in baseQuestion.Answers)
