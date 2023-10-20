@@ -4,7 +4,8 @@ using Treehoot.Domain.Models;
 
 public class DataLoader
 {
-    public static T GetEntity<T>(string fakeDbPath, int entityId) where T : IEntity
+    //if no id is passed - return the first (0-th) entity
+    public static T GetEntity<T>(string fakeDbPath, int entityId = 0) where T : IEntity
     {
         try
         {
