@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "../styles.css";
 import profile from "../Pictures/profile.png";
+import LoadingCircle from "../components/LoadingCircle";
 
 export default function Home() {
   const [formData, setFormData] = useState({
     avatarUrl: "",
     username: "",
   });
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -22,7 +24,7 @@ export default function Home() {
           avatarUrl: photoUrl,
           username: username,
         });
-        console.log(photo);
+        setLoading(false);
       } else {
         console.log("failed to fetch photo or username");
       }
@@ -39,7 +41,15 @@ export default function Home() {
       <div className=" d-flex flex-row  mb-3 mt-5">
         <img src={profile} />
       </div>
-      <div className="mb-5 fs-4 text">{formData.username.username}</div>
+      <div className="mb-5 fs-4 text">
+        {loading ? (
+          <div style={{ height: "4rem" }}>
+            <LoadingCircle />
+          </div>
+        ) : (
+          <div style={{ height: "4rem" }}>{formData.username.username}</div>
+        )}
+      </div>
       <div className="d-flex flex-row mt-5">
         <div className="mt-5 ">
           <Link

@@ -7,4 +7,3 @@ public class StageFull : IEntity
     public string Name { get; set; }
     public List<QuestionFull> Questions { get; set; }
 }
-
