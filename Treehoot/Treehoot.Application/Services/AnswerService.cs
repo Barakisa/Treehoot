@@ -10,25 +10,6 @@ public class AnswerService
 
     public Answer GetAnswer(int answerId)
     {
-        try
-        {
-            var jsonText = File.ReadAllText(fakeDbPath);
-
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allAnswers = data.Answers.ToList();
-
-            var answer = allAnswers.SingleOrDefault(a => a.Id == answerId);
-
-            return answer;
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
-        }
+        return DataLoader.GetEntity<Answer>(fakeDbPath, answerId);
     }
 }
