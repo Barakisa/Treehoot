@@ -6,4 +6,6 @@ public class Question : IEntity
     
     public string QuestionText{ get; set; }
     public List<int> Answers { get; set; }
+
+    public QuestionType QuestionType { get; set; }
 }

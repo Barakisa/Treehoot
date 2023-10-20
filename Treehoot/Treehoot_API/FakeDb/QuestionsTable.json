@@ -4,42 +4,50 @@
     {
       "Id": 111,
       "QuestionText": "Which is the first answer",
-      "Answers": [ 1111, 1112, 1113, 1114 ]
+      "Answers": [ 1111, 1112, 1113, 1114 ],
+      "QuestionType": 0
     },
     {
       "Id": 112,
       "QuestionText": "Which is the second answer",
-      "Answers": [ 1121, 1122, 1123, 1124 ]
+      "Answers": [ 1121, 1122, 1123, 1124 ],
+      "QuestionType": 0
     },
     {
       "Id": 121,
       "QuestionText": "Which is the third answer",
-      "Answers": [ 1211, 1212, 1213, 1214 ]
+      "Answers": [ 1211, 1212, 1213, 1214 ],
+      "QuestionType": 0
     },
     {
       "Id": 122,
       "QuestionText": "Which is the fourth answer",
-      "Answers": [ 1221, 1222, 1223, 1224 ]
+      "Answers": [ 1221, 1222, 1223, 1224 ],
+      "QuestionType": 0
     },
     {
       "Id": 211,
       "QuestionText": "Which is the first answer?",
-      "Answers": [ 2111, 2112 ]
+      "Answers": [ 2111, 2112 ],
+      "QuestionType": 0
     },
     {
       "Id": 212,
       "QuestionText": "Which is the second answer",
-      "Answers": [ 2121, 2122 ]
+      "Answers": [ 2121, 2122 ],
+      "QuestionType": 0
     },
     {
       "Id": 311,
       "QuestionText": "Which is the first answer",
-      "Answers": [ 3111, 3112 ]
+      "Answers": [ 3111, 3112 ],
+      "QuestionType": 0
     },
     {
       "Id": 312,
       "QuestionText": "WHich is the second answer",
-      "Answers": [ 3121, 3122 ]
+      "Answers": [ 3121, 3122 ],
+      "QuestionType": 0
     }
   ]
 }
