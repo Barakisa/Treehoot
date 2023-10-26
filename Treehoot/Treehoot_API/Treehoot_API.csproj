@@ -15,10 +15,4 @@
     <ProjectReference Include="..\Treehoot.Domain\Treehoot.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="lab1.txt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-  </ItemGroup>
-
 </Project>
