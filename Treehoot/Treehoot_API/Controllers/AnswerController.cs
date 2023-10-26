@@ -15,4 +15,10 @@ public class AnswerController : ControllerBase
     {
         return Ok(answerService.GetAnswer(answerId));
     }
+
+    [HttpGet("questionId/{questionId}")]
+    public ActionResult<Answer> GetByQuestionId(int questionId)
+    {
+        return Ok(answerService.GetQuestionAnswers(questionId));
+    }
 }

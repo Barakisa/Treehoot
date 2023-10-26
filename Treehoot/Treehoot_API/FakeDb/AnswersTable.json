@@ -2,21 +2,25 @@
   "Answers": [
     {
       "Id": 1111,
+      "QuestionId": 111,
       "IsCorrect": true,
       "Text": "This is the first answer"
     },
     {
       "Id": 1112,
+      "QuestionId": 111,
       "IsCorrect": false,
       "Text": "This is the first answer"
     },
     {
       "Id": 1113,
+      "QuestionId": 111,
       "IsCorrect": false,
       "Text": "This is the first answer"
     },
     {
       "Id": 1114,
+      "QuestionId": 111,
       "IsCorrect": false,
       "Text": "This is the first answer"
     },

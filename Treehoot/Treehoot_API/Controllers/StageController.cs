@@ -15,6 +15,11 @@ public class StageController : ControllerBase
     {
         return Ok(stageService.GetStage(stageId:stageId));
     }
+    [HttpGet("quizId/{quizId}")]
+    public ActionResult<Stage> GetByQuizId(int quizId)
+    {
+        return Ok(stageService.GetQuizStages(quizId));
+    }
 
     [HttpGet("{stageId}/full")]
     public ActionResult<StageFull> GetFull(int stageId)

@@ -3,15 +3,20 @@ import { Link } from "react-router-dom";
 import "../styles.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useQuiz } from "../QuizContext";
 
 export default function Join() {
-  const [game, setGame] = useState();
+  const { setQuizId, setStageId } = useQuiz();
 
   const fetchGame = async () => {
-    const response = await fetch("https://localhost:7219/api/Quiz");
+    const response = await fetch("https://localhost:7219/api/Quiz/1");
     const data = await response.json();
-    const quizIds = data.stages;
-    setGame(quizIds);
+    setQuizId(data.id);
+    const stageResponse = await fetch(
+      `https://localhost:7219/api/Stage/quizId/${data.id}`
+    );
+    const stageData = await stageResponse.json();
+    setStageId(stageData.id);
   };
 
   useEffect(() => {
@@ -24,7 +29,6 @@ export default function Join() {
       </div>
       <div>
         <Link
-          quizId={game}
           to="/question_preview"
           className="home-page-buttons btn btn-outline-primary fs-2 mt-5"
         >
