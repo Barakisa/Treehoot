@@ -53,7 +53,29 @@ export default function NewGame() {
     console.log(quizInfo);
   };
 
-  const handleCreateQuizSubmit = () => {
+  const handleCreateQuizSubmit = async () => {
+    const url = "https://localhost:7219/api/Quiz";
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quizInfo),
+    };
+
+    try {
+      const response = await fetch(url, options);
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("Success:", responseData);
+      } else {
+        console.log("Error:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
     setQuizInfo({
       name: null,
       description: null,

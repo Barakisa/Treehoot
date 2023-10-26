@@ -13,7 +13,7 @@ public class ObjectGatherer
         var baseQuiz = new QuizService().GetQuiz(quizId);
 
         gQuiz.Id = baseQuiz.Id;
-        gQuiz.Timer = baseQuiz.Timer;
+        //gQuiz.Timer = baseQuiz.Timer;
         gQuiz.Description = baseQuiz.Description;
         gQuiz.Name = baseQuiz.Name;
         /*gQuiz.Stages = new List<StageFull>();
