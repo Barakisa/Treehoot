@@ -12,6 +12,15 @@ public class QuestionService
     {
         return DataLoader.GetEntity<Question>(fakeDbPath, questionId);
     }
+
+    public List<Question> GetStageQuestions(int stageId) {
+
+        var jsonText = File.ReadAllText(fakeDbPath);
+        var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+        
+        var questions = data.Questions.Where(q=>q.StageId == stageId).ToList();
+        return questions;
+    }
     public QuestionFull GetQuestionFull(int questionId)
     {
         try

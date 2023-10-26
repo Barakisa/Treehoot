@@ -16,13 +16,13 @@ public class ObjectGatherer
         gQuiz.Timer = baseQuiz.Timer;
         gQuiz.Description = baseQuiz.Description;
         gQuiz.Name = baseQuiz.Name;
-        gQuiz.Stages = new List<StageFull>();
+        /*gQuiz.Stages = new List<StageFull>();
 
         foreach (int stageId in baseQuiz.Stages)
         {
             var stage = GatherStage(stageId);
             gQuiz.Stages.Add(stage);
-        }
+        }*/
 
         return gQuiz;
     }
@@ -35,14 +35,14 @@ public class ObjectGatherer
         var baseStage = new StageService().GetStage(stageId);
 
         gStage.Id = baseStage.Id;
-        gStage.Name = baseStage.Name;
-        gStage.Questions = new List<QuestionFull>();
+        //gStage.Name = baseStage.Name;
+        /*gStage.Questions = new List<QuestionFull>();
 
         foreach (int questionId in baseStage.Questions)
         {
             var question = GatherQuestion(questionId);
             gStage.Questions.Add(question);
-        }
+        }*/
 
         return gStage;
     }
@@ -56,6 +56,7 @@ public class ObjectGatherer
 
         gQuestion.Id = baseQuestion.Id;
         gQuestion.QuestionText = baseQuestion.QuestionText;
+        /*
         gQuestion.Answers = new List<Answer>();
         gQuestion.QuestionType = baseQuestion.QuestionType;
 
@@ -64,7 +65,7 @@ public class ObjectGatherer
         {
             var answer = answerService.GetAnswer(answerId);
             gQuestion.Answers.Add(answer);
-        }
+        }*/
 
         return gQuestion;
     }

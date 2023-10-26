@@ -15,6 +15,11 @@ public class QuestionController : ControllerBase
     {
         return Ok(questionService.GetQuestion(questionId));
     }
+    [HttpGet("stageId/{stageId}")]
+    public ActionResult<Question> GetByStageId(int stageId)
+    {
+        return Ok(questionService.GetStageQuestions(stageId));
+    }
 
     [HttpGet("{questionId}/full")]
     public ActionResult<QuestionFull> GetFull(int questionId)
