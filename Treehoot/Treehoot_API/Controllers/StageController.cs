@@ -13,12 +13,12 @@ public class StageController : ControllerBase
     [HttpGet("{stageId}")]
     public ActionResult<Stage> Get(int stageId)
     {
-        return Ok(stageService.GetStage(stageId));
+        return Ok(stageService.GetStage(stageId:stageId));
     }
 
     [HttpGet("{stageId}/full")]
     public ActionResult<StageFull> GetFull(int stageId)
     {
-        return Ok(stageService.GetStageFull(stageId));
+        return Ok(stageService.GetStageFull(stageId:stageId));
     }
 }

@@ -6,7 +6,7 @@ namespace Treehoot.Application.Helpers;
 public class ObjectGatherer
 {
     // gathers a quiz with all child elements
-    public QuizFull GatherQuiz(int quizId)
+    public QuizFull GatherQuiz(int quizId = 1)
     {
         // gatherable quiz
         var gQuiz = new QuizFull();
@@ -28,7 +28,7 @@ public class ObjectGatherer
     }
 
     // gathers a stage with all child elements
-    public StageFull GatherStage(int stageId)
+    public StageFull GatherStage(int stageId = 11)
     {
         // gatherable stage
         var gStage = new StageFull();
@@ -48,7 +48,7 @@ public class ObjectGatherer
     }
 
     // gathers a question with all child elements
-    public QuestionFull GatherQuestion(int questionId)
+    public QuestionFull GatherQuestion(int questionId = 111)
     {
         // gatherable stage
         var gQuestion = new QuestionFull();
@@ -57,6 +57,7 @@ public class ObjectGatherer
         gQuestion.Id = baseQuestion.Id;
         gQuestion.QuestionText = baseQuestion.QuestionText;
         gQuestion.Answers = new List<Answer>();
+        gQuestion.QuestionType = baseQuestion.QuestionType;
 
         var answerService = new AnswerService();
         foreach (int answerId in baseQuestion.Answers)

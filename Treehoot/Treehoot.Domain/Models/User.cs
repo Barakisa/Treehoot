@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Treehoot.Domain.Models;
-public class User
+public record User
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

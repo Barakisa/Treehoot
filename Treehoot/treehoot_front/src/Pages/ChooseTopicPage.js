@@ -43,7 +43,7 @@ export default function ChooseTopicPage() {
   }, []);
 
   return (
-    <div className="text container text-center">
+    <div style={{ marginTop: 50 }} className="text container text-center">
       {!state.isLoading && state.data ? (
         <div className="col-12 justify-content-center align-items-center">
           <div className="row justify-content-center align-items-center text-center">

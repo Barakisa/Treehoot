@@ -12,7 +12,7 @@ export default function QuestionPreview() {
   }, remainingTime * 1000 + 500);
 
   return (
-    <div className="container text" style={{ height: "100vh" }}>
+    <div className="container text" style={{ height: "100vh", marginTop: 50 }}>
       <div className="row justify-content-center align-items-center text-center fs-1 py-5">
         Prepare to choose the topic for your next question!
       </div>

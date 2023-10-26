@@ -1,6 +1,6 @@
 ﻿namespace Treehoot.Domain.Models;
 
-public class Stage
+public class Stage : IEntity
 {
     public int Id { get; set; }
 
