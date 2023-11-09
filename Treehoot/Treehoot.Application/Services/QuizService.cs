@@ -56,6 +56,24 @@ public class QuizService
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(quiz.Name) || string.IsNullOrWhiteSpace(quiz.Description))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Name and Description fields must not be empty.")
+                };
+
+
+            }
+
+            if (quiz.Stages == null || !quiz.Stages.Any())
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("At least one stage is required.")
+                };
+            }
+
             var newQuiz = new Quiz(147, quiz.Name, quiz.Description);
             var stages = new List<Stage>();
             var questions = new List<Question>();
@@ -68,11 +86,27 @@ public class QuizService
 
                 foreach (var question in stage.Topics)
                 {
+                    if (string.IsNullOrWhiteSpace(question.TopicName) || string.IsNullOrWhiteSpace(question.Question))
+                    {
+                        return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                        {
+                            Content = new StringContent("Topic name and question must not be empty.")
+                        };
+                    }
+
                     int questionId = 13;
                     questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
 
                     foreach (var answer in question.Answers)
                     {
+                        if (string.IsNullOrWhiteSpace(answer.Answer))
+                        {
+                            return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                            {
+                                Content = new StringContent("Answer must not be empty.")
+                            };
+                        }
+
                         int answerId = 14;
                         answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
                     }
