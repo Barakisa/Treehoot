@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import LoadingCircle from "../components/LoadingCircle";
 import ProgressBar from "../components/ProgressBar";
+import { useNavigate } from "react-router";
 import "../styles.css";
 import {
   reducer,
@@ -12,7 +13,9 @@ export default function ChooseTopicPage() {
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [buttonPairs, setButtonPairs] = useState(null);
-  const { currentStage } = useQuiz();
+  const { currentStage, setChosenQuestion } = useQuiz();
+
+  const navigate = useNavigate();
 
   const fetchTopics = async () => {
     console.log(currentStage);
@@ -43,6 +46,15 @@ export default function ChooseTopicPage() {
   useEffect(() => {
     fetchTopics();
   }, []);
+
+  const handleRadioChange = (id, name) => {
+    setChosenQuestion({ id: id, name: name });
+    console.log(id, name);
+  };
+
+  setTimeout(() => {
+    navigate("/question");
+  }, remainingTime * 1000 + 500);
 
   return (
     <div style={{ marginTop: 50 }} className="text container text-center">
@@ -95,6 +107,9 @@ export default function ChooseTopicPage() {
                     name="topicRadio"
                     id={`topicRadio${button.id}`}
                     style={{ cursor: "pointer" }}
+                    onChange={() =>
+                      handleRadioChange(button.id, button.questionText)
+                    }
                   />
                   <label
                     className="form-check-label text-break text-start"

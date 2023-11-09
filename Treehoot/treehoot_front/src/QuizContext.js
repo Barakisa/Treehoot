@@ -6,6 +6,7 @@ export function QuizProvider({ children }) {
   const [quizId, setQuizId] = useState(null);
   const [stageId, setStageId] = useState(null);
   const [currentStage, setCurrentStage] = useState(11);
+  const [chosenQuestion, setChosenQuestion] = useState({ id: null, name: "" });
 
   return (
     <QuizContext.Provider
@@ -16,6 +17,8 @@ export function QuizProvider({ children }) {
         setStageId,
         currentStage,
         setCurrentStage,
+        chosenQuestion,
+        setChosenQuestion,
       }}
     >
       {children}
