@@ -3,10 +3,12 @@ import Stage from "../components/Stage";
 
 export default function NewGame() {
   const [quizInfo, setQuizInfo] = useState({
-    name: null,
-    description: null,
+    name: "",
+    description: "",
     stages: [],
   });
+
+  const [isValid, setIsValid] = useState(true);
 
   const handleInputChange = (e, field) => {
     switch (field) {
@@ -67,20 +69,21 @@ export default function NewGame() {
       const response = await fetch(url, options);
 
       if (response.ok) {
+        setQuizInfo({
+          name: "",
+          description: "",
+          stages: [],
+        });
+        setIsValid(true);
         const responseData = await response.json();
         console.log("Success:", responseData);
       } else {
         console.log("Error:", response.status, response.statusText);
+        setIsValid(false);
       }
     } catch (error) {
       console.error("Error:", error);
     }
-
-    setQuizInfo({
-      name: null,
-      description: null,
-      stages: [],
-    });
   };
 
   return (
@@ -99,6 +102,7 @@ export default function NewGame() {
               type="text"
               placeholder="Name goes here..."
               id="quizNameField"
+              value={quizInfo.name}
               onChange={(e) => {
                 handleInputChange(e, "quizNameField");
               }}
@@ -113,6 +117,7 @@ export default function NewGame() {
               type="text"
               placeholder="Description goes here..."
               id="quizDescriptionField"
+              value={quizInfo.description}
               onChange={(e) => {
                 handleInputChange(e, "quizDescriptionField");
               }}
@@ -141,14 +146,21 @@ export default function NewGame() {
             ))}
           </div>
         </div>
-        <div className="d-flex flex-row justify-content-center align-items center">
+        <div className="d-flex flex-column justify-content-center align-items-center">
           <button
-            className="btn btn-success btn fs-1 fw-bold"
+            className="btn btn-success btn fs-1 fw-bold mb-2"
             style={{ width: "23rem", height: "6rem" }}
             onClick={handleCreateQuizSubmit}
           >
             Create Quiz
           </button>
+          {isValid ? (
+            ""
+          ) : (
+            <span className="text-danger">
+              Fields can't be empty! Check it and try again...
+            </span>
+          )}
         </div>
       </div>
     </div>
