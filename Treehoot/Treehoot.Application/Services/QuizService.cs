@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
 using Treehoot.Domain.Models;
+using Treehoot.Domain.DTOs;
+using System.Net;
 
 namespace Treehoot.Application.Services;
 
@@ -49,4 +51,42 @@ public class QuizService
             throw new Exception($"Error: {e.Message}");
         }
     }
+
+    public async Task <HttpResponseMessage> QuizPost (QuizPostRequest quiz)
+    {
+        try
+        {
+            var newQuiz = new Quiz(147, quiz.Name, quiz.Description);
+            var stages = new List<Stage>();
+            var questions = new List<Question>();
+            var answers = new List<Answer>();
+
+            foreach (var stage in quiz.Stages)
+            {
+                int stageId = 12;
+                stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
+
+                foreach (var question in stage.Topics)
+                {
+                    int questionId = 13;
+                    questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
+
+                    foreach (var answer in question.Answers)
+                    {
+                        int answerId = 14;
+                        answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
+                    }
+                }
+
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
+        catch
+        {
+            return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+        }
+    }
+
 }

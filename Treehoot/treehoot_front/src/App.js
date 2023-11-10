@@ -8,20 +8,23 @@ import QuestionPreview from "./Pages/QuestionPreview";
 import Host from "./Pages/Host";
 import Join from "./Pages/Join";
 import NewGame from "./Pages/NewGame";
+import { QuizProvider } from "./QuizContext";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/play" element={<Play />} />
-        <Route path="/question_preview" element={<QuestionPreview />} />
-        <Route path="/question" element={<Question />} />
-        <Route path="/choose_topic" element={<ChooseTopicPage />} />
-        <Route path="/host" element={<Host />} />
-        <Route path="/join" element={<Join />} />
-        <Route path="/new-game" element={<NewGame />} />
-      </Routes>
+      <QuizProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/play" element={<Play />} />
+          <Route path="/question_preview" element={<QuestionPreview />} />
+          <Route path="/question" element={<Question />} />
+          <Route path="/choose_topic" element={<ChooseTopicPage />} />
+          <Route path="/host" element={<Host />} />
+          <Route path="/join" element={<Join />} />
+          <Route path="/new-game" element={<NewGame />} />
+        </Routes>
+      </QuizProvider>
     </Router>
   );
 }

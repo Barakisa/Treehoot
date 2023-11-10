@@ -13,6 +13,15 @@ public class StageService
         return DataLoader.GetEntity<Stage>(fakeDbPath, stageId);
     }
 
+    public List<Stage> GetQuizStages(int quizId) {
+
+        var jsonText = File.ReadAllText(fakeDbPath);
+        var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
+
+        var stages = data.Stages.Where(s=>s.QuizId == quizId).ToList();
+
+        return stages;
+    }
     public StageFull GetStageFull(int stageId)
     {
         try

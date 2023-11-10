@@ -6,15 +6,17 @@ import {
   reducer,
   INITIAL_STATE,
 } from "../components/Reducers/FetchDataReducer";
-
+import { useQuiz } from "../QuizContext";
 export default function ChooseTopicPage() {
   const remainingTime = 15;
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [buttonPairs, setButtonPairs] = useState(null);
+  const { currentStage } = useQuiz();
 
   const fetchTopics = async () => {
-    const url = "https://mocki.io/v1/2878b7ca-c992-44b4-897e-d2c17b2ac554";
+    console.log(currentStage);
+    const url = `https://localhost:7219/api/Question/stageId/${currentStage}`;
     const response = await fetch(url);
     try {
       if (response.ok) {
@@ -86,7 +88,7 @@ export default function ChooseTopicPage() {
                 className="col-xxl-6 col-xl-6 col-lg-6 col-md-12 justify-content-center p-4"
                 key={button.id}
               >
-                <div className="d-flex form-check fs-2 justify-content-center align-items-center">
+                <div className="d-flex form-check fs-2 justify-content- align-items-center">
                   <input
                     className="form-check-input me-4"
                     type="radio"

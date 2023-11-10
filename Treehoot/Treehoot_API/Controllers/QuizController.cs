@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
 using Treehoot.Application.Services;
-
+using Treehoot.Domain.DTOs;
 namespace Treehoot_API.Controllers;
 
 [Route("api/[controller]")]
@@ -26,5 +26,11 @@ public class QuizController : ControllerBase
     public ActionResult<QuizFull> GetFull(int quizId)
     {
         return Ok(quizService.GetQuizFull(quizId));
+    }
+
+    [HttpPost]
+    public Task <HttpResponseMessage> QuizPost (QuizPostRequest quiz)
+    {
+        return (quizService.QuizPost(quiz));
     }
 }
