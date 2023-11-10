@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Treehoot.Api.Data;
 using Treehoot.Domain.Models;
+using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Controllers
 {
@@ -15,31 +16,29 @@ namespace Treehoot.Api.Controllers
     public class EFAnswersController : ControllerBase
     {
         private readonly TreehootApiContext _context;
+        private Maper _maps;
 
-        public EFAnswersController(TreehootApiContext context)
+        public EFAnswersController(TreehootApiContext context, Maper maps)
         {
             _context = context;
+            _maps = maps;
         }
 
         // GET: api/EFAnswers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswer()
+        public ActionResult<IEnumerable<Answer>> GetAnswer()
         {
-          if (_context.Answer == null)
-          {
-              return NotFound();
-          }
-            return await _context.Answer.ToListAsync();
+            return _maps(_context);
         }
 
         // GET: api/EFAnswers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Answer>> GetAnswer(int id)
         {
-          if (_context.Answer == null)
-          {
-              return NotFound();
-          }
+            if (_context.Answer == null)
+            {
+                return NotFound();
+            }
             var answer = await _context.Answer.FindAsync(id);
 
             if (answer == null)
@@ -86,10 +85,10 @@ namespace Treehoot.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Answer>> PostAnswer(Answer answer)
         {
-          if (_context.Answer == null)
-          {
-              return Problem("Entity set 'TreehootApiContext.Answer'  is null.");
-          }
+            if (_context.Answer == null)
+            {
+                return Problem("Entity set 'TreehootApiContext.Answer'  is null.");
+            }
             _context.Answer.Add(answer);
             await _context.SaveChangesAsync();
 
