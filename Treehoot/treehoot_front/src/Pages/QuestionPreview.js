@@ -3,7 +3,7 @@ import ProgressBar from "../components/ProgressBar";
 import { useNavigate } from "react-router";
 import "../styles.css";
 
-export default function QuestionPreview() {
+export default function QuestionPreview(props) {
   const remainingTime = 7;
   const navigate = useNavigate();
 
