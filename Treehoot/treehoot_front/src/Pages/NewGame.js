@@ -8,7 +8,7 @@ export default function NewGame() {
     stages: [],
   });
 
-  const [isValid, setIsValid] = useState(true);
+  const [responseMessage, setResponseMessage] = useState(false);
 
   const handleInputChange = (e, field) => {
     switch (field) {
@@ -67,6 +67,7 @@ export default function NewGame() {
 
     try {
       const response = await fetch(url, options);
+      const responseData = await response.text();
 
       if (response.ok) {
         setQuizInfo({
@@ -74,12 +75,11 @@ export default function NewGame() {
           description: "",
           stages: [],
         });
-        setIsValid(true);
-        const responseData = await response.json();
-        console.log("Success:", responseData);
+
+        setResponseMessage(responseData);
       } else {
-        console.log("Error:", response.status, response.statusText);
-        setIsValid(false);
+        console.log("Error");
+        setResponseMessage(responseData);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -154,12 +154,10 @@ export default function NewGame() {
           >
             Create Quiz
           </button>
-          {isValid ? (
-            ""
+          {responseMessage ? (
+            <span className="text-danger">{responseMessage}</span>
           ) : (
-            <span className="text-danger">
-              Fields can't be empty! Check it and try again...
-            </span>
+            ""
           )}
         </div>
       </div>
