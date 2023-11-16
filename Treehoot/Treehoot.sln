@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Treehoot.Api", "Treehoot_API\Treehoot.Api.csproj", "{F3B9FE03-220E-440A-823E-E20945BC7B29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Treehoot.Api", "Treehoot.Api\Treehoot.Api.csproj", "{F3B9FE03-220E-440A-823E-E20945BC7B29}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8BDDAC5F-9F91-460A-8999-1C6D75BE604D} = {8BDDAC5F-9F91-460A-8999-1C6D75BE604D}
 		{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9} = {DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}
