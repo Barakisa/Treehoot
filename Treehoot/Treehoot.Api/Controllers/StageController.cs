@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Treehoot.Application.Services;
 using Treehoot.Domain.Models;
 
-namespace Treehoot_API.Controllers;
+namespace Treehoot.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

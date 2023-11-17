@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
 
-namespace Treehoot_API.Controllers;
+namespace Treehoot.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

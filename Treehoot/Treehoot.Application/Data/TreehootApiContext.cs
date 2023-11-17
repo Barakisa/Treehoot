@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Treehoot.Domain.Models;
 
-namespace Treehoot.Api.Data
+namespace Treehoot.Application.Data
 {
     public class TreehootApiContext : DbContext
     {
@@ -15,5 +15,9 @@ namespace Treehoot.Api.Data
         }
 
         public DbSet<Treehoot.Domain.Models.Answer> Answer { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.Answer> Question { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.Answer> Stage { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.Answer> Quiz { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.Answer> User { get; set; } = default!;
     }
 }

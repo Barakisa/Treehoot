@@ -2,7 +2,8 @@
 using Treehoot.Domain.Models;
 using Treehoot.Application.Services;
 using Treehoot.Domain.DTOs;
-namespace Treehoot_API.Controllers;
+
+namespace Treehoot.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

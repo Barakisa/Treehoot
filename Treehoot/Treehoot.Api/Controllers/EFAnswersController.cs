@@ -5,40 +5,41 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Treehoot.Api.Data;
+using Treehoot.Application.Data;
 using Treehoot.Domain.Models;
-using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EFAnswersController : ControllerBase
+    public class EfAnswersController : ControllerBase
     {
         private readonly TreehootApiContext _context;
-        private Maper _maps;
 
-        public EFAnswersController(TreehootApiContext context, Maper maps)
+        public EfAnswersController(TreehootApiContext context)
         {
             _context = context;
-            _maps = maps;
         }
 
-        // GET: api/EFAnswers
+        // GET: api/EfAnswers
         [HttpGet]
-        public ActionResult<IEnumerable<Answer>> GetAnswer()
+        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswer()
         {
-            return _maps(_context);
+          if (_context.Answer == null)
+          {
+              return NotFound();
+          }
+            return await _context.Answer.ToListAsync();
         }
 
-        // GET: api/EFAnswers/5
+        // GET: api/EfAnswers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Answer>> GetAnswer(int id)
         {
-            if (_context.Answer == null)
-            {
-                return NotFound();
-            }
+          if (_context.Answer == null)
+          {
+              return NotFound();
+          }
             var answer = await _context.Answer.FindAsync(id);
 
             if (answer == null)
@@ -49,7 +50,7 @@ namespace Treehoot.Api.Controllers
             return answer;
         }
 
-        // PUT: api/EFAnswers/5
+        // PUT: api/EfAnswers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAnswer(int id, Answer answer)
@@ -80,22 +81,22 @@ namespace Treehoot.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/EFAnswers
+        // POST: api/EfAnswers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Answer>> PostAnswer(Answer answer)
         {
-            if (_context.Answer == null)
-            {
-                return Problem("Entity set 'TreehootApiContext.Answer'  is null.");
-            }
+          if (_context.Answer == null)
+          {
+              return Problem("Entity set 'TreehootApiContext.Answer'  is null.");
+          }
             _context.Answer.Add(answer);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAnswer", new { id = answer.Id }, answer);
         }
 
-        // DELETE: api/EFAnswers/5
+        // DELETE: api/EfAnswers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnswer(int id)
         {

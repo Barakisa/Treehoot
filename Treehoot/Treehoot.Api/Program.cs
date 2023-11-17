@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Treehoot.Api.Data;
+using Treehoot.Application.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TreehootApiContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TreehootApiContext") ?? throw new InvalidOperationException("Connection string 'TreehootApiContext' not found.")));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TreehootApiContext") ?? throw new InvalidOperationException("Connection string 'TreehootApiContext' not found."), b => b.MigrationsAssembly("Treehoot.Infrastructure")));
 // Add services to the container.
 
 builder.Services.AddControllers();

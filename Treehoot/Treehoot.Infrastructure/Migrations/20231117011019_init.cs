@@ -2,10 +2,12 @@
 
 #nullable disable
 
-namespace Treehoot.Api.Migrations
+namespace Treehoot.Infrastructure.Migrations
 {
+    /// <inheritdoc />
     public partial class init : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -24,6 +26,7 @@ namespace Treehoot.Api.Migrations
                 });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

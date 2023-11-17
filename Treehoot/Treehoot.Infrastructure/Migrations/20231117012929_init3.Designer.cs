@@ -4,24 +4,25 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Treehoot.Api.Data;
+using Treehoot.Application.Data;
 
 #nullable disable
 
-namespace Treehoot.Api.Migrations
+namespace Treehoot.Infrastructure.Migrations
 {
     [DbContext(typeof(TreehootApiContext))]
-    [Migration("20231110011302_init")]
-    partial class init
+    [Migration("20231117012929_init3")]
+    partial class init3
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.23")
+                .HasAnnotation("ProductVersion", "7.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Treehoot.Domain.Models.Answer", b =>
                 {
@@ -29,7 +30,7 @@ namespace Treehoot.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("bit");
