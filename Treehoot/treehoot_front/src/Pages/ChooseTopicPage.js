@@ -9,7 +9,7 @@ import {
 } from "../components/Reducers/FetchDataReducer";
 import { useQuiz } from "../QuizContext";
 export default function ChooseTopicPage() {
-  const remainingTime = 15;
+  const remainingTime = 5;
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [buttonPairs, setButtonPairs] = useState(null);
