@@ -3,6 +3,7 @@ using Treehoot.Application.Helpers;
 using Treehoot.Domain.Models;
 using Treehoot.Domain.DTOs;
 using System.Net;
+using System.Xml.Linq;
 
 namespace Treehoot.Application.Services;
 
@@ -52,26 +53,19 @@ public class QuizService
         }
     }
 
-    public async Task <HttpResponseMessage> QuizPost (QuizPostRequest quiz)
+
+    public QuizResult CreateAndValidateQuiz(QuizPostRequest quiz)
     {
         try
         {
             if (string.IsNullOrWhiteSpace(quiz.Name) || string.IsNullOrWhiteSpace(quiz.Description))
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent("Name and Description fields must not be empty.")
-                };
-
-
+                return new QuizResult(false, "Quiz name and description fields must not be empty!");
             }
 
             if (quiz.Stages == null || !quiz.Stages.Any())
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent("At least one stage is required.")
-                };
+                return new QuizResult(false, "At least one stage is required!");
             }
 
             var newQuiz = new Quiz(147, quiz.Name, quiz.Description);
@@ -84,27 +78,31 @@ public class QuizService
                 int stageId = 12;
                 stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
 
+                if(stage.Topics == null || !stage.Topics.Any())
+                {
+                    return new QuizResult(false, "Atleast one topic is required!");
+                }
+
                 foreach (var question in stage.Topics)
                 {
                     if (string.IsNullOrWhiteSpace(question.TopicName) || string.IsNullOrWhiteSpace(question.Question))
                     {
-                        return new HttpResponseMessage(HttpStatusCode.BadRequest)
-                        {
-                            Content = new StringContent("Topic name and question must not be empty.")
-                        };
+                        return new QuizResult(false, "Topic name and question fields must not be empty!");
                     }
 
                     int questionId = 13;
                     questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
 
+                    if(question.Answers == null || !question.Answers.Any())
+                    {
+                        return new QuizResult(false, "Atleast one answer is required");
+                    }
+
                     foreach (var answer in question.Answers)
                     {
                         if (string.IsNullOrWhiteSpace(answer.Answer))
                         {
-                            return new HttpResponseMessage(HttpStatusCode.BadRequest)
-                            {
-                                Content = new StringContent("Answer must not be empty.")
-                            };
+                            return new QuizResult(false, "Answer field must not be empty!");
                         }
 
                         int answerId = 14;
@@ -114,12 +112,12 @@ public class QuizService
 
             }
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return new QuizResult(true, "Quiz has been created!"); 
         }
 
         catch
         {
-            return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            return new QuizResult(false, "Something went wrong, try again...");
         }
     }
 

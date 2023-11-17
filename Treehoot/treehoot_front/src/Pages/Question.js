@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Timer from "../components/Timer";
 import {
   reducer,
@@ -10,6 +10,8 @@ import { useQuiz } from "../QuizContext";
 export default function Question() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const { chosenQuestion } = useQuiz();
+  const [isChosenAnswerCorrect, setIsChosenAnswerCorrect] = useState(false);
+
   const fetchData = async () => {
     try {
       //dummy json data for testing purposes
@@ -33,6 +35,16 @@ export default function Question() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleSelectedAnswer = (e) => {
+    const selectedAnswerId = e.target.id;
+
+    const isCorrect = state.data.some(
+      (answer) => answer.id == selectedAnswerId && answer.isCorrect === true
+    );
+
+    setIsChosenAnswerCorrect(isCorrect);
+  };
 
   return (
     <div className="d-flex flex-row justify-content-center align-items-center border border-3 border-primary-subtle rounded-4 vh-100">
@@ -61,13 +73,14 @@ export default function Question() {
                     <input
                       className="form-check-input me-4"
                       type="radio"
-                      name="quesionRadio"
-                      id={`questionRadio${button.id}`}
+                      name="answerRadio"
+                      id={button.id}
                       style={{ cursor: "pointer" }}
+                      onChange={(e) => handleSelectedAnswer(e)}
                     />
                     <label
                       className="form-check-label text-break text-start"
-                      for={`questionRadio${button.id}`}
+                      for={`answerRadio${button.id}`}
                       style={{ cursor: "pointer" }}
                     >
                       {button.text}
@@ -75,13 +88,15 @@ export default function Question() {
                   </div>
                 </div>
               ))}
+              <span>
+                Chosen answer is{" "}
+                {isChosenAnswerCorrect ? "correct" : "incorrect"}
+              </span>
             </div>
           </div>
         ) : (
           <span className="fs-3">
-            {typeof state.errorMessage === "string"
-              ? state.errorMessage
-              : "An error has occured!"}
+            {state.errorMessage ? state.errorMessage : "An error has occured!"}
           </span>
         )
       ) : (
