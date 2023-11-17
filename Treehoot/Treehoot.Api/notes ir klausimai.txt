@@ -1,3 +1,18 @@
+Klausimai:
+	Ar ok, kad Infra depends on Application? Circular dependency if api to infra and infra to api?
+	Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
+	Maping classes' naming conventions?
+	Do we need a DB or is SQLite ok?
+	Kaip dažnai csproj reikia editinti IRL?
+	Ar naudoti async su context'u?
+	Ar galima dėti visus mapinimus i viena klase? Ar reikia atskiros mapinimo klases kiekvienam Dto?
+
+Kiap updatinti db:
+	atsidaryti package manager console
+	defauilt project Treehoot.Infrastructure
+	"add-migrations <name>" komanda
+	"update-database" komanda
+
 Projektų struktūra
 Main projetai:
 

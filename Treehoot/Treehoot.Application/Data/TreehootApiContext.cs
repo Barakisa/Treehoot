@@ -15,9 +15,9 @@ namespace Treehoot.Application.Data
         }
 
         public DbSet<Treehoot.Domain.Models.Answer> Answer { get; set; } = default!;
-        public DbSet<Treehoot.Domain.Models.Answer> Question { get; set; } = default!;
-        public DbSet<Treehoot.Domain.Models.Answer> Stage { get; set; } = default!;
-        public DbSet<Treehoot.Domain.Models.Answer> Quiz { get; set; } = default!;
-        public DbSet<Treehoot.Domain.Models.Answer> User { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.Question> Question { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.Stage> Stage { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.Quiz> Quiz { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.User> User { get; set; } = default!;
     }
 }

@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Treehoot.Application.Data;
+using Treehoot.Application.Services;
 using Treehoot.Domain.Models;
+using Treehoot.Domain.DTOs;
+using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Controllers
 {
@@ -14,111 +17,37 @@ namespace Treehoot.Api.Controllers
     [ApiController]
     public class EfAnswersController : ControllerBase
     {
+        private readonly EfAnswerService _efAnswerService;
         private readonly TreehootApiContext _context;
 
-        public EfAnswersController(TreehootApiContext context)
+        public EfAnswersController(EfAnswerService efAnswerService, TreehootApiContext context)
         {
+            _efAnswerService = efAnswerService;
             _context = context;
+
         }
 
-        // GET: api/EfAnswers
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswer()
+        [HttpGet("{answerId}")]
+        public ActionResult<AnswerDto> Get(int answerId)
         {
-          if (_context.Answer == null)
-          {
-              return NotFound();
-          }
-            return await _context.Answer.ToListAsync();
+            var request = _efAnswerService.GetAnswer(answerId);
+            return Ok(request.ToResponse());
         }
-
-        // GET: api/EfAnswers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Answer>> GetAnswer(int id)
+        
+        [HttpGet("questionId/{questionId}")]
+        public ActionResult<List<AnswerDto>> GetByQuestionId(int questionId)
         {
-          if (_context.Answer == null)
-          {
-              return NotFound();
-          }
-            var answer = await _context.Answer.FindAsync(id);
-
-            if (answer == null)
-            {
-                return NotFound();
-            }
-
-            return answer;
+            var request = _efAnswerService.GetQuestionAnswers(questionId);
+            return Ok(request.ToResponse());
         }
 
-        // PUT: api/EfAnswers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnswer(int id, Answer answer)
-        {
-            if (id != answer.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(answer).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AnswerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/EfAnswers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Answer>> PostAnswer(Answer answer)
+        public async Task<ActionResult<AnswerDto>> CreateAnswer(AnswerDto answerDto)
         {
-          if (_context.Answer == null)
-          {
-              return Problem("Entity set 'TreehootApiContext.Answer'  is null.");
-          }
+            var answer = answerDto.ToModel();
             _context.Answer.Add(answer);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAnswer", new { id = answer.Id }, answer);
-        }
-
-        // DELETE: api/EfAnswers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAnswer(int id)
-        {
-            if (_context.Answer == null)
-            {
-                return NotFound();
-            }
-            var answer = await _context.Answer.FindAsync(id);
-            if (answer == null)
-            {
-                return NotFound();
-            }
-
-            _context.Answer.Remove(answer);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool AnswerExists(int id)
-        {
-            return (_context.Answer?.Any(e => e.Id == id)).GetValueOrDefault();
+            return CreatedAtAction("PostAnswer", new { id = answer.Id }, answer);
         }
     }
 }
