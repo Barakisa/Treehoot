@@ -23,8 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Treehoot.Application\Treehoot.Application.csproj" />
-    <ProjectReference Include="..\Treehoot.Domain\Treehoot.Domain.csproj" />
     <ProjectReference Include="..\Treehoot.Infrastructure\Treehoot.Infrastructure.csproj" />
   </ItemGroup>
 
