@@ -1,22 +1,32 @@
 Klausimai:
-	Ar ok, kad Infra depends on Application? Circular dependency if api to infra and infra to api?
-	Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
+	+Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
 		Servisam galioja; domain/dto ok
-	Maping classes' naming conventions?
+	+Maping classes' naming conventions?
 		extensions pas mane
-	Do we need a DB or is SQLite ok?
+	+Do we need a DB or is SQLite ok?
 		Docker + postgres
 		Sqlite maybe
-	Kaip dažnai csproj reikia editinti IRL?
-	Ar naudoti async su context'u?
-	Ar galima dėti visus mapinimus i viena klase? Ar reikia atskiros mapinimo klases kiekvienam Dto?
 
-Kiap updatinti db:
+----------
+
+Kiap updatinti ef:
 	atsidaryti package manager console
 	defauilt project Treehoot.Infrastructure
 	"add-migrations <name>" komanda
 	"update-database" komanda
+
+	or .net cli
+
 	dotnet ef migrations add testnoinfra2 --project .\Treehoot.Infrastructure\ --startup-project .\Treehoot.Api\
+	dotnet ef database update --project .\Treehoot.Infrastructure\ --startup-project .\Treehoot.Api\
+
+Kaip updaitnti db:
+	save changes in docker;
+	exportinti docker image: docker save PostgresDB:latest > PostgresDB.tar
+	pasidalinti su draugais lmao
+	loadinti nauja image'a: docker load < PostgresDB.tar
+
+----------
 
 Projektų struktūra
 Main projetai:
@@ -74,5 +84,5 @@ Biznio logika glai būti Domain klasėse / Application servisuose
 
 Api žino apie Application, Domain Infrastructure
 Application žino apie Domain
-Infrastructure žino apie API
+Infrastructure žino apie Application
 Domain nieko nežinon
