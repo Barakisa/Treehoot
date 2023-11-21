@@ -1,10 +1,11 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
+using Treehoot.Application.Services.IServices;
 using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.Services;
 
-public class AnswerService
+public class AnswerService : IAnswerService
 {
     private string fakeDbPath = "FakeDb/AnswersTable.json";
 
@@ -16,10 +17,6 @@ public class AnswerService
     public List<Answer> GetQuestionAnswers(int questionId)
     {
 
-        var jsonText = File.ReadAllText(fakeDbPath);
-        var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-
-        var answers = data.Answers.Where(a => a.QuestionId == questionId).ToList();
-        return answers;
+        return new List<Answer>();
     }
 }

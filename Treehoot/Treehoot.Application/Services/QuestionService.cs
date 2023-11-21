@@ -1,10 +1,11 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
+using Treehoot.Application.Services.IServices;
 using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.Services;
 
-public class QuestionService
+public class QuestionService : IQuestionService
 {
     private string fakeDbPath = "FakeDb/QuestionsTable.json";
 
@@ -15,27 +16,13 @@ public class QuestionService
 
     public List<Question> GetStageQuestions(int stageId) {
 
-        var jsonText = File.ReadAllText(fakeDbPath);
-        var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
         
-        var questions = data.Questions.Where(q=>q.StageId == stageId).ToList();
-        return questions;
+        return new List<Question>();
     }
+
     public QuestionFull GetQuestionFull(int questionId)
     {
-        try
-        {
-            var gatherer = new ObjectGatherer();
-            return gatherer.GatherQuestion(questionId);
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
-        }
+        return new QuestionFull();
     }
+
 }

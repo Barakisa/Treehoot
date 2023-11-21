@@ -14,15 +14,15 @@ public class EfAnswerService
         _context = context;
     }
 
-    public Answer? GetAnswer(int answerId)
+    public Answer GetAnswer(int answerId)
     {
-        return _context.Answer.FirstOrDefault(a => a.Id == answerId);
+        return _context.Answer.First(a => a.Id == answerId);
     }
 
     public List<Answer> GetQuestionAnswers(int questionId)
     {
 
-        return _context.Answer.Where(a => a.QuestionId == questionId).ToList();
+        return _context.Answer.Where(a => a.Question.Id == questionId).ToList();
     }
     /*
     public async Task<ActionResult<Answer>> AddAnswer(Answer answer)

@@ -1,10 +1,11 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
+using Treehoot.Application.Services.IServices;
 using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.Services;
 
-public class StageService
+public class StageService : IStageService
 {
     private string fakeDbPath = "FakeDb/StagesTable.json";
 
@@ -22,21 +23,10 @@ public class StageService
 
         return stages;
     }
+    
     public StageFull GetStageFull(int stageId)
     {
-        try
-        {
-            var gatherer = new ObjectGatherer();
-            return gatherer.GatherStage(stageId);
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
-        }
+        return new StageFull();
     }
+    
 }

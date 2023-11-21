@@ -1,31 +1,41 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
+using Treehoot.Application.Services.IServices;
 using Treehoot.Domain.Models;
 using Treehoot.Domain.DTOs;
 using System.Net;
+using Treehoot.Application.Data;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Treehoot.Application.Services;
 
-public class QuizService
+public class QuizService : IQuizService
 {
-    private string fakeDbPath = "FakeDb/QuizesTable.json";
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public Quiz GetQuiz(int quizId)
+    public QuizService(IServiceScopeFactory scopeFactory)
     {
-        return DataLoader.GetEntity<Quiz>(fakeDbPath, quizId);
+        _scopeFactory = scopeFactory;
+    }
+
+    public async Task<Quiz> GetQuiz(int quizId)
+    {
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await context.Quiz.FindAsync(quizId);
+        }
+        
     }
     public List<Quiz> GetQuizes() {
         try
         {
-            var jsonText = File.ReadAllText(fakeDbPath);
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allQuizes = data.Quizes.ToList();
-            return allQuizes;
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; 
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+                return context.Quiz.ToList();
+            }
         }
         catch (Exception e)
         {
@@ -33,52 +43,17 @@ public class QuizService
         }
         
     }
-
+    
     public QuizFull GetQuizFull(int quizId)
     {
-        try
-        {
-            var gatherer = new ObjectGatherer();
-            return gatherer.GatherQuiz(quizId);
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
-        }
+        return new QuizFull();
     }
-
+    
     public async Task <HttpResponseMessage> QuizPost (QuizPostRequest quiz)
     {
         try
         {
-            var newQuiz = new Quiz(147, quiz.Name, quiz.Description);
-            var stages = new List<Stage>();
-            var questions = new List<Question>();
-            var answers = new List<Answer>();
-
-            foreach (var stage in quiz.Stages)
-            {
-                int stageId = 12;
-                stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
-
-                foreach (var question in stage.Topics)
-                {
-                    int questionId = 13;
-                    questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
-
-                    foreach (var answer in question.Answers)
-                    {
-                        int answerId = 14;
-                        answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
-                    }
-                }
-
-            }
+            
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         }

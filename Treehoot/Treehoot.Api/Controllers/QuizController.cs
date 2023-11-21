@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
 using Treehoot.Application.Services;
+using Treehoot.Application.Services.IServices;
 using Treehoot.Domain.DTOs;
+using Treehoot.Application.Data;
 
 namespace Treehoot.Api.Controllers;
 
@@ -9,29 +11,35 @@ namespace Treehoot.Api.Controllers;
 [ApiController]
 public class QuizController : ControllerBase
 {
-    private QuizService quizService = new QuizService();
+    private readonly IQuizService _quizService;
+
+    public QuizController(IQuizService quizService)
+    {
+        _quizService = quizService;
+    }
+
 
     [HttpGet]//to be continued...
     public ActionResult<Quiz> Get()
     {
-        return Ok(quizService.GetQuizes());
+        return Ok(_quizService.GetQuizes());
     }
 
     [HttpGet("{quizId}")]
     public ActionResult<Quiz> Get(int quizId)
     {
-        return Ok(quizService.GetQuiz(quizId));
+        return Ok(_quizService.GetQuiz(quizId));
     }
 
     [HttpGet("{quizId}/full")]
     public ActionResult<QuizFull> GetFull(int quizId)
     {
-        return Ok(quizService.GetQuizFull(quizId));
+        return Ok(_quizService.GetQuizFull(quizId));
     }
 
     [HttpPost]
-    public Task <HttpResponseMessage> QuizPost (QuizPostRequest quiz)
+    public Task<HttpResponseMessage> QuizPost(QuizPostRequest quiz)
     {
-        return (quizService.QuizPost(quiz));
+        return _quizService.QuizPost(quiz);
     }
 }

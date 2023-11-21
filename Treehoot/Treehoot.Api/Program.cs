@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Treehoot.Api.Controllers;
 using Treehoot.Application.Data;
+using Treehoot.Application.Services;
+using Treehoot.Application.Services.IServices;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TreehootApiContext>(options =>
@@ -22,6 +26,9 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
     });
 });
+
+//dependency injection registration
+builder.Services.AddSingleton<IQuizService, QuizService>();
 
 var app = builder.Build();
 

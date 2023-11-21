@@ -44,7 +44,7 @@ namespace Treehoot.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<AnswerDto>> CreateAnswer(AnswerDto answerDto)
         {
-            var answer = answerDto.ToModel();
+            var answer = new Answer(answerDto.Id, _context.Question.First(a => a.Id == answerDto.QuestionId), answerDto.IsCorrect, answerDto.Text);
             _context.Answer.Add(answer);
             await _context.SaveChangesAsync();
             return CreatedAtAction("PostAnswer", new { id = answer.Id }, answer);

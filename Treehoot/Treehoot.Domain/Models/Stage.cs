@@ -10,11 +10,11 @@ public class Stage : IEntity
     }
 
     public string Name { get; set; }
-    
     public int Id { get; set; }
-
     public int QuizId { get; set; }
-    //public string Name { get; set; }
-    //public List<int> Questions { get; set; }
+    
+    //relationships
+    public Quiz Quiz { get; set; }
+    public List<Question> Questions { get; set; }
 }
 

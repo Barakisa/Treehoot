@@ -1,11 +1,11 @@
 Klausimai:
 	+Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
 		Servisam galioja; domain/dto ok
+		per interface'us reikia daryti
 	+Maping classes' naming conventions?
 		extensions pas mane
 	+Do we need a DB or is SQLite ok?
 		Docker + postgres
-		Sqlite maybe
 
 ----------
 
