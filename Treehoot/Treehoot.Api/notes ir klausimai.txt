@@ -1,4 +1,12 @@
-Klausimai:
+Nauji klausimai:
+	ar servisuoso su context geriua naudoti async? 
+		Jau klausiau, bet man idomu sitai situacijai (answerService pvz)
+	kaip daryti su scope factory? Taip tinka? (all services, dbcontext injection)
+	kur deti di intefaceus?
+	servisuose, ypac kur gauti single item, labai daug duplikuojamo kodo... 
+		ar riekia dar daugiau skaidyti, ar tinka taip kaip yra?
+
+Seni Klausimai:
 	+Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
 		Servisam galioja; domain/dto ok
 		per interface'us reikia daryti
@@ -28,6 +36,11 @@ Kaip updaitnti db:
 
 ----------
 
+Todo
+	Extention toResponse methods for domain klases (returns DTO objects)
+	error handling of null responses from db context. Should be in service I think
+
+----------
 Projektų struktūra
 Main projetai:
 

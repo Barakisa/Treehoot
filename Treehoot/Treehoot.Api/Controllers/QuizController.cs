@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
 using Treehoot.Application.Services;
-using Treehoot.Application.Services.IServices;
+using Treehoot.Application.IServices;
 using Treehoot.Domain.DTOs;
 using Treehoot.Application.Data;
 
@@ -32,9 +32,9 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet("{quizId}/full")]
-    public ActionResult<QuizFull> GetFull(int quizId)
+    public ActionResult<Quiz> GetFull(int quizId)
     {
-        return Ok(_quizService.GetQuizFull(quizId));
+        return Ok(_quizService.GetQuiz(quizId));
     }
 
     [HttpPost]

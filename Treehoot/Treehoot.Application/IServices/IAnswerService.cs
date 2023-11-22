@@ -1,6 +1,6 @@
 ﻿using Treehoot.Domain.Models;
 
-namespace Treehoot.Application.Services.IServices;
+namespace Treehoot.Application.IServices;
 
 public interface IAnswerService
 {

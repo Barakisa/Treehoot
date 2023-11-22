@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Treehoot.Api.Controllers;
 using Treehoot.Application.Data;
 using Treehoot.Application.Services;
-using Treehoot.Application.Services.IServices;
+using Treehoot.Application.IServices;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +28,11 @@ builder.Services.AddCors(options =>
 });
 
 //dependency injection registration
+builder.Services.AddSingleton<IAnswerService, AnswerService>();
+builder.Services.AddSingleton<IQuestionService, QuestionService>();
+builder.Services.AddSingleton<IStageService, StageService>();
 builder.Services.AddSingleton<IQuizService, QuizService>();
+
 
 var app = builder.Build();
 

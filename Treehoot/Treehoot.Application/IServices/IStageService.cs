@@ -2,7 +2,7 @@
 using Treehoot.Application.Helpers;
 using Treehoot.Domain.Models;
 
-namespace Treehoot.Application.Services.IServices;
+namespace Treehoot.Application.IServices;
 
 public interface IStageService
 {

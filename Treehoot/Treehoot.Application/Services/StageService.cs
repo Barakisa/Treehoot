@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
-using Treehoot.Application.Services.IServices;
+using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.Services;

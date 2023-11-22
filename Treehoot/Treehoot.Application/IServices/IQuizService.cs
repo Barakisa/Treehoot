@@ -5,7 +5,7 @@ using Treehoot.Domain.DTOs;
 using System.Net;
 using Treehoot.Application.Data;
 
-namespace Treehoot.Application.Services.IServices;
+namespace Treehoot.Application.IServices;
 
 public interface IQuizService
 {
