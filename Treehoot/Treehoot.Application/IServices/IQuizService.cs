@@ -12,5 +12,5 @@ public interface IQuizService
     Quiz GetQuiz(int quizId);
     List<Quiz> GetQuizes();
     QuizFull GetQuizFull(int quizId);
-    Task<HttpResponseMessage> QuizPost(QuizPostRequest quiz);
+    QuizResult CreateAndValidateQuiz(QuizPostRequest quiz);
 }

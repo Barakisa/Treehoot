@@ -74,7 +74,7 @@ public class QuizService : IQuizService
             foreach (var stage in quiz.Stages)
             {
                 int stageId = 12;
-                stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
+                //stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
 
                 if(stage.Topics == null || !stage.Topics.Any())
                 {
@@ -89,7 +89,7 @@ public class QuizService : IQuizService
                     }
 
                     int questionId = 13;
-                    questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
+                    //questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
 
                     if(question.Answers == null || !question.Answers.Any())
                     {
@@ -104,7 +104,7 @@ public class QuizService : IQuizService
                         }
 
                         int answerId = 14;
-                        answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
+                        //answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
                     }
                 }
 

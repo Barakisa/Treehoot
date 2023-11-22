@@ -39,8 +39,8 @@ public class QuizController : ControllerBase
     }
 
     [HttpPost]
-    public Task<HttpResponseMessage> QuizPost(QuizPostRequest quiz)
+    public ActionResult<QuizResult> QuizPost(QuizPostRequest quiz)
     {
-        return _quizService.QuizPost(quiz);
+        return Ok(_quizService.CreateAndValidateQuiz(quiz));
     }
 }
