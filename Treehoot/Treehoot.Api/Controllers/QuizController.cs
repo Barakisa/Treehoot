@@ -20,7 +20,7 @@ public class QuizController : ControllerBase
 
 
     [HttpGet]//to be continued...
-    public ActionResult<Quiz> Get()
+    public ActionResult<List<Quiz>> Get()
     {
         return Ok(_quizService.GetQuizes());
     }

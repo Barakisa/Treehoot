@@ -2,10 +2,9 @@
 
 public class Answer : IEntity
 {
-    public Answer(int id, Question question, bool isCorrect, string text)
+    public Answer(int id, bool isCorrect, string text)
     {
         Id = id;
-        Question = question;
         IsCorrect = isCorrect;
         Text = text;
     }
