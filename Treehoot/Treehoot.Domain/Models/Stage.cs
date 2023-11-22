@@ -2,16 +2,14 @@
 
 public class Stage : IEntity
 {
-    public Stage(string name, int id, int quizId)
+    public Stage(int id, string name)
     {
-        Name = name;
         Id = id;
-        QuizId = quizId;
+        Name = name;
     }
 
-    public string Name { get; set; }
     public int Id { get; set; }
-    public int QuizId { get; set; }
+    public string Name { get; set; }
     
     //relationships
     public Quiz Quiz { get; set; }

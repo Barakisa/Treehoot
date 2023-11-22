@@ -1,12 +1,11 @@
 ﻿using Treehoot.Domain.Models;
-using Treehoot.Domain.DTOs;
-using Microsoft.CodeAnalysis.CSharp;
 using Treehoot.Api.Dtos;
 
 namespace Treehoot.Api.Maping;
 
 public static class QuestionExtensions
 {
+    //GET simple response
     public static GetQuestionResponse ToResponse(this Question Question)
     {
         return new GetQuestionResponse
@@ -20,9 +19,12 @@ public static class QuestionExtensions
 
     public static List<GetQuestionResponse> ToResponse(this List<Question> Questions)
     {
-        return Questions.Select(Question => Question.ToResponse()).ToList();
+        return Questions
+                .Select(q => q.ToResponse())
+                .ToList();
     }
 
+    //GET full response
     public static GetQuestionFullResponse ToFullResponse(this Question Question)
     {
         return new GetQuestionFullResponse
@@ -37,7 +39,9 @@ public static class QuestionExtensions
 
     public static List<GetQuestionFullResponse> ToFullResponse(this List<Question> Questions)
     {
-        return Questions.Select(Question => Question.ToFullResponse()).ToList();
+        return Questions
+                .Select(q => q.ToFullResponse())
+                .ToList();
     }
 
 }

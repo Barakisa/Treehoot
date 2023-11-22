@@ -1,12 +1,11 @@
 ﻿using Treehoot.Domain.Models;
-using Treehoot.Domain.DTOs;
-using Microsoft.CodeAnalysis.CSharp;
 using Treehoot.Api.Dtos;
 
 namespace Treehoot.Api.Maping;
 
 public static class AnswerExtensions
 {
+    //GET simple response
     public static GetAnswerResponse ToResponse(this Answer answer)
     {
         return new GetAnswerResponse

@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Treehoot.Domain.Models;
-using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
 using Treehoot.Api.Dtos;
 using Treehoot.Api.Maping;

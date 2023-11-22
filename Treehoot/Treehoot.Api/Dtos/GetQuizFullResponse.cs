@@ -1,11 +1,10 @@
 ﻿using Treehoot.Domain.Models;
 
-namespace Treehoot.Domain.DTOs;
+namespace Treehoot.Api.Dtos;
 
-public class AnswerDto : IEntity
+public class GetQuizResponse : IEntity
 {
     public int Id { get; set; }
-
     public int QuestionId {  get; set; }
     public bool IsCorrect { get; set; }
     public string Text { get; set; }

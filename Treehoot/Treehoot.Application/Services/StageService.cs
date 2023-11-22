@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Treehoot.Application.Data;
-using Treehoot.Application.Helpers;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
@@ -16,28 +15,38 @@ public class StageService : IStageService
         _scopeFactory = scopeFactory;
     }
 
-    public Stage GetStage(int stageId)
+    public async Task<Stage?> GetStage(int stageId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return context.Stage.Single(a => a.Id == stageId);
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Stage
+                            .Include(s => s.Quiz)
+                            .SingleOrDefaultAsync(a => a.Id == stageId);
         }
     }
 
-    public List<Stage> GetQuizStages(int quizId)
+    public async Task<List<Stage>?> GetQuizStages(int quizId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return context.Stage.Where(a => a.Quiz.Id == quizId).ToList();
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Stage
+                            .Include(s => s.Quiz)
+                            .Where(a => a.Quiz.Id == quizId).ToListAsync();
         }
     }
 
-    //broken
-    public StageFull GetStageFull(int stageId)
+    public async Task<Stage?> GetStageFull(int stageId)
     {
-        return new StageFull();
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Stage
+                            .Include(s => s.Questions)
+                            .Include(s => s.Quiz)
+                            .SingleOrDefaultAsync(s => s.Id == stageId);
+        }
     }
     
 }

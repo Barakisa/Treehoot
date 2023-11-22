@@ -1,26 +1,45 @@
-﻿using Treehoot.Domain.Models;
-using Treehoot.Domain.DTOs;
-using Microsoft.CodeAnalysis.CSharp;
+﻿using Treehoot.Api.Dtos;
+using Treehoot.Domain.Models;
 
 namespace Treehoot.Api.Maping;
 
 public static class StageExtensions
 {
-    /*
-    public static StageDto ToResponse(this Stage Stage)
+    //GET simple response
+    public static GetStageResponse ToResponse(this Stage Stage)
     {
-        return new StageDto
+        return new GetStageResponse
         {
             Id = Stage.Id,
-            QuestionId = Stage.Question.Id,
-            IsCorrect = Stage.IsCorrect,
-            Text = Stage.Text
+            Name = Stage.Name,
+            QuizId = Stage.Quiz.Id
         };
     }
 
-    public static List<StageDto> ToResponse(this List<Stage> Stages)
+    public static List<GetStageResponse> ToResponse(this List<Stage> Questions)
     {
-        return Stages.Select(Stage => Stage.ToResponse()).ToList();
+        return Questions
+                .Select(s => s.ToResponse())
+                .ToList();
     }
-    */
+
+    //GET full response
+    public static GetStageFullResponse ToFullResponse(this Stage Stage)
+    {
+        return new GetStageFullResponse
+        {
+            Id = Stage.Id,
+            Name = Stage.Name,
+            QuizId = Stage.Quiz.Id,
+            Questions = Stage.Questions.ToFullResponse()
+        };
+    }
+
+    public static List<GetStageFullResponse> ToFullResponse(this List<Stage> Stages)
+    {
+        return Stages
+                .Select(s => s.ToFullResponse())
+                .ToList();
+    }
+
 }

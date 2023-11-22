@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Treehoot.Application.IServices;
-using Treehoot.Application.Services;
 using Treehoot.Domain.Models;
+using Treehoot.Api.Maping;
+using Treehoot.Api.Dtos;
 
 namespace Treehoot.Api.Controllers;
 
@@ -17,20 +18,57 @@ public class StageController : ControllerBase
     }
 
     [HttpGet("{stageId}")]
-    public ActionResult<Stage> Get(int stageId)
+    public async Task<ActionResult<Stage>> Get(int stageId)
     {
-        return Ok(_stageService.GetStage(stageId));
+        //service
+        var stage = await _stageService.GetStage(stageId);
+
+        //validation
+        if (stage == null)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = stage.ToResponse();
+
+        return Ok(response);
     }
+
     [HttpGet("quizId/{quizId}")]
-    public ActionResult<Stage> GetByQuizId(int quizId)
+    public async Task<ActionResult<Stage>> GetByQuizId(int quizId)
     {
-        return Ok(_stageService.GetQuizStages(quizId));
+        //service
+        var stages = await _stageService.GetQuizStages(quizId);
+
+        //validation
+        if (stages == null || stages.Count == 0)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = stages.ToResponse();
+
+        return Ok(response);
     }
 
     //broken
     [HttpGet("{stageId}/full")]
-    public ActionResult<StageFull> GetFull(int stageId)
+    public async Task<ActionResult<GetStageFullResponse>> GetFull(int stageId)
     {
-        return Ok(_stageService.GetStageFull(stageId:stageId));
+        //service
+        var stage = await _stageService.GetStageFull(stageId);
+
+        //validation
+        if (stage == null)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = stage.ToFullResponse();
+
+        return Ok(response);
     }
 }
