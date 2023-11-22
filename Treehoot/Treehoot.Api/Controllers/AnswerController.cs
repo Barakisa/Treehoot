@@ -19,14 +19,38 @@ public class AnswerController : ControllerBase
     }
 
     [HttpGet("{answerId}")]
-    public ActionResult<GetAnswerResponse> Get(int answerId)
+    public async Task<ActionResult<GetAnswerResponse>> Get(int answerId)
     {
-        return Ok(_answerService.GetAnswer(answerId).ToResponse());
+        //service
+        var answer = await _answerService.GetAnswer(answerId);
+
+        //validation
+        if (answer == null)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = answer.ToResponse();
+
+        return Ok(response);
     }
 
     [HttpGet("questionId/{questionId}")]
-    public ActionResult<List<GetAnswerResponse>> GetByQuestionId(int questionId)
+    public async Task<ActionResult<List<GetAnswerResponse>>> GetByQuestionId(int questionId)
     {
-        return Ok(_answerService.GetQuestionAnswers(questionId).ToResponse());
+        //service
+        var answers = await _answerService.GetQuestionAnswers(questionId);
+
+        //validation
+        if (answers == null || answers.Count == 0)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = answers.ToResponse();
+
+        return Ok(response);
     }
 }

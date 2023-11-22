@@ -43,7 +43,7 @@ public class QuestionController : ControllerBase
         var questions = await _questionService.GetStageQuestions(stageId);
 
         //validation
-        if (questions == null)
+        if (questions == null || questions.Count == 0)
         {
             return NotFound();
         }

@@ -23,8 +23,8 @@ public class QuestionService : IQuestionService
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Question
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Question
                             .Include(q => q.Stage)
                             .SingleOrDefaultAsync(q => q.Id == questionId);
         }
@@ -34,8 +34,8 @@ public class QuestionService : IQuestionService
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Question
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Question
                             .Include(q => q.Stage)
                             .Where(q => q.Stage.Id == stageId)
                             .ToListAsync();
@@ -46,8 +46,8 @@ public class QuestionService : IQuestionService
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Question
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Question
                             .Include(q => q.Answers)
                             .Include(q => q.Stage)
                             .SingleOrDefaultAsync(q => q.Id == questionId) ;

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using Treehoot.Application.Data;
 using Treehoot.Application.Helpers;
@@ -16,21 +17,24 @@ public class AnswerService : IAnswerService
         _scopeFactory = scopeFactory;
     }
 
-    public Answer GetAnswer(int answerId)
+    public async Task<Answer?> GetAnswer(int answerId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return context.Answer.Single(a => a.Id == answerId);
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Answer
+                            .SingleOrDefaultAsync(a => a.Id == answerId);
         }
     }
 
-    public List<Answer> GetQuestionAnswers(int questionId)
+    public async Task<List<Answer>?> GetQuestionAnswers(int questionId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return context.Answer.Where(a => a.Question.Id == questionId).ToList();
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Answer
+                            .Where(a => a.Question.Id == questionId)
+                            .ToListAsync();
         }
     }
 }
