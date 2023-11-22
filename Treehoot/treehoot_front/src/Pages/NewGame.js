@@ -3,10 +3,12 @@ import Stage from "../components/Stage";
 
 export default function NewGame() {
   const [quizInfo, setQuizInfo] = useState({
-    name: null,
-    description: null,
+    name: "",
+    description: "",
     stages: [],
   });
+
+  const [responseMessage, setResponseMessage] = useState(false);
 
   const handleInputChange = (e, field) => {
     switch (field) {
@@ -65,22 +67,23 @@ export default function NewGame() {
 
     try {
       const response = await fetch(url, options);
+      const responseData = await response.text();
 
       if (response.ok) {
-        const responseData = await response.json();
-        console.log("Success:", responseData);
+        setQuizInfo({
+          name: "",
+          description: "",
+          stages: [],
+        });
+
+        setResponseMessage(responseData);
       } else {
-        console.log("Error:", response.status, response.statusText);
+        console.log("Error");
+        setResponseMessage(responseData);
       }
     } catch (error) {
       console.error("Error:", error);
     }
-
-    setQuizInfo({
-      name: null,
-      description: null,
-      stages: [],
-    });
   };
 
   return (
@@ -99,6 +102,7 @@ export default function NewGame() {
               type="text"
               placeholder="Name goes here..."
               id="quizNameField"
+              value={quizInfo.name}
               onChange={(e) => {
                 handleInputChange(e, "quizNameField");
               }}
@@ -113,6 +117,7 @@ export default function NewGame() {
               type="text"
               placeholder="Description goes here..."
               id="quizDescriptionField"
+              value={quizInfo.description}
               onChange={(e) => {
                 handleInputChange(e, "quizDescriptionField");
               }}
@@ -141,14 +146,19 @@ export default function NewGame() {
             ))}
           </div>
         </div>
-        <div className="d-flex flex-row justify-content-center align-items center">
+        <div className="d-flex flex-column justify-content-center align-items-center">
           <button
-            className="btn btn-success btn fs-1 fw-bold"
+            className="btn btn-success btn fs-1 fw-bold mb-2"
             style={{ width: "23rem", height: "6rem" }}
             onClick={handleCreateQuizSubmit}
           >
             Create Quiz
           </button>
+          {responseMessage ? (
+            <span className="text-danger">{responseMessage}</span>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

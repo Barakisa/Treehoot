@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Treehoot.Application", "Tre
 		{DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9} = {DDD28F1C-7522-425B-B7F0-EE2EDAC3DDE9}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treehoot.Tests", "Treehoot.Tests\Treehoot.Tests.csproj", "{1C8B191D-BD34-44E8-AB74-0C740AE08B6C}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Treehoot.Infrastructure", "Treehoot.Infrastructure\Treehoot.Infrastructure.csproj", "{E102B7FB-B7C8-4082-BD18-E984B22D240C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8BDDAC5F-9F91-460A-8999-1C6D75BE604D} = {8BDDAC5F-9F91-460A-8999-1C6D75BE604D}
@@ -40,6 +42,10 @@ Global
 		{8BDDAC5F-9F91-460A-8999-1C6D75BE604D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BDDAC5F-9F91-460A-8999-1C6D75BE604D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BDDAC5F-9F91-460A-8999-1C6D75BE604D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C8B191D-BD34-44E8-AB74-0C740AE08B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8B191D-BD34-44E8-AB74-0C740AE08B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8B191D-BD34-44E8-AB74-0C740AE08B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8B191D-BD34-44E8-AB74-0C740AE08B6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E102B7FB-B7C8-4082-BD18-E984B22D240C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E102B7FB-B7C8-4082-BD18-E984B22D240C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E102B7FB-B7C8-4082-BD18-E984B22D240C}.Release|Any CPU.ActiveCfg = Release|Any CPU
