@@ -42,6 +42,7 @@ Todo
 	fix get full object metodus; dabar jie broken / grazina tuscius objektus. 
 		Reikia overhaulinti modeliu naudojima, pradeti naudoti labai daug skirtingu dto
 		pazymeti //broken
+	change db password, configure sevret passwords
 
 ----------
 Projektų struktūra

@@ -2,7 +2,6 @@
 
 public class Answer : IEntity
 {
-    public Answer() { }
     public Answer(int id, Question question, bool isCorrect, string text)
     {
         Id = id;
