@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
+using Treehoot.Api.Dtos;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
+using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Controllers;
 
@@ -17,14 +19,14 @@ public class AnswerController : ControllerBase
     }
 
     [HttpGet("{answerId}")]
-    public ActionResult<Answer> Get(int answerId)
+    public ActionResult<GetAnswerResponse> Get(int answerId)
     {
-        return Ok(_answerService.GetAnswer(answerId));
+        return Ok(_answerService.GetAnswer(answerId).ToResponse());
     }
 
     [HttpGet("questionId/{questionId}")]
-    public ActionResult<Answer> GetByQuestionId(int questionId)
+    public ActionResult<List<GetAnswerResponse>> GetByQuestionId(int questionId)
     {
-        return Ok(_answerService.GetQuestionAnswers(questionId));
+        return Ok(_answerService.GetQuestionAnswers(questionId).ToResponse());
     }
 }

@@ -1,10 +1,14 @@
 Nauji klausimai:
-	ar servisuoso su context geriua naudoti async? 
+	-ar servisuoso su context geriua naudoti async? 
 		Jau klausiau, bet man idomu sitai situacijai (answerService pvz)
-	kaip daryti su scope factory? Taip tinka? (all services, dbcontext injection)
-	kur deti di intefaceus?
-	servisuose, ypac kur gauti single item, labai daug duplikuojamo kodo... 
+	-kaip daryti su scope factory? Taip tinka? (all services - dbcontext injection)
+	-kur deti di intefaceus?
+	-servisuose, ypac kur gauti single item, labai daug duplikuojamo kodo... 
 		ar riekia dar daugiau skaidyti, ar tinka taip kaip yra?
+	-kaip vadinti dto? Kaip geriau isdestyti tas tris dalis? Ar ju visu reikia? 
+		[http method][objectname][response|request|responsebody|requestbody]
+			GetStageResponseBody
+		
 
 Seni Klausimai:
 	+Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
@@ -30,19 +34,22 @@ Kiap updatinti ef:
 
 Kaip updaitnti db:
 	save changes in docker;
-	exportinti docker image: docker save PostgresDB:latest > PostgresDB.tar
+	docker commit PostgresDB treehoot-postgre-db
+	exportinti docker image: docker save treehoot-postgre-db -o treehoot-postrge-db
 	pasidalinti su draugais lmao
-	loadinti nauja image'a: docker load < PostgresDB.tar
+	loadinti nauja image'a: docker load -i treehoot-postrge-db.tar
+	docker desktop is image containeri reikia pasidaryti: name PostgresDB, port localhost:5432
 
 ----------
 
 Todo
-	Extention toResponse methods for domain klases (returns DTO objects)
+	Extention toResponse methods for domain klases (returns DTO objects):
 	error handling of null responses from db context. Should be in service I think
 	fix get full object metodus; dabar jie broken / grazina tuscius objektus. 
 		Reikia overhaulinti modeliu naudojima, pradeti naudoti labai daug skirtingu dto
 		pazymeti //broken
 	change db password, configure sevret passwords
+	pakeisti visus servisus, kur naudojamas db context, kad visur butu async await
 
 ----------
 Projektų struktūra

@@ -41,8 +41,10 @@ public class QuestionService : IQuestionService
         using (var scope = _scopeFactory.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Question.Include(q => q.Answers).FirstOrDefaultAsync(q => q.Id == questionId);
-
+            return await context.Question
+                            .Include(q => q.Answers)
+                            .Include(q => q.Stage)
+                            .SingleAsync(a => a.Id == questionId);
         }
     }
 

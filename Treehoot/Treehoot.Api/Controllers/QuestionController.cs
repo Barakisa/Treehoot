@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
+using Treehoot.Api.Dtos;
+using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Controllers;
 
@@ -17,21 +19,30 @@ public class QuestionController : ControllerBase
     }
 
     [HttpGet("{questionId}")]
-    public ActionResult<Question> Get(int questionId)
+    public ActionResult<GetQuestionResponse> Get(int questionId)
     {
-        return Ok(_questionService.GetQuestion(questionId));
+        return Ok(_questionService.GetQuestion(questionId).ToResponse());
     }
 
     [HttpGet("stageId/{stageId}")]
-    public ActionResult<Question> GetByStageId(int stageId)
+    public ActionResult<List<GetQuestionResponse>> GetByStageId(int stageId)
     {
-        return Ok(_questionService.GetStageQuestions(stageId));
+        return Ok(_questionService.GetStageQuestions(stageId).ToResponse());
     }
 
+    //broken
     [HttpGet("{questionId}/full")]
-    public ActionResult<Question> GetFull(int questionId)
+    public async Task<ActionResult<GetQuestionFullResponse>> GetFull(int questionId)
     {
-        return Ok(_questionService.GetQuestionFull(questionId));
+        var question = await _questionService.GetQuestionFull(questionId);
+
+        if (question == null)
+        {
+            return NotFound();
+        }
+
+        var fullResponse = question.ToFullResponse();
+        return Ok(fullResponse);
     }
 
 }

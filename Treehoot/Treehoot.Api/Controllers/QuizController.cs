@@ -2,7 +2,7 @@
 using Treehoot.Domain.Models;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
-using Treehoot.Domain.DTOs;
+using Treehoot.Api.Dtos;
 using Treehoot.Application.Data;
 
 namespace Treehoot.Api.Controllers;
@@ -37,10 +37,11 @@ public class QuizController : ControllerBase
     {
         return Ok(_quizService.GetQuizFull(quizId));
     }
-
+    /*
     [HttpPost]
-    public ActionResult<QuizResult> QuizPost(QuizPostRequest quiz)
+    public ActionResult<PostResult> QuizPost(PostQuizBody quiz)
     {
-        return Ok(_quizService.CreateAndValidateQuiz(quiz));
-    }
+        var quizModel = new Quiz(new Guid(), quiz.Name, quiz.Description);
+        return Ok(_quizService.CreateAndValidateQuiz(quizModel));
+    }*/
 }

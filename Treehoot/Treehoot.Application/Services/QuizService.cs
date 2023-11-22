@@ -2,7 +2,6 @@
 using Treehoot.Application.Helpers;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
-using Treehoot.Domain.DTOs;
 using System.Net;
 using Treehoot.Application.Data;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,18 +51,18 @@ public class QuizService : IQuizService
     }
 
 
-    public QuizResult CreateAndValidateQuiz(QuizPostRequest quiz)
+    public PostResult CreateAndValidateQuiz(Quiz quiz)
     {
         try
         {
             if (string.IsNullOrWhiteSpace(quiz.Name) || string.IsNullOrWhiteSpace(quiz.Description))
             {
-                return new QuizResult(false, "Quiz name and description fields must not be empty!");
+                return new PostResult(false, "Quiz name and description fields must not be empty!");
             }
 
             if (quiz.Stages == null || !quiz.Stages.Any())
             {
-                return new QuizResult(false, "At least one stage is required!");
+                return new PostResult(false, "At least one stage is required!");
             }
 
             var newQuiz = new Quiz(147, quiz.Name, quiz.Description);
@@ -76,16 +75,16 @@ public class QuizService : IQuizService
                 int stageId = 12;
                 //stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
 
-                if(stage.Topics == null || !stage.Topics.Any())
+                if(stage.Questions == null || !stage.Questions.Any())
                 {
-                    return new QuizResult(false, "Atleast one topic is required!");
+                    return new PostResult(false, "Atleast one topic is required!");
                 }
 
-                foreach (var question in stage.Topics)
+                foreach (var question in stage.Questions)
                 {
-                    if (string.IsNullOrWhiteSpace(question.TopicName) || string.IsNullOrWhiteSpace(question.Question))
+                    if (string.IsNullOrWhiteSpace(question.Topic) || string.IsNullOrWhiteSpace(question.QuestionText))
                     {
-                        return new QuizResult(false, "Topic name and question fields must not be empty!");
+                        return new PostResult(false, "Topic name and question fields must not be empty!");
                     }
 
                     int questionId = 13;
@@ -93,14 +92,14 @@ public class QuizService : IQuizService
 
                     if(question.Answers == null || !question.Answers.Any())
                     {
-                        return new QuizResult(false, "Atleast one answer is required");
+                        return new PostResult(false, "Atleast one answer is required");
                     }
 
                     foreach (var answer in question.Answers)
                     {
-                        if (string.IsNullOrWhiteSpace(answer.Answer))
+                        if (string.IsNullOrWhiteSpace(answer.Text))
                         {
-                            return new QuizResult(false, "Answer field must not be empty!");
+                            return new PostResult(false, "Answer field must not be empty!");
                         }
 
                         int answerId = 14;
@@ -110,12 +109,12 @@ public class QuizService : IQuizService
 
             }
 
-            return new QuizResult(true, "Quiz has been created!"); 
+            return new PostResult(true, "Quiz has been created!"); 
         }
 
         catch
         {
-            return new QuizResult(false, "Something went wrong, try again...");
+            return new PostResult(false, "Something went wrong, try again...");
         }
     }
 
