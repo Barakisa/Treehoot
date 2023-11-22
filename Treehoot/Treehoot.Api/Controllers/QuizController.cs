@@ -31,10 +31,11 @@ public class QuizController : ControllerBase
         return Ok(_quizService.GetQuiz(quizId));
     }
 
+    //broken
     [HttpGet("{quizId}/full")]
-    public ActionResult<Quiz> GetFull(int quizId)
+    public ActionResult<QuizFull> GetFull(int quizId)
     {
-        return Ok(_quizService.GetQuiz(quizId));
+        return Ok(_quizService.GetQuizFull(quizId));
     }
 
     [HttpPost]

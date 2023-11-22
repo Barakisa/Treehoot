@@ -39,6 +39,9 @@ Kaip updaitnti db:
 Todo
 	Extention toResponse methods for domain klases (returns DTO objects)
 	error handling of null responses from db context. Should be in service I think
+	fix get full object metodus; dabar jie broken / grazina tuscius objektus. 
+		Reikia overhaulinti modeliu naudojima, pradeti naudoti labai daug skirtingu dto
+		pazymeti //broken
 
 ----------
 Projektų struktūra

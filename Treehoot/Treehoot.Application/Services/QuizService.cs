@@ -19,15 +19,15 @@ public class QuizService : IQuizService
         _scopeFactory = scopeFactory;
     }
 
-    public async Task<Quiz> GetQuiz(int quizId)
+    public Quiz GetQuiz(int quizId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Quiz.FindAsync(quizId);
+            return context.Quiz.Single(a => a.Id == quizId);
         }
-        
     }
+
     public List<Quiz> GetQuizes() {
         try
         {
@@ -44,6 +44,7 @@ public class QuizService : IQuizService
         
     }
     
+    //broken
     public QuizFull GetQuizFull(int quizId)
     {
         return new QuizFull();

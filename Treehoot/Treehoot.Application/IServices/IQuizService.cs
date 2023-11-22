@@ -9,7 +9,7 @@ namespace Treehoot.Application.IServices;
 
 public interface IQuizService
 {
-    Task<Quiz> GetQuiz(int quizId);
+    Quiz GetQuiz(int quizId);
     List<Quiz> GetQuizes();
     QuizFull GetQuizFull(int quizId);
     Task<HttpResponseMessage> QuizPost(QuizPostRequest quiz);

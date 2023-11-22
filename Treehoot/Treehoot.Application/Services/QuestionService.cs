@@ -35,14 +35,13 @@ public class QuestionService : IQuestionService
         }
     }
 
+    //broken
     public async Task<Question> GetQuestionFull(int questionId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            var a = await context.Question.Include(q => q.Answers).FirstOrDefaultAsync(q => q.Id == questionId);
-
-            return a;
+            return await context.Question.Include(q => q.Answers).FirstOrDefaultAsync(q => q.Id == questionId);
 
         }
     }
