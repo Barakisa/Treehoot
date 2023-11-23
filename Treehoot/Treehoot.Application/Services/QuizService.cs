@@ -1,32 +1,42 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
+using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 using Treehoot.Domain.DTOs;
 using System.Net;
+using Treehoot.Application.Data;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
 namespace Treehoot.Application.Services;
 
-public class QuizService
+public class QuizService : IQuizService
 {
-    private string fakeDbPath = "FakeDb/QuizesTable.json";
+    private readonly IServiceScopeFactory _scopeFactory;
+
+    public QuizService(IServiceScopeFactory scopeFactory)
+    {
+        _scopeFactory = scopeFactory;
+    }
 
     public Quiz GetQuiz(int quizId)
     {
-        return DataLoader.GetEntity<Quiz>(fakeDbPath, quizId);
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return context.Quiz.Single(a => a.Id == quizId);
+        }
     }
+
     public List<Quiz> GetQuizes() {
         try
         {
-            var jsonText = File.ReadAllText(fakeDbPath);
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allQuizes = data.Quizes.ToList();
-            return allQuizes;
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; 
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+                return context.Quiz.ToList();
+            }
         }
         catch (Exception e)
         {
@@ -34,23 +44,11 @@ public class QuizService
         }
         
     }
-
+    
+    //broken
     public QuizFull GetQuizFull(int quizId)
     {
-        try
-        {
-            var gatherer = new ObjectGatherer();
-            return gatherer.GatherQuiz(quizId);
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
-        }
+        return new QuizFull();
     }
 
 
@@ -76,7 +74,7 @@ public class QuizService
             foreach (var stage in quiz.Stages)
             {
                 int stageId = 12;
-                stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
+                //stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
 
                 if(stage.Topics == null || !stage.Topics.Any())
                 {
@@ -91,7 +89,7 @@ public class QuizService
                     }
 
                     int questionId = 13;
-                    questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
+                    //questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
 
                     if(question.Answers == null || !question.Answers.Any())
                     {
@@ -106,7 +104,7 @@ public class QuizService
                         }
 
                         int answerId = 14;
-                        answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
+                        //answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
                     }
                 }
 

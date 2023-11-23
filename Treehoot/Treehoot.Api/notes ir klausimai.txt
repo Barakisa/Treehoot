@@ -1,0 +1,105 @@
+Nauji klausimai:
+	ar servisuoso su context geriua naudoti async? 
+		Jau klausiau, bet man idomu sitai situacijai (answerService pvz)
+	kaip daryti su scope factory? Taip tinka? (all services, dbcontext injection)
+	kur deti di intefaceus?
+	servisuose, ypac kur gauti single item, labai daug duplikuojamo kodo... 
+		ar riekia dar daugiau skaidyti, ar tinka taip kaip yra?
+
+Seni Klausimai:
+	+Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
+		Servisam galioja; domain/dto ok
+		per interface'us reikia daryti
+	+Maping classes' naming conventions?
+		extensions pas mane
+	+Do we need a DB or is SQLite ok?
+		Docker + postgres
+
+----------
+
+Kiap updatinti ef:
+	atsidaryti package manager console
+	defauilt project Treehoot.Infrastructure
+	"add-migrations <name>" komanda
+	"update-database" komanda
+
+	or .net cli
+
+	dotnet ef migrations add testnoinfra2 --project .\Treehoot.Infrastructure\ --startup-project .\Treehoot.Api\
+	dotnet ef database update --project .\Treehoot.Infrastructure\ --startup-project .\Treehoot.Api\
+
+Kaip updaitnti db:
+	save changes in docker;
+	exportinti docker image: docker save PostgresDB:latest > PostgresDB.tar
+	pasidalinti su draugais lmao
+	loadinti nauja image'a: docker load < PostgresDB.tar
+
+----------
+
+Todo
+	Extention toResponse methods for domain klases (returns DTO objects)
+	error handling of null responses from db context. Should be in service I think
+	fix get full object metodus; dabar jie broken / grazina tuscius objektus. 
+		Reikia overhaulinti modeliu naudojima, pradeti naudoti labai daug skirtingu dto
+		pazymeti //broken
+	change db password, configure sevret passwords
+
+----------
+Projektų struktūra
+Main projetai:
+
+Api
+
+*** roles
+-controlers
+-- 1 eilutė
+-- nereikia net try catch, nes kitur susitvarko
+--- nebent ultra prasmingai
+- middleware
+- config
+- maping*
+-- kiti mano, kad application layeryje
+-- data -> dto
+*** directories / files
+- startup
+-- suregistruojami servisai
+
+Application
+
+- business logic
+-servisai
+-- tai, kas vyksta
+-- rūšioujami, pagal tai, ką daro
+- maping*
+-- kiti mano api layeryje
+- dbcontext
+-- repo, kuri nežino, apie pačią duombazę
+--- gali prie betkokios DBMS prisijungti
+
+Contracts
+
+Domain
+
+- Domain classes
+-- keliauja tiesiai į duombazę	
+-- atsako už pagrindinę logiką
+-- gali būti:
+--- tik modeliai 
+--- gali būti logikos krūva sudėta (model driven development)
+
+Infrastructure
+
+- Konkretūs duombazių dalykai 
+-- sql
+-- indeksai
+- išoriniai client'ai
+-- implementuoja POST, GET...
+
+********************
+
+Biznio logika glai būti Domain klasėse / Application servisuose
+
+Api žino apie Application, Domain Infrastructure
+Application žino apie Domain
+Infrastructure žino apie Application
+Domain nieko nežinon

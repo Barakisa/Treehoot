@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace Treehoot.Domain.DTOs
 {
 	public class QuizPostRequest
