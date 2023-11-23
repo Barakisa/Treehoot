@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Treehoot.Domain.Models;
-using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
+using Treehoot.Api.Dtos;
+using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Controllers;
 
@@ -17,21 +17,57 @@ public class QuestionController : ControllerBase
     }
 
     [HttpGet("{questionId}")]
-    public ActionResult<Question> Get(int questionId)
+    public async Task<ActionResult<GetQuestionResponse>> GetSingle(int questionId)
     {
-        return Ok(_questionService.GetQuestion(questionId));
+        //service
+        var question = await _questionService.GetSingle(questionId);
+
+        //validation
+        if (question == null)
+        {
+            return NotFound();
+        }
+        
+        //maping
+        var response = question.ToResponse();
+        
+        return Ok(response);
     }
 
     [HttpGet("stageId/{stageId}")]
-    public ActionResult<Question> GetByStageId(int stageId)
+    public async Task<ActionResult<List<GetQuestionResponse>>> GetByStageId(int stageId)
     {
-        return Ok(_questionService.GetStageQuestions(stageId));
+        //service
+        var questions = await _questionService.GetStageQuestions(stageId);
+
+        //validation
+        if (questions == null || questions.Count == 0)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = questions.ToResponse();
+        
+        return Ok(response);
     }
 
     [HttpGet("{questionId}/full")]
-    public ActionResult<Question> GetFull(int questionId)
+    public async Task<ActionResult<GetQuestionFullResponse>> GetSingleFull(int questionId)
     {
-        return Ok(_questionService.GetQuestionFull(questionId));
+        //service
+        var question = await _questionService.GetSingleFull(questionId);
+
+        //validation
+        if (question == null)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var fullResponse = question.ToFullResponse();
+        
+        return Ok(fullResponse);
     }
 
 }

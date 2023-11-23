@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
-
-namespace Treehoot.Domain.Models;
+﻿namespace Treehoot.Domain.Models;
 
 public class Question : IEntity
 {

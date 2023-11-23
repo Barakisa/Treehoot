@@ -8,6 +8,8 @@ using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.Services;
 
+#nullable enable
+
 public class QuestionService : IQuestionService
 {
     private readonly IServiceScopeFactory _scopeFactory;
@@ -17,32 +19,38 @@ public class QuestionService : IQuestionService
         _scopeFactory = scopeFactory;
     }
 
-    public Question GetQuestion(int questionId)
+    public async Task<Question?> GetSingle(int questionId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return context.Question.Single(a => a.Id == questionId);
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Question
+                            .Include(q => q.Stage)
+                            .SingleOrDefaultAsync(q => q.Id == questionId);
         }
     }
 
-    public List<Question> GetStageQuestions(int stageId) 
+    public async Task<List<Question>?> GetStageQuestions(int stageId) 
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return context.Question.Where(a => a.Stage.Id == stageId).ToList();
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Question
+                            .Include(q => q.Stage)
+                            .Where(q => q.Stage.Id == stageId)
+                            .ToListAsync();
         }
     }
 
-    //broken
-    public async Task<Question> GetQuestionFull(int questionId)
+    public async Task<Question?> GetSingleFull(int questionId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Question.Include(q => q.Answers).FirstOrDefaultAsync(q => q.Id == questionId);
-
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Question
+                            .Include(q => q.Answers)
+                            .Include(q => q.Stage)
+                            .SingleOrDefaultAsync(q => q.Id == questionId) ;
         }
     }
 

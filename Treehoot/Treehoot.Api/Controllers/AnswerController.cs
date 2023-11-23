@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
+using Treehoot.Api.Dtos;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
+using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Controllers;
 
@@ -17,14 +19,38 @@ public class AnswerController : ControllerBase
     }
 
     [HttpGet("{answerId}")]
-    public ActionResult<Answer> Get(int answerId)
+    public async Task<ActionResult<GetAnswerResponse>> Get(int answerId)
     {
-        return Ok(_answerService.GetAnswer(answerId));
+        //service
+        var answer = await _answerService.GetSingle(answerId);
+
+        //validation
+        if (answer == null)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = answer.ToResponse();
+
+        return Ok(response);
     }
 
     [HttpGet("questionId/{questionId}")]
-    public ActionResult<Answer> GetByQuestionId(int questionId)
+    public async Task<ActionResult<List<GetAnswerResponse>>> GetByQuestionId(int questionId)
     {
-        return Ok(_answerService.GetQuestionAnswers(questionId));
+        //service
+        var answers = await _answerService.GetQuestionAnswers(questionId);
+
+        //validation
+        if (answers == null || answers.Count == 0)
+        {
+            return NotFound();
+        }
+
+        //maping
+        var response = answers.ToResponse();
+
+        return Ok(response);
     }
 }
