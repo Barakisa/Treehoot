@@ -17,10 +17,10 @@ public class QuestionController : ControllerBase
     }
 
     [HttpGet("{questionId}")]
-    public async Task<ActionResult<GetQuestionResponse>> Get(int questionId)
+    public async Task<ActionResult<GetQuestionResponse>> GetSingle(int questionId)
     {
         //service
-        var question = await _questionService.GetQuestion(questionId);
+        var question = await _questionService.GetSingle(questionId);
 
         //validation
         if (question == null)
@@ -53,10 +53,10 @@ public class QuestionController : ControllerBase
     }
 
     [HttpGet("{questionId}/full")]
-    public async Task<ActionResult<GetQuestionFullResponse>> GetFull(int questionId)
+    public async Task<ActionResult<GetQuestionFullResponse>> GetSingleFull(int questionId)
     {
         //service
-        var question = await _questionService.GetQuestionFull(questionId);
+        var question = await _questionService.GetSingleFull(questionId);
 
         //validation
         if (question == null)

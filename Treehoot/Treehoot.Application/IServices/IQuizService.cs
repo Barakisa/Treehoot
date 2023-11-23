@@ -8,8 +8,8 @@ namespace Treehoot.Application.IServices;
 
 public interface IQuizService
 {
-    Quiz GetQuiz(int quizId);
-    List<Quiz> GetQuizes();
-    QuizFull GetQuizFull(int quizId);
-    PostResult CreateAndValidateQuiz(Quiz quiz);
+    Task<List<Quiz>?> GetAll();
+    Task<Quiz?> GetSingle(int quizId);
+    Task<Quiz?> GetSingleFull(int quizId);
+    //Task<PostResult> CreateAndValidateQuiz(Quiz quiz);
 }

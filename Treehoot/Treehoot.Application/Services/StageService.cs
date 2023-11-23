@@ -15,7 +15,7 @@ public class StageService : IStageService
         _scopeFactory = scopeFactory;
     }
 
-    public async Task<Stage?> GetStage(int stageId)
+    public async Task<Stage?> GetSingle(int stageId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
@@ -37,13 +37,14 @@ public class StageService : IStageService
         }
     }
 
-    public async Task<Stage?> GetStageFull(int stageId)
+    public async Task<Stage?> GetSingleFull(int stageId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
             var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
             return await dbcontext.Stage
                             .Include(s => s.Questions)
+                                .ThenInclude(q => q.Answers)
                             .Include(s => s.Quiz)
                             .SingleOrDefaultAsync(s => s.Id == stageId);
         }

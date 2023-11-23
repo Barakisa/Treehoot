@@ -17,7 +17,7 @@ public class AnswerService : IAnswerService
         _scopeFactory = scopeFactory;
     }
 
-    public async Task<Answer?> GetAnswer(int answerId)
+    public async Task<Answer?> GetSingle(int answerId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {

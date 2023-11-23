@@ -1,26 +1,44 @@
 ﻿using Treehoot.Domain.Models;
-using Treehoot.Domain.DTOs;
-using Microsoft.CodeAnalysis.CSharp;
+using Treehoot.Api.Dtos;
 
 namespace Treehoot.Api.Maping;
 
 public static class QuizExtensions
 {
-    /*
-    public static QuizDto ToResponse(this Quiz Quiz)
+    //GET simple response
+    public static GetQuizResponse ToResponse(this Quiz Quiz)
     {
-        return new QuizDto
+        return new GetQuizResponse
         {
             Id = Quiz.Id,
-            QuestionId = Quiz.Question.Id,
-            IsCorrect = Quiz.IsCorrect,
-            Text = Quiz.Text
+            Name = Quiz.Name,
+            Description = Quiz.Description
         };
     }
 
-    public static List<QuizDto> ToResponse(this List<Quiz> Quizs)
+    public static List<GetQuizResponse> ToResponse(this List<Quiz> Quizzes)
     {
-        return Quizs.Select(Quiz => Quiz.ToResponse()).ToList();
+        return Quizzes
+                .Select(q => q.ToResponse())
+                .ToList();
     }
-    */
+
+    //GET full response
+    public static GetQuizFullResponse ToFullResponse(this Quiz Quiz)
+    {
+        return new GetQuizFullResponse
+        {
+            Id = Quiz.Id,
+            Name = Quiz.Name,
+            Description = Quiz.Description,
+            Stages = Quiz.Stages.ToFullResponse()
+        };
+    }
+
+    public static List<GetQuizFullResponse> ToFullResponse(this List<Quiz> Quizs)
+    {
+        return Quizs
+                .Select(q => q.ToFullResponse())
+                .ToList();
+    }
 }

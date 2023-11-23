@@ -22,7 +22,7 @@ public class AnswerController : ControllerBase
     public async Task<ActionResult<GetAnswerResponse>> Get(int answerId)
     {
         //service
-        var answer = await _answerService.GetAnswer(answerId);
+        var answer = await _answerService.GetSingle(answerId);
 
         //validation
         if (answer == null)

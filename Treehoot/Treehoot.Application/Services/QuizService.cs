@@ -19,39 +19,50 @@ public class QuizService : IQuizService
         _scopeFactory = scopeFactory;
     }
 
-    public Quiz GetQuiz(int quizId)
+    public async Task<List<Quiz>?> GetAll()
     {
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return context.Quiz.Single(a => a.Id == quizId);
-        }
-    }
-
-    public List<Quiz> GetQuizes() {
         try
         {
             using (var scope = _scopeFactory.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-                return context.Quiz.ToList();
+                return await context.Quiz
+                                .ToListAsync();
             }
         }
         catch (Exception e)
         {
             throw new Exception($"Error: {e.Message}");
         }
-        
+
+    }
+
+    public async Task<Quiz?> GetSingle(int quizId)
+    {
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await context.Quiz
+                            .SingleOrDefaultAsync(a => a.Id == quizId);
+        }
     }
     
-    //broken
-    public QuizFull GetQuizFull(int quizId)
+    public async Task<Quiz?> GetSingleFull(int quizId)
     {
-        return new QuizFull();
+
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await context.Quiz
+                            .Include(s => s.Stages)
+                                .ThenInclude(s => s.Questions)
+                                    .ThenInclude(q => q.Answers)
+                            .SingleOrDefaultAsync(a => a.Id == quizId);
+        }
     }
 
-
-    public PostResult CreateAndValidateQuiz(Quiz quiz)
+    /*
+    public async Task<PostResult> CreateAndValidateQuiz(Quiz quiz)
     {
         try
         {
@@ -64,11 +75,6 @@ public class QuizService : IQuizService
             {
                 return new PostResult(false, "At least one stage is required!");
             }
-
-            var newQuiz = new Quiz(147, quiz.Name, quiz.Description);
-            var stages = new List<Stage>();
-            var questions = new List<Question>();
-            var answers = new List<Answer>();
 
             foreach (var stage in quiz.Stages)
             {
@@ -117,5 +123,6 @@ public class QuizService : IQuizService
             return new PostResult(false, "Something went wrong, try again...");
         }
     }
+    */
 
 }

@@ -4,6 +4,6 @@ namespace Treehoot.Application.IServices;
 
 public interface IAnswerService
 {
-    Task<Answer?> GetAnswer(int answerId);
+    Task<Answer?> GetSingle(int answerId);
     Task<List<Answer>?> GetQuestionAnswers(int questionId);
 }

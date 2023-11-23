@@ -6,7 +6,7 @@ namespace Treehoot.Application.IServices;
 
 public interface IStageService
 {
-    Task<Stage?> GetStage(int stageId);
+    Task<Stage?> GetSingle(int stageId);
     Task<List<Stage>?> GetQuizStages(int quizId);
-    Task<Stage?> GetStageFull(int stageId);
+    Task<Stage?> GetSingleFull(int stageId);
 }

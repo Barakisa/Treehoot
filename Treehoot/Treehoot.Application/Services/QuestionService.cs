@@ -19,7 +19,7 @@ public class QuestionService : IQuestionService
         _scopeFactory = scopeFactory;
     }
 
-    public async Task<Question?> GetQuestion(int questionId)
+    public async Task<Question?> GetSingle(int questionId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {
@@ -42,7 +42,7 @@ public class QuestionService : IQuestionService
         }
     }
 
-    public async Task<Question?> GetQuestionFull(int questionId)
+    public async Task<Question?> GetSingleFull(int questionId)
     {
         using (var scope = _scopeFactory.CreateScope())
         {

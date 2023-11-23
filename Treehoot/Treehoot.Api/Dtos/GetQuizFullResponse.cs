@@ -2,10 +2,7 @@
 
 namespace Treehoot.Api.Dtos;
 
-public class GetQuizResponse : IEntity
+public class GetQuizFullResponse : GetQuizResponse
 {
-    public int Id { get; set; }
-    public int QuestionId {  get; set; }
-    public bool IsCorrect { get; set; }
-    public string Text { get; set; }
+    public List<GetStageFullResponse> Stages { get; set; }
 }

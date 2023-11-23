@@ -18,10 +18,10 @@ public class StageController : ControllerBase
     }
 
     [HttpGet("{stageId}")]
-    public async Task<ActionResult<Stage>> Get(int stageId)
+    public async Task<ActionResult<Stage>> GetSingle(int stageId)
     {
         //service
-        var stage = await _stageService.GetStage(stageId);
+        var stage = await _stageService.GetSingle(stageId);
 
         //validation
         if (stage == null)
@@ -55,10 +55,10 @@ public class StageController : ControllerBase
 
     //broken
     [HttpGet("{stageId}/full")]
-    public async Task<ActionResult<GetStageFullResponse>> GetFull(int stageId)
+    public async Task<ActionResult<GetStageFullResponse>> GetSingleFull(int stageId)
     {
         //service
-        var stage = await _stageService.GetStageFull(stageId);
+        var stage = await _stageService.GetSingleFull(stageId);
 
         //validation
         if (stage == null)
