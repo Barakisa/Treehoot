@@ -1,25 +1,40 @@
-﻿using System.Text.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
+using Treehoot.Application.Data;
 using Treehoot.Application.Helpers;
+using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.Services;
 
-public class AnswerService
+public class AnswerService : IAnswerService
 {
-    private string fakeDbPath = "FakeDb/AnswersTable.json";
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public Answer GetAnswer(int answerId)
+    public AnswerService(IServiceScopeFactory scopeFactory)
     {
-        return DataLoader.GetEntity<Answer>(fakeDbPath, answerId);
+        _scopeFactory = scopeFactory;
     }
 
-    public List<Answer> GetQuestionAnswers(int questionId)
+    public async Task<Answer?> GetSingle(int answerId)
     {
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Answer
+                            .SingleOrDefaultAsync(a => a.Id == answerId);
+        }
+    }
 
-        var jsonText = File.ReadAllText(fakeDbPath);
-        var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-
-        var answers = data.Answers.Where(a => a.QuestionId == questionId).ToList();
-        return answers;
+    public async Task<List<Answer>?> GetQuestionAnswers(int questionId)
+    {
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Answer
+                            .Where(a => a.Question.Id == questionId)
+                            .ToListAsync();
+        }
     }
 }

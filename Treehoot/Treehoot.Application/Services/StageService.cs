@@ -1,42 +1,53 @@
-﻿using System.Text.Json;
-using Treehoot.Application.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Treehoot.Application.Data;
+using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.Services;
 
-public class StageService
+public class StageService : IStageService
 {
-    private string fakeDbPath = "FakeDb/StagesTable.json";
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public Stage GetStage(int stageId)
+    public StageService(IServiceScopeFactory scopeFactory)
     {
-        return DataLoader.GetEntity<Stage>(fakeDbPath, stageId);
+        _scopeFactory = scopeFactory;
     }
 
-    public List<Stage> GetQuizStages(int quizId) {
-
-        var jsonText = File.ReadAllText(fakeDbPath);
-        var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-
-        var stages = data.Stages.Where(s=>s.QuizId == quizId).ToList();
-
-        return stages;
-    }
-    public StageFull GetStageFull(int stageId)
+    public async Task<Stage?> GetSingle(int stageId)
     {
-        try
+        using (var scope = _scopeFactory.CreateScope())
         {
-            var gatherer = new ObjectGatherer();
-            return gatherer.GatherStage(stageId);
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Stage
+                            .Include(s => s.Quiz)
+                            .SingleOrDefaultAsync(a => a.Id == stageId);
         }
     }
+
+    public async Task<List<Stage>?> GetQuizStages(int quizId)
+    {
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Stage
+                            .Include(s => s.Quiz)
+                            .Where(a => a.Quiz.Id == quizId).ToListAsync();
+        }
+    }
+
+    public async Task<Stage?> GetSingleFull(int stageId)
+    {
+        using (var scope = _scopeFactory.CreateScope())
+        {
+            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await dbcontext.Stage
+                            .Include(s => s.Questions)
+                                .ThenInclude(q => q.Answers)
+                            .Include(s => s.Quiz)
+                            .SingleOrDefaultAsync(s => s.Id == stageId);
+        }
+    }
+    
 }

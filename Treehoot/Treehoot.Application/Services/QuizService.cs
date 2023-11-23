@@ -1,124 +1,128 @@
 ﻿using System.Text.Json;
 using Treehoot.Application.Helpers;
+using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
-using Treehoot.Domain.DTOs;
 using System.Net;
+using Treehoot.Application.Data;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
 namespace Treehoot.Application.Services;
 
-public class QuizService
+public class QuizService : IQuizService
 {
-    private string fakeDbPath = "FakeDb/QuizesTable.json";
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public Quiz GetQuiz(int quizId)
+    public QuizService(IServiceScopeFactory scopeFactory)
     {
-        return DataLoader.GetEntity<Quiz>(fakeDbPath, quizId);
+        _scopeFactory = scopeFactory;
     }
-    public List<Quiz> GetQuizes() {
+
+    public async Task<List<Quiz>?> GetAll()
+    {
         try
         {
-            var jsonText = File.ReadAllText(fakeDbPath);
-            var data = JsonSerializer.Deserialize<JsonConversion>(jsonText);
-            var allQuizes = data.Quizes.ToList();
-            return allQuizes;
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found");
-            throw; 
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+                return await context.Quiz
+                                .ToListAsync();
+            }
         }
         catch (Exception e)
         {
             throw new Exception($"Error: {e.Message}");
         }
-        
+
     }
 
-    public QuizFull GetQuizFull(int quizId)
+    public async Task<Quiz?> GetSingle(int quizId)
     {
-        try
+        using (var scope = _scopeFactory.CreateScope())
         {
-            var gatherer = new ObjectGatherer();
-            return gatherer.GatherQuiz(quizId);
+            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await context.Quiz
+                            .SingleOrDefaultAsync(a => a.Id == quizId);
         }
-        catch (FileNotFoundException)
+    }
+    
+    public async Task<Quiz?> GetSingleFull(int quizId)
+    {
+
+        using (var scope = _scopeFactory.CreateScope())
         {
-            Console.WriteLine("File not found");
-            throw; // rethrow the exception so it can be handled in the controller
-        }
-        catch (Exception e)
-        {
-            throw new Exception($"Error: {e.Message}");
+            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            return await context.Quiz
+                            .Include(s => s.Stages)
+                                .ThenInclude(s => s.Questions)
+                                    .ThenInclude(q => q.Answers)
+                            .SingleOrDefaultAsync(a => a.Id == quizId);
         }
     }
 
-
-    public QuizResult CreateAndValidateQuiz(QuizPostRequest quiz)
+    /*
+    public async Task<PostResult> CreateAndValidateQuiz(Quiz quiz)
     {
         try
         {
             if (string.IsNullOrWhiteSpace(quiz.Name) || string.IsNullOrWhiteSpace(quiz.Description))
             {
-                return new QuizResult(false, "Quiz name and description fields must not be empty!");
+                return new PostResult(false, "Quiz name and description fields must not be empty!");
             }
 
             if (quiz.Stages == null || !quiz.Stages.Any())
             {
-                return new QuizResult(false, "At least one stage is required!");
+                return new PostResult(false, "At least one stage is required!");
             }
-
-            var newQuiz = new Quiz(147, quiz.Name, quiz.Description);
-            var stages = new List<Stage>();
-            var questions = new List<Question>();
-            var answers = new List<Answer>();
 
             foreach (var stage in quiz.Stages)
             {
                 int stageId = 12;
-                stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
+                //stages.Add(new Stage(stage.Name ,stageId, newQuiz.Id));
 
-                if(stage.Topics == null || !stage.Topics.Any())
+                if(stage.Questions == null || !stage.Questions.Any())
                 {
-                    return new QuizResult(false, "Atleast one topic is required!");
+                    return new PostResult(false, "Atleast one topic is required!");
                 }
 
-                foreach (var question in stage.Topics)
+                foreach (var question in stage.Questions)
                 {
-                    if (string.IsNullOrWhiteSpace(question.TopicName) || string.IsNullOrWhiteSpace(question.Question))
+                    if (string.IsNullOrWhiteSpace(question.Topic) || string.IsNullOrWhiteSpace(question.QuestionText))
                     {
-                        return new QuizResult(false, "Topic name and question fields must not be empty!");
+                        return new PostResult(false, "Topic name and question fields must not be empty!");
                     }
 
                     int questionId = 13;
-                    questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
+                    //questions.Add(new Question(questionId, stageId, question.TopicName, question.Question));
 
                     if(question.Answers == null || !question.Answers.Any())
                     {
-                        return new QuizResult(false, "Atleast one answer is required");
+                        return new PostResult(false, "Atleast one answer is required");
                     }
 
                     foreach (var answer in question.Answers)
                     {
-                        if (string.IsNullOrWhiteSpace(answer.Answer))
+                        if (string.IsNullOrWhiteSpace(answer.Text))
                         {
-                            return new QuizResult(false, "Answer field must not be empty!");
+                            return new PostResult(false, "Answer field must not be empty!");
                         }
 
                         int answerId = 14;
-                        answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
+                        //answers.Add(new Answer(answerId, questionId, answer.IsCorrect, answer.Answer));
                     }
                 }
 
             }
 
-            return new QuizResult(true, "Quiz has been created!"); 
+            return new PostResult(true, "Quiz has been created!"); 
         }
 
         catch
         {
-            return new QuizResult(false, "Something went wrong, try again...");
+            return new PostResult(false, "Something went wrong, try again...");
         }
     }
+    */
 
 }

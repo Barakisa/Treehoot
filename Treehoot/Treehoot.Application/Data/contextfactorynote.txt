@@ -1,0 +1,2 @@
+﻿If there are problems creating context, using cli, sometimes balck magic helps:
+https://learn.microsoft.com/en-us/ef/core/cli/dbcontext-creation?tabs=dotnet-core-cli
