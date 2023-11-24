@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
-using Treehoot.Api.Maping;
+using Treehoot.Api.Mapping;
 using Treehoot.Api.Dtos;
+using Treehoot.Application.Services;
 
 namespace Treehoot.Api.Controllers;
 
@@ -11,17 +12,23 @@ namespace Treehoot.Api.Controllers;
 public class StageController : ControllerBase
 {
     private readonly IStageService _stageService;
+    private readonly IApiCallResultService _apiCallResultService;
 
-    public StageController(IStageService stageService)
+    public StageController(IStageService stageService, IApiCallResultService apiCallResultService)
     {
         _stageService = stageService;
+        _apiCallResultService = apiCallResultService;
     }
 
     [HttpGet("{stageId}")]
     public async Task<ActionResult<Stage>> GetSingle(int stageId)
     {
+        _stageService.StageReturned +=  _apiCallResultService.OnEntityReturned;
+
         //service
         var stage = await _stageService.GetSingle(stageId);
+
+        _stageService.StageReturned -= _apiCallResultService.OnEntityReturned;
 
         //validation
         if (stage == null)
@@ -38,8 +45,12 @@ public class StageController : ControllerBase
     [HttpGet("quizId/{quizId}")]
     public async Task<ActionResult<Stage>> GetByQuizId(int quizId)
     {
+        _stageService.StageReturned += _apiCallResultService.OnEntityReturned;
+
         //service
         var stages = await _stageService.GetQuizStages(quizId);
+
+        _stageService.StageReturned -= _apiCallResultService.OnEntityReturned;
 
         //validation
         if (stages == null || stages.Count == 0)
@@ -57,8 +68,12 @@ public class StageController : ControllerBase
     [HttpGet("{stageId}/full")]
     public async Task<ActionResult<GetStageFullResponse>> GetSingleFull(int stageId)
     {
+        _stageService.StageReturned += _apiCallResultService.OnEntityReturned;
+
         //service
         var stage = await _stageService.GetSingleFull(stageId);
+
+        _stageService.StageReturned -= _apiCallResultService.OnEntityReturned;
 
         //validation
         if (stage == null)

@@ -20,5 +20,7 @@ namespace Treehoot.Application.Data
         public DbSet<Treehoot.Domain.Models.Stage> Stage { get; set; } = default!;
         public DbSet<Treehoot.Domain.Models.Quiz> Quiz { get; set; } = default!;
         public DbSet<Treehoot.Domain.Models.User> User { get; set; } = default!;
+        public DbSet<Treehoot.Domain.Models.ApiCallResult> ApiCallResult { get; set; } = default!;
+
     }
 }

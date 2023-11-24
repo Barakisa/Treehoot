@@ -1,7 +1,7 @@
 ﻿using Treehoot.Api.Dtos;
 using Treehoot.Domain.Models;
 
-namespace Treehoot.Api.Maping;
+namespace Treehoot.Api.Mapping;
 
 public static class StageExtensions
 {

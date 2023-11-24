@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Treehoot.Domain.Models
 {
-    public interface IEntity
+    public interface IGetable
     {
     }
 }

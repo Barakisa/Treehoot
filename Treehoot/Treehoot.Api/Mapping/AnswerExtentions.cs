@@ -1,7 +1,7 @@
 ﻿using Treehoot.Domain.Models;
 using Treehoot.Api.Dtos;
 
-namespace Treehoot.Api.Maping;
+namespace Treehoot.Api.Mapping;
 
 public static class AnswerExtensions
 {
@@ -19,7 +19,9 @@ public static class AnswerExtensions
 
     public static List<GetAnswerResponse> ToResponse(this List<Answer> answers)
     {
-        return answers.Select(answer => answer.ToResponse()).ToList();
+        return answers
+                .Select(answer => answer.ToResponse())
+                .ToList();
     }
 
 }
