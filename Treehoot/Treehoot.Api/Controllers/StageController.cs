@@ -3,6 +3,7 @@ using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 using Treehoot.Api.Maping;
 using Treehoot.Api.Dtos;
+using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Api.Controllers;
 
@@ -38,19 +39,25 @@ public class StageController : ControllerBase
     [HttpGet("quizId/{quizId}")]
     public async Task<ActionResult<Stage>> GetByQuizId(int quizId)
     {
-        //service
-        var stages = await _stageService.GetQuizStages(quizId);
-
-        //validation
-        if (stages == null || stages.Count == 0)
+        try
         {
-            return NotFound();
+            //service
+            var stages = await _stageService.GetQuizStages(quizId);
+
+            //validation
+            if (!stages.Any())
+            {
+                throw new NotFoundException("stage", "quiz", quizId);
+            }
+            //maping
+            var response = stages.ToResponse();
+
+            return Ok(response);
         }
-
-        //maping
-        var response = stages.ToResponse();
-
-        return Ok(response);
+        catch (NotFoundException ex)
+        {
+            return NotFound(new { Message = ex.Message });
+        }
     }
 
     //broken

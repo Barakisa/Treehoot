@@ -4,6 +4,7 @@ using Treehoot.Api.Dtos;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
 using Treehoot.Api.Maping;
+using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Api.Controllers;
 
@@ -21,36 +22,45 @@ public class AnswerController : ControllerBase
     [HttpGet("{answerId}")]
     public async Task<ActionResult<GetAnswerResponse>> Get(int answerId)
     {
-        //service
-        var answer = await _answerService.GetSingle(answerId);
+            //service
+            var answer = await _answerService.GetSingle(answerId);
 
-        //validation
-        if (answer == null)
-        {
-            return NotFound();
-        }
+            //validation
+            if (answer == null)
+            {
+                return NotFound();
+            }
 
-        //maping
-        var response = answer.ToResponse();
+            //maping
+            var response = answer.ToResponse();
 
-        return Ok(response);
+            return Ok(response);
+        
+       
     }
 
     [HttpGet("questionId/{questionId}")]
     public async Task<ActionResult<List<GetAnswerResponse>>> GetByQuestionId(int questionId)
     {
-        //service
-        var answers = await _answerService.GetQuestionAnswers(questionId);
-
-        //validation
-        if (answers == null || answers.Count == 0)
+        try
         {
-            return NotFound();
+            //service
+            var answers = await _answerService.GetQuestionAnswers(questionId);
+
+            //validation
+            if (!answers.Any())
+            {
+                throw new NotFoundException("answer", "question", questionId);
+            }
+
+            //maping
+            var response = answers.ToResponse();
+
+            return Ok(response);
         }
-
-        //maping
-        var response = answers.ToResponse();
-
-        return Ok(response);
+        catch (NotFoundException ex)
+        {
+            return NotFound(new { Message = ex.Message });
+        }
     }
 }

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Treehoot.Application.IServices;
 using Treehoot.Api.Dtos;
 using Treehoot.Api.Maping;
+using Treehoot.Application.Exceptions;
+using Treehoot.Domain.Models;
 
 namespace Treehoot.Api.Controllers;
 
@@ -19,37 +21,45 @@ public class QuestionController : ControllerBase
     [HttpGet("{questionId}")]
     public async Task<ActionResult<GetQuestionResponse>> GetSingle(int questionId)
     {
-        //service
-        var question = await _questionService.GetSingle(questionId);
+        
+            //service
+            var question = await _questionService.GetSingle(questionId);
 
-        //validation
-        if (question == null)
-        {
+            //validation
+            if (question == null)
+            {
             return NotFound();
-        }
+            }
+            //maping
+            var response = question.ToResponse();
+
+            return Ok(response);
         
-        //maping
-        var response = question.ToResponse();
-        
-        return Ok(response);
     }
 
     [HttpGet("stageId/{stageId}")]
     public async Task<ActionResult<List<GetQuestionResponse>>> GetByStageId(int stageId)
     {
-        //service
-        var questions = await _questionService.GetStageQuestions(stageId);
-
-        //validation
-        if (questions == null || questions.Count == 0)
+        try
         {
-            return NotFound();
-        }
+            //service
+            var questions = await _questionService.GetStageQuestions(stageId);
 
-        //maping
-        var response = questions.ToResponse();
-        
-        return Ok(response);
+            //validation
+            if (!questions.Any())
+            {
+                throw new NotFoundException("question", "stage", stageId);
+            }
+
+            //maping
+            var response = questions.ToResponse();
+
+            return Ok(response);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(new { Message = ex.Message });
+        }
     }
 
     [HttpGet("{questionId}/full")]
