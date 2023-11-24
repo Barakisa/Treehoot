@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Treehoot.Application.Data;
 using Treehoot.Application.IServices;
@@ -8,12 +9,12 @@ namespace Treehoot.Application.Services;
 
 public class StageService : IStageService
 {
-    public event EventHandler<int> StageReturned;
+    public event EventHandler<List<Stage>> StageReturned;
 
-    protected virtual void OnStageReturned(int returnedItemCount)
+    protected virtual void OnStageReturned(List<Stage> stages)
     {
         if(StageReturned != null) 
-            StageReturned(this, returnedItemCount);
+            StageReturned(this, stages);
     }
 
     private readonly IServiceScopeFactory _scopeFactory;
@@ -32,8 +33,7 @@ public class StageService : IStageService
                             .Include(s => s.Quiz)
                             .SingleOrDefaultAsync(a => a.Id == stageId);
             
-            if (stage == null) OnStageReturned(0);
-            else OnStageReturned(1);
+            OnStageReturned(new List<Stage> { stage });
 
             return stage;
         }
@@ -48,7 +48,7 @@ public class StageService : IStageService
                             .Include(s => s.Quiz)
                             .Where(a => a.Quiz.Id == quizId).ToListAsync();
 
-            OnStageReturned(stages.Count);
+            OnStageReturned(stages);
 
             return stages;
         }
@@ -65,8 +65,7 @@ public class StageService : IStageService
                             .Include(s => s.Quiz)
                             .SingleOrDefaultAsync(s => s.Id == stageId);
 
-            if (stage == null) OnStageReturned(0);
-            else OnStageReturned(1);
+            OnStageReturned(new List<Stage> { stage });
 
             return stage;
         }

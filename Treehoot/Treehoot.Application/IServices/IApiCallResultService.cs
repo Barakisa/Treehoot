@@ -6,5 +6,5 @@ namespace Treehoot.Application.IServices;
 
 public interface IApiCallResultService
 {
-    public void OnStageReturned(object source, int a);
+    public void OnEntityReturned<T>(object source, List<T> entity) where T : IEntity, IGetable;
 }

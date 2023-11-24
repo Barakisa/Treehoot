@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Treehoot.Application.Data;
 using Treehoot.Application.IServices;
@@ -15,7 +16,7 @@ namespace Treehoot.Application.Services
             _scopeFactory = scopeFactory;
         }
 
-        public async void OnStageReturned(object source, int a)
+        public async void OnEntityReturned<T>(object source, List<T> entity) where T : IEntity, IGetable
         {
             using (var scope = _scopeFactory.CreateScope())
             {
@@ -24,9 +25,9 @@ namespace Treehoot.Application.Services
                 await dbContext.ApiCallResult
                     .AddAsync(new ApiCallResult() { 
                         Id = Guid.NewGuid(),
-                        DateTime = DateTime.Now.ToString(), 
-                        IsSuccessful = a > 0,
-                        ItemCount = a
+                        DateTime = DateTime.Now.ToString(),
+                        ItemCount = entity.Where(a => a != null).ToList().Count, 
+                        IsSuccessful = entity.Where(a => a != null).ToList().Count > 0
                     });
                 await dbContext.SaveChangesAsync();
             }
