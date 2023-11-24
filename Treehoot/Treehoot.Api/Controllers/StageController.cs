@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
-using Treehoot.Api.Maping;
+using Treehoot.Api.Mapping;
 using Treehoot.Api.Dtos;
+using Treehoot.Application.Services;
 
 namespace Treehoot.Api.Controllers;
 
@@ -11,17 +12,23 @@ namespace Treehoot.Api.Controllers;
 public class StageController : ControllerBase
 {
     private readonly IStageService _stageService;
+    private readonly IApiCallResultService _apiCallResultService;
 
-    public StageController(IStageService stageService)
+    public StageController(IStageService stageService, IApiCallResultService apiCallResultService)
     {
         _stageService = stageService;
+        _apiCallResultService = apiCallResultService;
     }
 
     [HttpGet("{stageId}")]
     public async Task<ActionResult<Stage>> GetSingle(int stageId)
     {
+        _stageService.StageReturned +=  _apiCallResultService.OnStageReturned;
+
         //service
         var stage = await _stageService.GetSingle(stageId);
+
+        _stageService.StageReturned -= _apiCallResultService.OnStageReturned;
 
         //validation
         if (stage == null)
@@ -38,6 +45,8 @@ public class StageController : ControllerBase
     [HttpGet("quizId/{quizId}")]
     public async Task<ActionResult<Stage>> GetByQuizId(int quizId)
     {
+        _stageService.StageReturned += _apiCallResultService.OnStageReturned;
+
         //service
         var stages = await _stageService.GetQuizStages(quizId);
 
@@ -57,6 +66,8 @@ public class StageController : ControllerBase
     [HttpGet("{stageId}/full")]
     public async Task<ActionResult<GetStageFullResponse>> GetSingleFull(int stageId)
     {
+        _stageService.StageReturned += _apiCallResultService.OnStageReturned;
+
         //service
         var stage = await _stageService.GetSingleFull(stageId);
 

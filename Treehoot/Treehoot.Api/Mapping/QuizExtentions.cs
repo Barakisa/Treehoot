@@ -1,7 +1,7 @@
 ﻿using Treehoot.Domain.Models;
 using Treehoot.Api.Dtos;
 
-namespace Treehoot.Api.Maping;
+namespace Treehoot.Api.Mapping;
 
 public static class QuizExtensions
 {

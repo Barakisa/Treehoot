@@ -3,7 +3,7 @@ using Treehoot.Domain.Models;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
 using Treehoot.Api.Dtos;
-using Treehoot.Api.Maping;
+using Treehoot.Api.Mapping;
 using Treehoot.Application.Data;
 
 namespace Treehoot.Api.Controllers;

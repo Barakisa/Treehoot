@@ -32,7 +32,7 @@ builder.Services.AddSingleton<IAnswerService, AnswerService>();
 builder.Services.AddSingleton<IQuestionService, QuestionService>();
 builder.Services.AddSingleton<IStageService, StageService>();
 builder.Services.AddSingleton<IQuizService, QuizService>();
-
+builder.Services.AddSingleton<IApiCallResultService, ApiCallResultService>();
 
 var app = builder.Build();
 
