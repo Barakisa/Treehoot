@@ -3,8 +3,9 @@ using Treehoot.Domain.Models;
 using Treehoot.Api.Dtos;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
-using Treehoot.Api.Maping;
 using Treehoot.Application.Exceptions;
+using Treehoot.Api.Mapping;
+
 
 namespace Treehoot.Api.Controllers;
 

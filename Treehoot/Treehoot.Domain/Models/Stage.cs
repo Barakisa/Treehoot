@@ -1,6 +1,6 @@
 ﻿namespace Treehoot.Domain.Models;
 
-public class Stage : IEntity
+public class Stage : IEntity, IGetable
 {
     public Stage(int id, string name)
     {

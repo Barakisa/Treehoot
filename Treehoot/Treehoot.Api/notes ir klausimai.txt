@@ -8,6 +8,9 @@ Nauji klausimai:
 	-kaip vadinti dto? Kaip geriau isdestyti tas tris dalis? Ar ju visu reikia? 
 		[http method][objectname][response|request|responsebody|requestbody]
 			GetStageResponseBody
+	-decouplinimas yra gerai -  Kada geriau NEdecoupliti? 
+		Kada decouplinimas kenkia? 
+		Kaip del microservisu?
 		
 
 Seni Klausimai:

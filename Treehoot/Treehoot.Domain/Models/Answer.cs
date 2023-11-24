@@ -1,6 +1,6 @@
 ﻿namespace Treehoot.Domain.Models;
 
-public class Answer : IEntity
+public class Answer : IEntity, IGetable
 {
     public Answer(int id, bool isCorrect, string text)
     {

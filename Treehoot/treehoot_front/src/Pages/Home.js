@@ -50,11 +50,11 @@ export default function Home() {
           <div style={{ height: "4rem" }}>{formData.username.username}</div>
         )}
       </div>
-      <div className="d-flex flex-row mt-5">
+      <div className="d-flex flex-row mt-5 gap-5">
         <div className="mt-5 ">
           <Link
             to="/settings"
-            className="home-page-buttons btn btn-outline-primary me-5 fs-2"
+            className="home-page-buttons btn btn-outline-primary fs-2"
           >
             Settings
           </Link>
@@ -62,7 +62,7 @@ export default function Home() {
         <div className="mt-5">
           <Link
             to="/play"
-            className=" home-page-buttons btn btn-outline-primary me-5 fs-2"
+            className=" home-page-buttons btn btn-outline-primary fs-2"
           >
             Play
           </Link>
@@ -73,6 +73,14 @@ export default function Home() {
             className="home-page-buttons btn btn-outline-primary fs-2 "
           >
             New Game
+          </Link>
+        </div>
+        <div className="mt-5">
+          <Link 
+            to="/sign-up"
+            className="home-page-buttons btn btn-outline-primary fs-2"
+          >
+            Sign up
           </Link>
         </div>
       </div>

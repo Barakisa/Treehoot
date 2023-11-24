@@ -1,6 +1,6 @@
 ﻿namespace Treehoot.Domain.Models;
 
-public class Quiz : IEntity
+public class Quiz : IEntity, IGetable
 {
     public Quiz(int id, string name, string description)
     {

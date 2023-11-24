@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Treehoot.Application.IServices;
 using Treehoot.Api.Dtos;
-using Treehoot.Api.Maping;
+using Treehoot.Api.Mapping;
 using Treehoot.Application.Exceptions;
 using Treehoot.Domain.Models;
+
 
 namespace Treehoot.Api.Controllers;
 

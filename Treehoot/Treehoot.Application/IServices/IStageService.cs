@@ -6,6 +6,7 @@ namespace Treehoot.Application.IServices;
 
 public interface IStageService
 {
+    event EventHandler<List<Stage>> StageReturned;
     Task<Stage?> GetSingle(int stageId);
     Task<List<Stage>?> GetQuizStages(int quizId);
     Task<Stage?> GetSingleFull(int stageId);
