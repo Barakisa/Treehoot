@@ -8,6 +8,7 @@ import QuestionPreview from "./Pages/QuestionPreview";
 import Host from "./Pages/Host";
 import Join from "./Pages/Join";
 import NewGame from "./Pages/NewGame";
+import SignUp from "./Pages/SignUp";
 import { QuizProvider } from "./QuizContext";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/host" element={<Host />} />
           <Route path="/join" element={<Join />} />
           <Route path="/new-game" element={<NewGame />} />
+          <Route path="/sign-up" element={<SignUp />} />
         </Routes>
       </QuizProvider>
     </Router>
