@@ -7,6 +7,7 @@ using Treehoot.Application.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
+using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Application.Services;
 
@@ -39,12 +40,20 @@ public class QuizService : IQuizService
 
     public async Task<Quiz?> GetSingle(int quizId)
     {
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Quiz
-                            .SingleOrDefaultAsync(a => a.Id == quizId);
-        }
+        
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+                var quiz = await dbcontext.Quiz.FindAsync(quizId);
+                if (quiz == null)
+                {
+                    throw new NotFoundException("Quiz", quizId);
+                }
+                return await dbcontext.Quiz
+                                .SingleOrDefaultAsync(a => a.Id == quizId);
+            }
+        
+      
     }
     
     public async Task<Quiz?> GetSingleFull(int quizId)

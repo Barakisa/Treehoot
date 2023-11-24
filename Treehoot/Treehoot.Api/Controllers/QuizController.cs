@@ -5,6 +5,7 @@ using Treehoot.Application.IServices;
 using Treehoot.Api.Dtos;
 using Treehoot.Api.Mapping;
 using Treehoot.Application.Data;
+using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Api.Controllers;
 
@@ -42,18 +43,26 @@ public class QuizController : ControllerBase
     public async Task<ActionResult<GetQuizResponse>> GetSingle(int quizId)
     {
         //service
-        var quizzes = await _quizService.GetSingle(quizId);
-
-        //validation
-        if (quizzes == null)
+        try
         {
-            return NotFound();
+            var quizzes = await _quizService.GetSingle(quizId);
+            //validation
+
+            if (quizzes == null)
+            {
+                return NotFound();
+            }
+
+            //maping
+            var response = quizzes.ToResponse();
+
+            return Ok(response);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(new {Message = ex.Message});
         }
 
-        //maping
-        var response = quizzes.ToResponse();
-
-        return Ok(response);
     }
 
     [HttpGet("{quizId}/full")]

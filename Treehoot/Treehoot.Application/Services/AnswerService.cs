@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using Treehoot.Application.Data;
+using Treehoot.Application.Exceptions;
 using Treehoot.Application.Helpers;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
@@ -29,12 +30,19 @@ public class AnswerService : IAnswerService
 
     public async Task<List<Answer>?> GetQuestionAnswers(int questionId)
     {
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await dbcontext.Answer
-                            .Where(a => a.Question.Id == questionId)
-                            .ToListAsync();
-        }
+        
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+                var question = await dbcontext.Question.FindAsync(questionId);
+                if(question == null) {
+                    throw new NotFoundException("Question",questionId);
+                }
+                return await dbcontext.Answer
+                                .Where(a => a.Question.Id == questionId)
+                                .ToListAsync();
+            }
+        
+       
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Treehoot.Application.Data;
+using Treehoot.Application.Exceptions;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
@@ -41,17 +42,24 @@ public class StageService : IStageService
 
     public async Task<List<Stage>?> GetQuizStages(int quizId)
     {
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            var stages =  await dbcontext.Stage
+        
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+                var quiz = await dbcontext.Quiz.FindAsync(quizId);
+                if (quiz == null)
+                {
+                    throw new NotFoundException("Quiz", quizId);
+                }
+                var stages =  await dbcontext.Stage
                             .Include(s => s.Quiz)
                             .Where(a => a.Quiz.Id == quizId).ToListAsync();
 
-            OnStageReturned(stages);
+                OnStageReturned(stages);
 
-            return stages;
-        }
+                return stages;
+            }
+        
     }
 
     public async Task<Stage?> GetSingleFull(int stageId)

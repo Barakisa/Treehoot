@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using Treehoot.Application.Data;
+using Treehoot.Application.Exceptions;
 using Treehoot.Application.Helpers;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
@@ -35,6 +36,11 @@ public class QuestionService : IQuestionService
         using (var scope = _scopeFactory.CreateScope())
         {
             var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
+            var stage = await dbcontext.Stage.FindAsync(stageId);
+            if (stage == null) 
+            {
+                throw new NotFoundException("Stage", stageId);
+            }
             return await dbcontext.Question
                             .Include(q => q.Stage)
                             .Where(q => q.Stage.Id == stageId)
