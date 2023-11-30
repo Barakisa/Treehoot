@@ -10,73 +10,41 @@ namespace Treehoot.Application.Services;
 
 public class StageService : IStageService
 {
-    public event EventHandler<List<Stage>> StageReturned;
 
-    protected virtual void OnStageReturned(List<Stage> stages)
+    private readonly TreehootApiContext _treehootApiContext;
+
+    public StageService(TreehootApiContext treehootApiContext)
     {
-        if(StageReturned != null) 
-            StageReturned(this, stages);
-    }
-
-    private readonly IServiceScopeFactory _scopeFactory;
-
-    public StageService(IServiceScopeFactory scopeFactory)
-    {
-        _scopeFactory = scopeFactory;
+        _treehootApiContext = treehootApiContext;
     }
 
     public async Task<Stage?> GetSingle(int stageId)
     {
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            var stage = await dbcontext.Stage
-                            .Include(s => s.Quiz)
-                            .SingleOrDefaultAsync(a => a.Id == stageId);
-            
-            OnStageReturned(new List<Stage> { stage });
-
-            return stage;
-        }
+        return await _treehootApiContext.Stage
+                        .Include(s => s.Quiz)
+                        .SingleOrDefaultAsync(a => a.Id == stageId);
     }
 
     public async Task<List<Stage>?> GetQuizStages(int quizId)
     {
-        
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-                var quiz = await dbcontext.Quiz.FindAsync(quizId);
-                if (quiz == null)
-                {
-                    throw new NotFoundException("Quiz", quizId);
-                }
-                var stages =  await dbcontext.Stage
-                            .Include(s => s.Quiz)
-                            .Where(a => a.Quiz.Id == quizId).ToListAsync();
+        var quiz = await _treehootApiContext.Quiz.FindAsync(quizId);
+        if (quiz == null)
+        {
+            throw new NotFoundException("Quiz", quizId);
+        }
+        var stages = await _treehootApiContext.Stage
+                    .Include(s => s.Quiz)
+                    .Where(a => a.Quiz.Id == quizId).ToListAsync();
 
-                OnStageReturned(stages);
-
-                return stages;
-            }
-        
+        return stages;
     }
 
     public async Task<Stage?> GetSingleFull(int stageId)
     {
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            var stage = await dbcontext.Stage
-                            .Include(s => s.Questions)
-                                .ThenInclude(q => q.Answers)
-                            .Include(s => s.Quiz)
-                            .SingleOrDefaultAsync(s => s.Id == stageId);
-
-            OnStageReturned(new List<Stage> { stage });
-
-            return stage;
-        }
+        return await _treehootApiContext.Stage
+                        .Include(s => s.Questions)
+                            .ThenInclude(q => q.Answers)
+                        .Include(s => s.Quiz)
+                        .SingleOrDefaultAsync(s => s.Id == stageId);
     }
-    
 }

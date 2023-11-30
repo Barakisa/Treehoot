@@ -1,10 +1,4 @@
 Nauji klausimai:
-	-ar servisuoso su context geriua naudoti async? 
-		Jau klausiau, bet man idomu sitai situacijai (answerService pvz)
-	-kaip daryti su scope factory? Taip tinka? (all services - dbcontext injection)
-	-kur deti di intefaceus?
-	-servisuose, ypac kur gauti single item, labai daug duplikuojamo kodo... 
-		ar riekia dar daugiau skaidyti, ar tinka taip kaip yra?
 	-kaip vadinti dto? Kaip geriau isdestyti tas tris dalis? Ar ju visu reikia? 
 		[http method][objectname][response|request|responsebody|requestbody]
 			GetStageResponseBody
@@ -21,7 +15,8 @@ Seni Klausimai:
 		extensions pas mane
 	+Do we need a DB or is SQLite ok?
 		Docker + postgres
-
+	+kaip daryti su scope factory? Taip tinka? (all services - dbcontext injection)
+		Reikia transient daryti, ne scope
 ----------
 
 Kiap updatinti ef:

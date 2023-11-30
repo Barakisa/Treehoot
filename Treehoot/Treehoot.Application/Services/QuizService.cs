@@ -13,23 +13,19 @@ namespace Treehoot.Application.Services;
 
 public class QuizService : IQuizService
 {
-    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly TreehootApiContext _treehootApiContext;
 
-    public QuizService(IServiceScopeFactory scopeFactory)
+    public QuizService(TreehootApiContext treehootApiContext)
     {
-        _scopeFactory = scopeFactory;
+        _treehootApiContext = treehootApiContext;
     }
 
     public async Task<List<Quiz>?> GetAll()
     {
         try
         {
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-                return await context.Quiz
+            return await _treehootApiContext.Quiz
                                 .ToListAsync();
-            }
         }
         catch (Exception e)
         {
@@ -40,34 +36,26 @@ public class QuizService : IQuizService
 
     public async Task<Quiz?> GetSingle(int quizId)
     {
-        
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-                var quiz = await dbcontext.Quiz.FindAsync(quizId);
-                if (quiz == null)
-                {
-                    throw new NotFoundException("Quiz", quizId);
-                }
-                return await dbcontext.Quiz
-                                .SingleOrDefaultAsync(a => a.Id == quizId);
-            }
-        
-      
+        var quiz = await _treehootApiContext.Quiz.FindAsync(quizId);
+        if (quiz == null)
+        {
+            throw new NotFoundException("Quiz", quizId);
+        }
+        return await _treehootApiContext.Quiz
+                        .SingleOrDefaultAsync(a => a.Id == quizId);
+
+
+
     }
-    
+
     public async Task<Quiz?> GetSingleFull(int quizId)
     {
+        return await _treehootApiContext.Quiz
+                        .Include(s => s.Stages)
+                            .ThenInclude(s => s.Questions)
+                                .ThenInclude(q => q.Answers)
+                        .SingleOrDefaultAsync(a => a.Id == quizId);
 
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await context.Quiz
-                            .Include(s => s.Stages)
-                                .ThenInclude(s => s.Questions)
-                                    .ThenInclude(q => q.Answers)
-                            .SingleOrDefaultAsync(a => a.Id == quizId);
-        }
     }
 
     /*

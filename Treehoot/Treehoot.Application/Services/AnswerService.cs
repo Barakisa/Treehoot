@@ -11,38 +11,28 @@ namespace Treehoot.Application.Services;
 
 public class AnswerService : IAnswerService
 {
-    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly TreehootApiContext _treehootApiContext;
 
-    public AnswerService(IServiceScopeFactory scopeFactory)
+    public AnswerService(TreehootApiContext treehootApiContext)
     {
-        _scopeFactory = scopeFactory;
+        _treehootApiContext = treehootApiContext;
     }
 
     public async Task<Answer?> GetSingle(int answerId)
     {
-        using (var scope = _scopeFactory.CreateScope())
-        {
-            var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-            return await dbcontext.Answer
-                            .SingleOrDefaultAsync(a => a.Id == answerId);
-        }
+        return await _treehootApiContext.Answer
+                        .SingleOrDefaultAsync(a => a.Id == answerId);
     }
 
     public async Task<List<Answer>?> GetQuestionAnswers(int questionId)
     {
-        
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                var dbcontext = scope.ServiceProvider.GetRequiredService<TreehootApiContext>();
-                var question = await dbcontext.Question.FindAsync(questionId);
-                if(question == null) {
-                    throw new NotFoundException("Question",questionId);
-                }
-                return await dbcontext.Answer
-                                .Where(a => a.Question.Id == questionId)
-                                .ToListAsync();
-            }
-        
-       
+        var question = await _treehootApiContext.Question.FindAsync(questionId);
+        if (question == null)
+        {
+            throw new NotFoundException("Question", questionId);
+        }
+        return await _treehootApiContext.Answer
+                        .Where(a => a.Question.Id == questionId)
+                        .ToListAsync();
     }
 }

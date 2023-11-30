@@ -28,11 +28,12 @@ builder.Services.AddCors(options =>
 });
 
 //dependency injection registration
-builder.Services.AddSingleton<IAnswerService, AnswerService>();
-builder.Services.AddSingleton<IQuestionService, QuestionService>();
-builder.Services.AddSingleton<IStageService, StageService>();
-builder.Services.AddSingleton<IQuizService, QuizService>();
-builder.Services.AddSingleton<IApiCallResultService, ApiCallResultService>();
+builder.Services.AddTransient<IAnswerService, AnswerService>();
+builder.Services.AddTransient<IQuestionService, QuestionService>();
+builder.Services.AddTransient<IStageService, StageService>();
+builder.Services.AddTransient<IQuizService, QuizService>();
+    
+builder.Services.AddTransient<TreehootApiContext,  TreehootApiContext>();
 
 var app = builder.Build();
 
