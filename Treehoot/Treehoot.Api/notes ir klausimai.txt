@@ -50,6 +50,11 @@ Todo
 	pakeisti visus servisus, kur naudojamas db context, kad visur butu async await
 
 ----------
+
+Tests:
+	Reikia bent vienam servisui padaryti testus, naudojant in-memory db
+
+----------
 Projektų struktūra
 Main projetai:
 
