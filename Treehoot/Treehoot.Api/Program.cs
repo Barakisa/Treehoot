@@ -35,7 +35,7 @@ builder.Services.AddTransient<IQuestionService, QuestionService>();
 builder.Services.AddTransient<IStageService, StageService>();
 builder.Services.AddTransient<IQuizService, QuizService>();
     
-builder.Services.AddTransient<TreehootApiContext,  TreehootApiContext>();
+//builder.Services.AddTransient<TreehootApiContext,  TreehootApiContext>();
 
 var app = builder.Build();
 

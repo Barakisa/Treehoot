@@ -5,7 +5,7 @@ Nauji klausimai:
 	-decouplinimas yra gerai -  Kada geriau NEdecoupliti? 
 		Kada decouplinimas kenkia? 
 		Kaip del microservisu?
-		
+	- how does getting a type work?
 
 Seni Klausimai:
 	+Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
