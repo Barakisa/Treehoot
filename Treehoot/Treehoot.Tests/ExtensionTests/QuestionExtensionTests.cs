@@ -1,6 +1,5 @@
 ﻿using Xunit;
 using Treehoot.Domain.Models;
-using Treehoot.Api.Maping;
 
 namespace Treehoot.Api.Mapping.Tests
 {
