@@ -45,16 +45,16 @@ public class QuizController : ControllerBase
         //service
         try
         {
-            var quizzes = await _quizService.GetSingle(quizId);
+            var quiz = await _quizService.GetSingle(quizId);
             //validation
 
-            if (quizzes == null)
+            if (quiz == null)
             {
                 return NotFound();
             }
 
             //maping
-            var response = quizzes.ToResponse();
+            var response = quiz.ToResponse();
 
             return Ok(response);
         }
