@@ -13,23 +13,17 @@ namespace Treehoot.Api.Controllers;
 public class StageController : ControllerBase
 {
     private readonly IStageService _stageService;
-    private readonly IApiCallResultService _apiCallResultService;
 
-    public StageController(IStageService stageService, IApiCallResultService apiCallResultService)
+    public StageController(IStageService stageService)
     {
         _stageService = stageService;
-        _apiCallResultService = apiCallResultService;
     }
 
     [HttpGet("{stageId}")]
     public async Task<ActionResult<Stage>> GetSingle(int stageId)
     {
-        _stageService.StageReturned +=  _apiCallResultService.OnEntityReturned;
-
         //service
         var stage = await _stageService.GetSingle(stageId);
-
-        _stageService.StageReturned -= _apiCallResultService.OnEntityReturned;
 
         //validation
         if (stage == null)
@@ -48,12 +42,8 @@ public class StageController : ControllerBase
     {
         try
         {
-            _stageService.StageReturned += _apiCallResultService.OnEntityReturned;
-
             //service
             var stages = await _stageService.GetQuizStages(quizId);
-
-            _stageService.StageReturned -= _apiCallResultService.OnEntityReturned;
 
             //validation
             if (!stages.Any())
@@ -75,12 +65,8 @@ public class StageController : ControllerBase
     [HttpGet("{stageId}/full")]
     public async Task<ActionResult<GetStageFullResponse>> GetSingleFull(int stageId)
     {
-        _stageService.StageReturned += _apiCallResultService.OnEntityReturned;
-
-        //service
+         //service
         var stage = await _stageService.GetSingleFull(stageId);
-
-        _stageService.StageReturned -= _apiCallResultService.OnEntityReturned;
 
         //validation
         if (stage == null)
