@@ -82,11 +82,23 @@ public class QuizController : ControllerBase
 
         return Ok(response);
     }
-    /*
+    
     [HttpPost]
-    public ActionResult<PostResult> QuizPost(PostQuizBody quiz)
+    public async Task<ActionResult<PostResult>> CreateQuiz([FromBody] PostQuizBody postQuiz)
     {
-        var quizModel = new Quiz(new Guid(), quiz.Name, quiz.Description);
-        return Ok(_quizService.CreateAndValidateQuiz(quizModel));
-    }*/
+        if (postQuiz == null)
+        {
+            return UnprocessableEntity(new PostResult (success: false, message: "unprocessable entity"));
+        }
+
+        var quiz = postQuiz.ToModel();
+        
+        var valid = await _quizService.Validate(quiz);
+        
+        if(!valid.Success){
+            return ValidationProblem(valid.Message);
+        }
+        
+        return Ok(valid);
+    }
 }

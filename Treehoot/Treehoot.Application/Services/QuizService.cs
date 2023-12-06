@@ -57,9 +57,7 @@ public class QuizService : IQuizService
                         .SingleOrDefaultAsync(a => a.Id == quizId);
 
     }
-
-    /*
-    public async Task<PostResult> CreateAndValidateQuiz(Quiz quiz)
+    public async Task<PostResult> Validate(Quiz quiz)
     {
         try
         {
@@ -112,7 +110,7 @@ public class QuizService : IQuizService
 
             }
 
-            return new PostResult(true, "Quiz has been created!"); 
+            return new PostResult(true, "Quiz is valid!"); 
         }
 
         catch
@@ -120,6 +118,4 @@ public class QuizService : IQuizService
             return new PostResult(false, "Something went wrong, try again...");
         }
     }
-    */
-
 }

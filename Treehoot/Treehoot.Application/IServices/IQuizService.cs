@@ -11,5 +11,5 @@ public interface IQuizService
     Task<List<Quiz>?> GetAll();
     Task<Quiz?> GetSingle(int quizId);
     Task<Quiz?> GetSingleFull(int quizId);
-    //Task<PostResult> CreateAndValidateQuiz(Quiz quiz);
+    Task<PostResult> Validate(Quiz quiz);
 }
