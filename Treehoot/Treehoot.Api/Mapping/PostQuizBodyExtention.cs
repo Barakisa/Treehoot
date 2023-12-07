@@ -25,7 +25,7 @@ namespace Treehoot.Api.Mapping
             {
                 var modelStage = new Stage(id: 1, 
                                            name: postStage.Name);
-                modelStage.Questions = postQuestionsToModel(postStage.Questions);
+                modelStage.Questions = postQuestionsToModel(postStage.Topics);
 
                 modelStages.Add(modelStage);
             }

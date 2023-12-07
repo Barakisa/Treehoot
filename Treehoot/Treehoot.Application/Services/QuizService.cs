@@ -7,6 +7,7 @@ using Treehoot.Application.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Application.Services;
@@ -57,7 +58,7 @@ public class QuizService : IQuizService
                         .SingleOrDefaultAsync(a => a.Id == quizId);
 
     }
-    public async Task<PostResult> Validate(Quiz quiz)
+    public async Task<PostResult> ValidatePost(Quiz quiz)
     {
         try
         {
@@ -78,7 +79,7 @@ public class QuizService : IQuizService
 
                 if(stage.Questions == null || !stage.Questions.Any())
                 {
-                    return new PostResult(false, "Atleast one topic is required!");
+                    return new PostResult(false, "At least one topic is required!");
                 }
 
                 foreach (var question in stage.Questions)
@@ -117,5 +118,11 @@ public class QuizService : IQuizService
         {
             return new PostResult(false, "Something went wrong, try again...");
         }
+    }
+
+    public async Task<PostResult> Create(Quiz quiz)
+    {
+        //var res = await _treehootApiContext.Quiz.AddAsync(quiz);
+        return new PostResult(true, "quiz added");
     }
 }

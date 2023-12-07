@@ -88,17 +88,19 @@ public class QuizController : ControllerBase
     {
         if (postQuiz == null)
         {
-            return UnprocessableEntity(new PostResult (success: false, message: "unprocessable entity"));
+            return BadRequest(new PostResult (success: false, message: "Could not map request body to the expected new quiz body"));
         }
 
         var quiz = postQuiz.ToModel();
         
-        var valid = await _quizService.Validate(quiz);
+        var valid = await _quizService.ValidatePost(quiz);
         
         if(!valid.Success){
-            return ValidationProblem(valid.Message);
+            return BadRequest(valid);
         }
+
+        var created = _quizService.Create(quiz);
         
-        return Ok(valid);
+        return Ok(created);
     }
 }

@@ -83,10 +83,10 @@ export default function NewGame() {
           stages: [],
         });
 
-        setResponseMessage(responseData.detail);
+        setResponseMessage(responseData.message);
       } else {
         console.log("Error (Api)");
-        setResponseMessage(responseData.detail);
+        setResponseMessage(responseData.message);
       }
     } catch (error) {
       console.error("Error (TryCatch):", error);
