@@ -10,7 +10,7 @@ namespace Treehoot.Api.Mapping
     {
         public static Quiz ToModel(this PostQuizBody postQuiz)
         {
-            var modelQuiz = new Quiz(id: 1, 
+            var modelQuiz = new Quiz(id: new Guid(), 
                                      name: postQuiz.Name, 
                                      description: postQuiz.Description);
             modelQuiz.Stages = postStagesToModel(postQuiz.Stages);
@@ -23,7 +23,7 @@ namespace Treehoot.Api.Mapping
 
             foreach (var postStage in postStages)
             {
-                var modelStage = new Stage(id: 1, 
+                var modelStage = new Stage(id: new Guid(), 
                                            name: postStage.Name);
                 modelStage.Questions = postQuestionsToModel(postStage.Topics);
 
@@ -39,7 +39,7 @@ namespace Treehoot.Api.Mapping
 
             foreach (var postQuestion in postQuestions)
             {
-                var modelQuestion = new Question(id: 1, 
+                var modelQuestion = new Question(id: new Guid(), 
                                                  topic: postQuestion.TopicName, 
                                                  questionText: postQuestion.Question);
                 modelQuestion.Answers = postAnswersToModel(postQuestion.Answers);
@@ -56,7 +56,7 @@ namespace Treehoot.Api.Mapping
 
             foreach (var postAnswer in postAnswers)
             {
-                var modelAnswer = new Answer(id: 1, isCorrect: postAnswer.IsCorrect, text: postAnswer.Answer);
+                var modelAnswer = new Answer(id: new Guid(), isCorrect: postAnswer.IsCorrect, text: postAnswer.Answer);
                 modelAnswers.Add(modelAnswer);
             }
             return modelAnswers;

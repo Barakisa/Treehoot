@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
-using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
 using Treehoot.Api.Dtos;
 using Treehoot.Api.Mapping;
-using Treehoot.Application.Data;
 using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Api.Controllers;
@@ -40,7 +38,7 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet("{quizId}")]
-    public async Task<ActionResult<GetQuizResponse>> GetSingle(int quizId)
+    public async Task<ActionResult<GetQuizResponse>> GetSingle(Guid quizId)
     {
         //service
         try
@@ -66,7 +64,7 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet("{quizId}/full")]
-    public async Task<ActionResult<GetQuizFullResponse>> GetSingleFull(int quizId)
+    public async Task<ActionResult<GetQuizFullResponse>> GetSingleFull(Guid quizId)
     {
         //service
         var quiz = await _quizService.GetSingleFull(quizId);
@@ -99,7 +97,7 @@ public class QuizController : ControllerBase
             return BadRequest(valid);
         }
 
-        var created = _quizService.Create(quiz);
+        var created = await _quizService.Create(quiz);
         
         return Ok(created);
     }

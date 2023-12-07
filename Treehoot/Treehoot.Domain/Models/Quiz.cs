@@ -2,14 +2,14 @@
 
 public class Quiz : IEntity, IGetable
 {
-    public Quiz(int id, string name, string description)
+    public Quiz(Guid id, string name, string description)
     {
         Id = id;
         Name = name;
         Description = description;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     public string Name { get; set; }
     public string Description { get; set; }

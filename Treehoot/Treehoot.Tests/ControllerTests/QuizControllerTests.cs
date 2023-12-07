@@ -13,8 +13,8 @@ public class QuizControllerTests
         // Arrange
         var expectedQuizzes = new List<Quiz>
         {
-            new Quiz(1, "Quiz 1", "Description 1"),
-            new Quiz(2, "Quiz 2", "Description 2"),
+            new Quiz(new Guid(), "Quiz 1", "Description 1"),
+            new Quiz(new Guid(), "Quiz 2", "Description 2"),
         };
 
         var quizServiceMock = new Mock<IQuizService>();
@@ -51,15 +51,15 @@ public class QuizControllerTests
     public async Task GetSingle_WhenQuizExists_ReturnsOk()
     {
         // Arrange
-        var expectedQuiz = new Quiz(1, "Name", "Description");
+        var expectedQuiz = new Quiz(new Guid(), "Name", "Description");
 
         var quizServiceMock = new Mock<IQuizService>();
-        quizServiceMock.Setup(service => service.GetSingle(It.IsAny<int>()))
+        quizServiceMock.Setup(service => service.GetSingle(It.IsAny<Guid>()))
             .ReturnsAsync(expectedQuiz);
         var controller = new QuizController(quizServiceMock.Object);
 
         // Act
-        var result = await controller.GetSingle(1);
+        var result = await controller.GetSingle(new Guid());
 
         // Assert
         Assert.IsType<OkObjectResult>(result.Result);
@@ -69,7 +69,7 @@ public class QuizControllerTests
     public async Task GetSingle_WhenQuizDoesntExist_ReturnsNotFound()
     {
         // Arrange
-        var nonExistentQuizId = 999;
+        var nonExistentQuizId = new Guid();
 
         var quizServiceMock = new Mock<IQuizService>();
         quizServiceMock.Setup(service => service.GetSingle(nonExistentQuizId))

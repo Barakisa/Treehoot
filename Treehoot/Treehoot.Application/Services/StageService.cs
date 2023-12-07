@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
 using Treehoot.Application.Data;
 using Treehoot.Application.Exceptions;
 using Treehoot.Application.IServices;
@@ -18,14 +16,14 @@ public class StageService : IStageService
         _treehootApiContext = treehootApiContext;
     }
 
-    public async Task<Stage?> GetSingle(int stageId)
+    public async Task<Stage?> GetSingle(Guid stageId)
     {
         return await _treehootApiContext.Stage
                         .Include(s => s.Quiz)
                         .SingleOrDefaultAsync(a => a.Id == stageId);
     }
 
-    public async Task<List<Stage>?> GetQuizStages(int quizId)
+    public async Task<List<Stage>?> GetQuizStages(Guid quizId)
     {
         var quiz = await _treehootApiContext.Quiz.FindAsync(quizId);
         if (quiz == null)
@@ -39,7 +37,7 @@ public class StageService : IStageService
         return stages;
     }
 
-    public async Task<Stage?> GetSingleFull(int stageId)
+    public async Task<Stage?> GetSingleFull(Guid stageId)
     {
         return await _treehootApiContext.Stage
                         .Include(s => s.Questions)

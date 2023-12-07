@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json;
 using Treehoot.Application.Data;
 using Treehoot.Application.Exceptions;
-using Treehoot.Application.Helpers;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
@@ -20,14 +17,14 @@ public class QuestionService : IQuestionService
         _treehootApiContext = treehootApiContext;
     }
 
-    public async Task<Question?> GetSingle(int questionId)
+    public async Task<Question?> GetSingle(Guid questionId)
     {
         return await _treehootApiContext.Question
                         .Include(q => q.Stage)
                         .SingleOrDefaultAsync(q => q.Id == questionId);
     }
 
-    public async Task<List<Question>?> GetStageQuestions(int stageId)
+    public async Task<List<Question>?> GetStageQuestions(Guid stageId)
     {
         var stage = await _treehootApiContext.Stage.FindAsync(stageId);
         if (stage == null)
@@ -40,7 +37,7 @@ public class QuestionService : IQuestionService
                         .ToListAsync();
     }
 
-    public async Task<Question?> GetSingleFull(int questionId)
+    public async Task<Question?> GetSingleFull(Guid questionId)
     {
         return await _treehootApiContext.Question
                         .Include(q => q.Answers)

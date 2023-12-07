@@ -1,6 +1,6 @@
 ﻿using Xunit;
 using Treehoot.Domain.Models;
-using Treehoot.Api.Maping;
+using Treehoot.Api.Mapping;
 
 namespace Treehoot.Api.Mapping.Tests
 {
@@ -10,8 +10,8 @@ namespace Treehoot.Api.Mapping.Tests
         public void ToResponse_SingleAnswer_ShouldMapCorrectly()
         {
             // Arrange
-            var question = new Question(1, "Topic 1", "Question 1");
-            var answer = new Answer(1, true, "Answer") { Question = question };
+            var question = new Question(new Guid(), "Topic 1", "Question 1");
+            var answer = new Answer(new Guid(), true, "Answer") { Question = question };
 
             // Act
             var result = answer.ToResponse();
@@ -27,11 +27,11 @@ namespace Treehoot.Api.Mapping.Tests
         public void ToResponse_ListOfAnswers_ShouldMapCorrectly()
         {
             // Arrange
-            var question = new Question(1, "Topic1", "QuestionText1");
+            var question = new Question(new Guid(), "Topic1", "QuestionText1");
             var answers = new List<Answer>
             {
-                new Answer(1, true, "Answer") { Question = question },
-                new Answer(2, true, "Answer") { Question = question }
+                new Answer(new Guid(), true, "Answer") { Question = question },
+                new Answer(new Guid(), true, "Answer") { Question = question }
             };
 
             // Act

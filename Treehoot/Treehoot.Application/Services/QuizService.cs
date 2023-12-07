@@ -1,13 +1,7 @@
-﻿using System.Text.Json;
-using Treehoot.Application.Helpers;
-using Treehoot.Application.IServices;
+﻿using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
-using System.Net;
 using Treehoot.Application.Data;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Application.Services;
@@ -35,7 +29,7 @@ public class QuizService : IQuizService
 
     }
 
-    public async Task<Quiz?> GetSingle(int quizId)
+    public async Task<Quiz?> GetSingle(Guid quizId)
     {
         var quiz = await _treehootApiContext.Quiz.FindAsync(quizId);
         if (quiz == null)
@@ -49,7 +43,7 @@ public class QuizService : IQuizService
 
     }
 
-    public async Task<Quiz?> GetSingleFull(int quizId)
+    public async Task<Quiz?> GetSingleFull(Guid quizId)
     {
         return await _treehootApiContext.Quiz
                         .Include(s => s.Stages)
@@ -122,7 +116,8 @@ public class QuizService : IQuizService
 
     public async Task<PostResult> Create(Quiz quiz)
     {
-        //var res = await _treehootApiContext.Quiz.AddAsync(quiz);
-        return new PostResult(true, "quiz added");
+        var res = await _treehootApiContext.Quiz.AddAsync(quiz);
+        await _treehootApiContext.SaveChangesAsync();
+        return new PostResult(true, "Quiz added");
     }
 }

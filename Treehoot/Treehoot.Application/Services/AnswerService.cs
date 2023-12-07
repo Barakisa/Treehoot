@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json;
 using Treehoot.Application.Data;
 using Treehoot.Application.Exceptions;
-using Treehoot.Application.Helpers;
 using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
@@ -18,13 +15,13 @@ public class AnswerService : IAnswerService
         _treehootApiContext = treehootApiContext;
     }
 
-    public async Task<Answer?> GetSingle(int answerId)
+    public async Task<Answer?> GetSingle(Guid answerId)
     {
         return await _treehootApiContext.Answer
                         .SingleOrDefaultAsync(a => a.Id == answerId);
     }
 
-    public async Task<List<Answer>?> GetQuestionAnswers(int questionId)
+    public async Task<List<Answer>?> GetQuestionAnswers(Guid questionId)
     {
         var question = await _treehootApiContext.Question.FindAsync(questionId);
         if (question == null)

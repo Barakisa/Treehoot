@@ -21,7 +21,7 @@ public class AnswerController : ControllerBase
     }
 
     [HttpGet("{answerId}")]
-    public async Task<ActionResult<GetAnswerResponse>> Get(int answerId)
+    public async Task<ActionResult<GetAnswerResponse>> Get(Guid answerId)
     {
             //service
             var answer = await _answerService.GetSingle(answerId);
@@ -41,7 +41,7 @@ public class AnswerController : ControllerBase
     }
 
     [HttpGet("questionId/{questionId}")]
-    public async Task<ActionResult<List<GetAnswerResponse>>> GetByQuestionId(int questionId)
+    public async Task<ActionResult<List<GetAnswerResponse>>> GetByQuestionId(Guid questionId)
     {
         try
         {
