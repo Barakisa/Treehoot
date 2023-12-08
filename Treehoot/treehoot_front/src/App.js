@@ -10,7 +10,7 @@ import Join from "./Pages/Join";
 import NewGame from "./Pages/NewGame";
 import { QuizProvider } from "./QuizContext";
 import LogIn from "./Pages/LogIn";
-import Register from "./Pages/Register";
+import RegisterPage from "./Pages/RegisterPage";
 import { UserProvider } from "./UserContext";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <Route path="/join" element={<Join />} />
             <Route path="/new-game" element={<NewGame />} />
             <Route path="/log-in" element={<LogIn />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </QuizProvider>
       </UserProvider>
