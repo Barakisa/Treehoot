@@ -4,6 +4,7 @@ import { useState } from "react";
 import "../styles.css";
 import profile from "../Pictures/profile.png";
 import LoadingCircle from "../components/LoadingCircle";
+import { useUser } from "../UserContext";
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export default function Home() {
     username: "",
   });
   const [loading, setLoading] = useState(true);
+  const { user } = useUser();
 
   const fetchData = async () => {
     try {
@@ -76,12 +78,18 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-5">
-          <Link 
-            to="/sign-up"
-            className="home-page-buttons btn btn-outline-primary fs-2"
-          >
-            Sign up
-          </Link>
+          {user.isLoggedIn ? (
+            <button className="home-page-buttons btn btn-outline-primary fs-2">
+              Log out
+            </button>
+          ) : (
+            <Link
+              to="/log-in"
+              className="home-page-buttons btn btn-outline-primary fs-2"
+            >
+              Log in
+            </Link>
+          )}
         </div>
       </div>
     </div>

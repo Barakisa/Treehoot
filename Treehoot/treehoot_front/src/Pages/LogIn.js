@@ -1,13 +1,15 @@
 import { React, useState } from "react";
+import { Link } from "react-router-dom";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-export default function Signup() {
+export default function LogIn() {
   const [email, setEmail] = useState({ email: "", isValid: true });
   const [password, setPassword] = useState({ password: "", isValid: true });
 
   const handleEmailChange = (e) => {
+    console.log(email);
     setEmail({
       email: e.target.value,
       isValid: EMAIL_REGEX.test(e.target.value),
@@ -25,7 +27,7 @@ export default function Signup() {
     <div className="d-flex flex-column justify-content-center align-items-center vh-100">
       <div className="border border-1 p-5 rounded" style={{ width: "500px" }}>
         <div className="d-flex flex-row justify-content-center mb-5">
-          <span className="fs-1 block">Sign up</span>
+          <span className="fs-1 block">Log in</span>
         </div>
 
         <div>
@@ -83,9 +85,14 @@ export default function Signup() {
                 Remember me!
               </label>
             </div>
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
+            <div className="d-flex flex-column align-items-center gap-3">
+              <button type="submit" className="btn btn-lg btn-primary mt-2">
+                Log me in
+              </button>
+              <Link to="/register">
+                Don't have an account? Click here and register!
+              </Link>
+            </div>
           </form>
         </div>
       </div>
