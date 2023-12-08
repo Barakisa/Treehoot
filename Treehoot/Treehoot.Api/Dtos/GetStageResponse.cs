@@ -4,7 +4,7 @@ namespace Treehoot.Api.Dtos;
 
 public class GetStageResponse : IEntity
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+    public Guid QuizId { get; set; }
     public string Name { get; set; }
-    public int QuizId { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using Treehoot.Domain.Models;
+using Treehoot.Api.Mapping;
 
 namespace Treehoot.Api.Mapping.Tests
 {
@@ -9,8 +10,8 @@ namespace Treehoot.Api.Mapping.Tests
         public void ToResponse_SingleStage_ShouldMapCorrectly()
         {
             // Arrange
-            var quiz = new Quiz(1, "Quiz 1", "Description 1");
-            var stage = new Stage(1, "Stage 1") { Quiz = quiz };
+            var quiz = new Quiz(new Guid(), "Quiz 1", "Description 1");
+            var stage = new Stage(new Guid(), "Stage 1") { Quiz = quiz };
 
             // Act
             var result = stage.ToResponse();
@@ -25,11 +26,11 @@ namespace Treehoot.Api.Mapping.Tests
         public void ToResponse_ListOfStages_ShouldMapCorrectly()
         {
             // Arrange
-            var quiz = new Quiz(1, "Quiz 1", "Description 1");
+            var quiz = new Quiz(new Guid(), "Quiz 1", "Description 1");
             var stages = new List<Stage>
             {
-                new Stage(1, "Stage 1") { Quiz = quiz },
-                new Stage(2, "Stage 2") { Quiz = quiz }
+                new Stage(new Guid(), "Stage 1") { Quiz = quiz },
+                new Stage(new Guid(), "Stage 2") { Quiz = quiz }
             };
 
             // Act

@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Treehoot.Domain.Models;
-using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
 using Treehoot.Api.Dtos;
 using Treehoot.Api.Mapping;
-using Treehoot.Application.Data;
 using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Api.Controllers;
@@ -40,7 +38,7 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet("{quizId}")]
-    public async Task<ActionResult<GetQuizResponse>> GetSingle(int quizId)
+    public async Task<ActionResult<GetQuizResponse>> GetSingle(Guid quizId)
     {
         //service
         try
@@ -66,7 +64,7 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet("{quizId}/full")]
-    public async Task<ActionResult<GetQuizFullResponse>> GetSingleFull(int quizId)
+    public async Task<ActionResult<GetQuizFullResponse>> GetSingleFull(Guid quizId)
     {
         //service
         var quiz = await _quizService.GetSingleFull(quizId);
@@ -82,11 +80,25 @@ public class QuizController : ControllerBase
 
         return Ok(response);
     }
-    /*
+    
     [HttpPost]
-    public ActionResult<PostResult> QuizPost(PostQuizBody quiz)
+    public async Task<ActionResult<PostResult>> CreateQuiz([FromBody] PostQuizBody postQuiz)
     {
-        var quizModel = new Quiz(new Guid(), quiz.Name, quiz.Description);
-        return Ok(_quizService.CreateAndValidateQuiz(quizModel));
-    }*/
+        if (postQuiz == null)
+        {
+            return BadRequest(new PostResult (success: false, message: "Could not map request body to the expected new quiz body"));
+        }
+
+        var quiz = postQuiz.ToModel();
+        
+        var valid = await _quizService.ValidatePost(quiz);
+        
+        if(!valid.Success){
+            return BadRequest(valid);
+        }
+
+        var created = await _quizService.Create(quiz);
+        
+        return Ok(created);
+    }
 }

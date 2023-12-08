@@ -2,13 +2,13 @@
 
 public class Stage : IEntity, IGetable
 {
-    public Stage(int id, string name)
+    public Stage(Guid id, string name)
     {
         Id = id;
         Name = name;
     }
 
-    public int Id { get; set; }
+    public Guid  Id { get; set; }
     public string Name { get; set; }
     
     //relationships

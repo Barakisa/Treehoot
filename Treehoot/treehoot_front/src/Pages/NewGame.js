@@ -65,9 +65,16 @@ export default function NewGame() {
       body: JSON.stringify(quizInfo),
     };
 
+    ///debug
+    console.log(options);
+    
     try {
       const response = await fetch(url, options);
-      const responseData = await response.text();
+      const responseData = await response.json();
+
+      
+      ///debug
+      console.log(responseData);
 
       if (response.ok) {
         setQuizInfo({
@@ -76,13 +83,13 @@ export default function NewGame() {
           stages: [],
         });
 
-        setResponseMessage(responseData);
+        setResponseMessage(responseData.message);
       } else {
-        console.log("Error");
-        setResponseMessage(responseData);
+        console.log("Error (Api)");
+        setResponseMessage(responseData.message);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error (TryCatch):", error);
     }
   };
 

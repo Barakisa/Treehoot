@@ -20,7 +20,7 @@ public class StageController : ControllerBase
     }
 
     [HttpGet("{stageId}")]
-    public async Task<ActionResult<Stage>> GetSingle(int stageId)
+    public async Task<ActionResult<Stage>> GetSingle(Guid stageId)
     {
         //service
         var stage = await _stageService.GetSingle(stageId);
@@ -38,7 +38,7 @@ public class StageController : ControllerBase
     }
 
     [HttpGet("quizId/{quizId}")]
-    public async Task<ActionResult<Stage>> GetByQuizId(int quizId)
+    public async Task<ActionResult<Stage>> GetByQuizId(Guid quizId)
     {
         try
         {
@@ -63,7 +63,7 @@ public class StageController : ControllerBase
 
     //broken
     [HttpGet("{stageId}/full")]
-    public async Task<ActionResult<GetStageFullResponse>> GetSingleFull(int stageId)
+    public async Task<ActionResult<GetStageFullResponse>> GetSingleFull(Guid stageId)
     {
          //service
         var stage = await _stageService.GetSingleFull(stageId);

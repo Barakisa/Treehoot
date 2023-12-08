@@ -8,7 +8,9 @@ using Treehoot.Application.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TreehootApiContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("TreehootApiContext") ?? throw new InvalidOperationException("Connection string 'TreehootApiContext' not found."), b => b.MigrationsAssembly("Treehoot.Infrastructure")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("TreehootApiContext") 
+                      ?? throw new InvalidOperationException("Connection string 'TreehootApiContext' not found."), 
+        b => b.MigrationsAssembly("Treehoot.Infrastructure")));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -33,7 +35,7 @@ builder.Services.AddTransient<IQuestionService, QuestionService>();
 builder.Services.AddTransient<IStageService, StageService>();
 builder.Services.AddTransient<IQuizService, QuizService>();
     
-builder.Services.AddTransient<TreehootApiContext,  TreehootApiContext>();
+//builder.Services.AddTransient<TreehootApiContext,  TreehootApiContext>();
 
 var app = builder.Build();
 

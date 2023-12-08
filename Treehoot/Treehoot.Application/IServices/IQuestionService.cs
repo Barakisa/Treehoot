@@ -1,12 +1,10 @@
-﻿using System.Text.Json;
-using Treehoot.Application.Helpers;
-using Treehoot.Domain.Models;
+﻿using Treehoot.Domain.Models;
 
 namespace Treehoot.Application.IServices;
 
 public interface IQuestionService
 {
-    Task<Question?> GetSingle(int questionId);
-    Task<List<Question>?> GetStageQuestions(int stageId);
-    Task<Question?> GetSingleFull(int questionId);
+    Task<Question?> GetSingle(Guid questionId);
+    Task<List<Question>?> GetStageQuestions(Guid stageId);
+    Task<Question?> GetSingleFull(Guid questionId);
 }

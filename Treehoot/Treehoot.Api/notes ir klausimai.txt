@@ -5,7 +5,8 @@ Nauji klausimai:
 	-decouplinimas yra gerai -  Kada geriau NEdecoupliti? 
 		Kada decouplinimas kenkia? 
 		Kaip del microservisu?
-		
+	-ką daryti sudirbus migracijas? Sudirbus DB?
+	-ką daryti su convert metodu? jis dabar kinda guli migracijose
 
 Seni Klausimai:
 	+Kiap dėl new, kuris yra mapinime / kur negalima declarinti nieko, so no DI?
@@ -41,13 +42,18 @@ Kaip updaitnti db:
 ----------
 
 Todo
-	Extention toResponse methods for domain klases (returns DTO objects):
 	error handling of null responses from db context. Should be in service I think
-	fix get full object metodus; dabar jie broken / grazina tuscius objektus. 
-		Reikia overhaulinti modeliu naudojima, pradeti naudoti labai daug skirtingu dto
-		pazymeti //broken
-	change db password, configure sevret passwords
-	pakeisti visus servisus, kur naudojamas db context, kad visur butu async await
+	
+	change db password, configure secret passwords
+	
+	player class
+
+	plyfield class
+
+----------
+
+Tests:
+	Reikia bent vienam servisui padaryti testus, naudojant in-memory db
 
 ----------
 Projektų struktūra

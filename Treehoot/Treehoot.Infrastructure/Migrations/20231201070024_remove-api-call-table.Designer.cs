@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Treehoot.Application.Data;
@@ -11,9 +12,11 @@ using Treehoot.Application.Data;
 namespace Treehoot.Infrastructure.Migrations
 {
     [DbContext(typeof(TreehootApiContext))]
-    partial class TreehootApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231201070024_remove-api-call-table")]
+    partial class removeapicalltable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,15 +27,17 @@ namespace Treehoot.Infrastructure.Migrations
 
             modelBuilder.Entity("Treehoot.Domain.Models.Answer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -47,16 +52,18 @@ namespace Treehoot.Infrastructure.Migrations
 
             modelBuilder.Entity("Treehoot.Domain.Models.Question", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("StageId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("StageId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Topic")
                         .IsRequired()
@@ -71,9 +78,11 @@ namespace Treehoot.Infrastructure.Migrations
 
             modelBuilder.Entity("Treehoot.Domain.Models.Quiz", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -90,16 +99,18 @@ namespace Treehoot.Infrastructure.Migrations
 
             modelBuilder.Entity("Treehoot.Domain.Models.Stage", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("QuizId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("QuizId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

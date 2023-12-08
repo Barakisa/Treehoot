@@ -1,12 +1,7 @@
-﻿using System.Text.Json;
-using Treehoot.Application.Helpers;
-using Treehoot.Application.IServices;
+﻿using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
-using System.Net;
 using Treehoot.Application.Data;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 using Treehoot.Application.Exceptions;
 
 namespace Treehoot.Application.Services;
@@ -34,7 +29,7 @@ public class QuizService : IQuizService
 
     }
 
-    public async Task<Quiz?> GetSingle(int quizId)
+    public async Task<Quiz?> GetSingle(Guid quizId)
     {
         var quiz = await _treehootApiContext.Quiz.FindAsync(quizId);
         if (quiz == null)
@@ -48,7 +43,7 @@ public class QuizService : IQuizService
 
     }
 
-    public async Task<Quiz?> GetSingleFull(int quizId)
+    public async Task<Quiz?> GetSingleFull(Guid quizId)
     {
         return await _treehootApiContext.Quiz
                         .Include(s => s.Stages)
@@ -57,9 +52,7 @@ public class QuizService : IQuizService
                         .SingleOrDefaultAsync(a => a.Id == quizId);
 
     }
-
-    /*
-    public async Task<PostResult> CreateAndValidateQuiz(Quiz quiz)
+    public async Task<PostResult> ValidatePost(Quiz quiz)
     {
         try
         {
@@ -80,7 +73,7 @@ public class QuizService : IQuizService
 
                 if(stage.Questions == null || !stage.Questions.Any())
                 {
-                    return new PostResult(false, "Atleast one topic is required!");
+                    return new PostResult(false, "At least one topic is required!");
                 }
 
                 foreach (var question in stage.Questions)
@@ -112,7 +105,7 @@ public class QuizService : IQuizService
 
             }
 
-            return new PostResult(true, "Quiz has been created!"); 
+            return new PostResult(true, "Quiz is valid!"); 
         }
 
         catch
@@ -120,6 +113,11 @@ public class QuizService : IQuizService
             return new PostResult(false, "Something went wrong, try again...");
         }
     }
-    */
 
+    public async Task<PostResult> Create(Quiz quiz)
+    {
+        var res = await _treehootApiContext.Quiz.AddAsync(quiz);
+        await _treehootApiContext.SaveChangesAsync();
+        return new PostResult(true, "Quiz added");
+    }
 }

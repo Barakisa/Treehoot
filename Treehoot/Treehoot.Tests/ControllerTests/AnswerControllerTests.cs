@@ -21,18 +21,18 @@ namespace Treehoot.Api.Controller.Tests
             // Arrange
             var expectedAnswers = new List<Answer>
         {
-            new Answer(1, true , "Text"),
-            new Answer(2, false, "Text")
+            new Answer(new Guid(), true , "Text"),
+            new Answer(new Guid(), false, "Text")
         };
-            expectedAnswers.ForEach(answer => answer.Question = new Question(1, "Topic", "QuestionText"));
+            expectedAnswers.ForEach(answer => answer.Question = new Question(new Guid(), "Topic", "QuestionText"));
 
             var answerServiceMock = new Mock<IAnswerService>();
-            answerServiceMock.Setup(service => service.GetQuestionAnswers(It.IsAny<int>()))
+            answerServiceMock.Setup(service => service.GetQuestionAnswers(It.IsAny<Guid>()))
                 .ReturnsAsync(expectedAnswers);
             var controller = new AnswerController(answerServiceMock.Object);
 
             // Act
-            var result = await controller.GetByQuestionId(1);
+            var result = await controller.GetByQuestionId(new Guid());
 
             // Assert
             Assert.IsType<OkObjectResult>(result.Result);
@@ -42,7 +42,7 @@ namespace Treehoot.Api.Controller.Tests
         public async Task GetByQuestionId_WhenNoAnswersExist_ReturnsNotFound()
         {
             // Arrange
-            var nonExistentQuestionId = -1;
+            var nonExistentQuestionId = new Guid();
 
             var answerServiceMock = new Mock<IAnswerService>();
             answerServiceMock.Setup(service => service.GetQuestionAnswers(nonExistentQuestionId))

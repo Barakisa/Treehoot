@@ -14,16 +14,16 @@ namespace Treehoot.Api.Controller.Tests
         public async Task GetSingle_WhenQuestionExists_ReturnsOk()
         {
             // Arrange
-            var expectedQuestion = new Question(1, "Topic", "QuestionText");
-            expectedQuestion.Stage = new Stage(1, "Name");
+            var expectedQuestion = new Question(new Guid(), "Topic", "QuestionText");
+            expectedQuestion.Stage = new Stage(new Guid(), "Name");
 
             var questionServiceMock = new Mock<IQuestionService>();
-            questionServiceMock.Setup(service => service.GetSingle(It.IsAny<int>()))
+            questionServiceMock.Setup(service => service.GetSingle(It.IsAny<Guid>()))
                 .ReturnsAsync(expectedQuestion);
             var controller = new QuestionController(questionServiceMock.Object);
 
             // Act
-            var result = await controller.GetSingle(1);
+            var result = await controller.GetSingle(new Guid());
 
             // Assert
             Assert.IsType<OkObjectResult>(result.Result);
@@ -33,7 +33,7 @@ namespace Treehoot.Api.Controller.Tests
         public async Task GetSingle_WhenQuestionDoesntExist_ReturnsNotFound()
         {
             // Arrange
-            var nonExistentQuestionId = -1;
+            var nonExistentQuestionId = new Guid();
 
             var questionServiceMock = new Mock<IQuestionService>();
             questionServiceMock.Setup(service => service.GetSingle(nonExistentQuestionId))
@@ -53,18 +53,18 @@ namespace Treehoot.Api.Controller.Tests
             // Arrange
             var expectedQuestions = new List<Question>
         {
-            new Question(1, "Topic1", "QuestionText1"),
-            new Question(2, "Topic2", "QuestionText2")
+            new Question(new Guid(), "Topic1", "QuestionText1"),
+            new Question(new Guid(), "Topic2", "QuestionText2")
         };
-            expectedQuestions.ForEach(question => question.Stage = new Stage(1, "Name"));
+            expectedQuestions.ForEach(question => question.Stage = new Stage(new Guid(), "Name"));
 
             var questionServiceMock = new Mock<IQuestionService>();
-            questionServiceMock.Setup(service => service.GetStageQuestions(It.IsAny<int>()))
+            questionServiceMock.Setup(service => service.GetStageQuestions(It.IsAny<Guid>()))
                 .ReturnsAsync(expectedQuestions);
             var controller = new QuestionController(questionServiceMock.Object);
 
             // Act
-            var result = await controller.GetByStageId(1);
+            var result = await controller.GetByStageId(new Guid());
 
             // Assert
             Assert.IsType<OkObjectResult>(result.Result);
@@ -74,7 +74,7 @@ namespace Treehoot.Api.Controller.Tests
         public async Task GetByStageId_WhenNoQuestionsExist_ReturnsNotFound()
         {
             // Arrange
-            var nonExistentStageId = -1;
+            var nonExistentStageId = new Guid();
 
             var questionServiceMock = new Mock<IQuestionService>();
             questionServiceMock.Setup(service => service.GetStageQuestions(nonExistentStageId))

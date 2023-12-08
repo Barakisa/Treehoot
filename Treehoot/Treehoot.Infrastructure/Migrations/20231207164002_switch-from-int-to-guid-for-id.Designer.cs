@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Treehoot.Application.Data;
@@ -11,9 +12,11 @@ using Treehoot.Application.Data;
 namespace Treehoot.Infrastructure.Migrations
 {
     [DbContext(typeof(TreehootApiContext))]
-    partial class TreehootApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231207164002_switch-from-int-to-guid-for-id")]
+    partial class switchfrominttoguidforid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
