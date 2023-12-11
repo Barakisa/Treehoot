@@ -13,11 +13,11 @@ namespace Treehoot.Api.Mapping
             var modelQuiz = new Quiz(id: new Guid(), 
                                      name: postQuiz.Name, 
                                      description: postQuiz.Description);
-            modelQuiz.Stages = postStagesToModel(postQuiz.Stages);
+            modelQuiz.Stages = PostStagesToModel(postQuiz.Stages);
             return modelQuiz;
         }
 
-        private static List<Stage> postStagesToModel(List<PostStageBody> postStages)
+        private static List<Stage> PostStagesToModel(List<PostStageBody> postStages)
         {
             var modelStages = new List<Stage>();
 
@@ -25,7 +25,7 @@ namespace Treehoot.Api.Mapping
             {
                 var modelStage = new Stage(id: new Guid(), 
                                            name: postStage.Name);
-                modelStage.Questions = postQuestionsToModel(postStage.Topics);
+                modelStage.Questions = PostQuestionsToModel(postStage.Topics);
 
                 modelStages.Add(modelStage);
             }
@@ -33,7 +33,7 @@ namespace Treehoot.Api.Mapping
             return modelStages;
         }
 
-        private static List<Question> postQuestionsToModel(List<PostQuestionBody>  postQuestions) 
+        private static List<Question> PostQuestionsToModel(List<PostQuestionBody>  postQuestions) 
         {
             var modelQuestions = new List<Question>();
 
@@ -42,7 +42,7 @@ namespace Treehoot.Api.Mapping
                 var modelQuestion = new Question(id: new Guid(), 
                                                  topic: postQuestion.TopicName, 
                                                  questionText: postQuestion.Question);
-                modelQuestion.Answers = postAnswersToModel(postQuestion.Answers);
+                modelQuestion.Answers = PostAnswersToModel(postQuestion.Answers);
 
                 modelQuestions.Add(modelQuestion);
             }
@@ -50,7 +50,7 @@ namespace Treehoot.Api.Mapping
             return modelQuestions;
         }
 
-        private static List<Answer> postAnswersToModel(List<PostAnswerBody> postAnswers)
+        private static List<Answer> PostAnswersToModel(List<PostAnswerBody> postAnswers)
         {
             var modelAnswers = new List<Answer>();
 

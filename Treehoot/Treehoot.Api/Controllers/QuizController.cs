@@ -19,7 +19,7 @@ public class QuizController : ControllerBase
     }
 
 
-    [HttpGet]//to be continued...
+    [HttpGet]
     public async Task<ActionResult<List<GetQuizResponse>>> GetAll()
     {
         //service
