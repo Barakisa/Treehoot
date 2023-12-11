@@ -25,6 +25,11 @@ namespace Treehoot.Domain.Models
             return HostedQuizes.Remove(quizCode);
         }
 
+        public Dictionary<int, Guid> GetAllHostedQuizes()
+        {
+            return new Dictionary<int, Guid>(HostedQuizes);
+        }
+
         public KeyValuePair<bool, Guid?> GetHostedQuizGuidByCode(int code)
         {
             if (HostedQuizes.ContainsKey(code))

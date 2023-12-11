@@ -34,6 +34,8 @@ builder.Services.AddTransient<IAnswerService, AnswerService>();
 builder.Services.AddTransient<IQuestionService, QuestionService>();
 builder.Services.AddTransient<IStageService, StageService>();
 builder.Services.AddTransient<IQuizService, QuizService>();
+builder.Services.AddTransient<IPlaygroundService, PlaygroundService>();
+
 
 var app = builder.Build();
 
@@ -51,5 +53,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapPlaygroundEndpoints();
 
 app.Run();
