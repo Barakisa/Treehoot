@@ -4,6 +4,6 @@ namespace Treehoot.Application.IServices;
 
 public interface IPlaygroundService
 {
-    Task<Answer?> GetSingle(Guid answerId);
-    Task<List<Answer>?> GetQuestionAnswers(Guid questionId);
+    Task<KeyValuePair<int, Quiz>> GetSingleHostedQuiz(int code);
+    Task<Dictionary<int, Quiz>> GetAllHostedQuizes();
 }

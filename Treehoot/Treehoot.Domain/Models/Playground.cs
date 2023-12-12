@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Treehoot.Domain.Interfaces;
 
 namespace Treehoot.Domain.Models
 {
-    public class Playground
+    public class Playground : IPlayground
     {
         private Dictionary<int, Guid> HostedQuizes = new();
         private const int CodeMin = 1;
@@ -30,33 +31,32 @@ namespace Treehoot.Domain.Models
             return new Dictionary<int, Guid>(HostedQuizes);
         }
 
-        public KeyValuePair<bool, Guid?> GetHostedQuizGuidByCode(int code)
+        public Guid GetHostedQuizGuidByCode(int code)
         {
-            if (HostedQuizes.ContainsKey(code))
-            {
-                return new KeyValuePair<bool, Guid?>(true, HostedQuizes[code]);
-            }
-
-            return new KeyValuePair<bool, Guid?>(false, null);
+            return new Guid(HostedQuizes[code].ToString());
         }
 
-        public int GenerateQuizCode()
+        public bool IsHosted(int code)
+        {
+            return HostedQuizes.ContainsKey(code);
+        }
+
+        public bool IsHosted(Guid id)
+        {
+            return HostedQuizes.ContainsValue(id);
+        }
+
+        private int GenerateQuizCode()
         {
             var generator = new Random();
             var newCode = generator.Next(CodeMin, CodeMax);
             //ensures the key is new
             while (HostedQuizes.ContainsKey(newCode))
             {
-                 newCode = generator.Next(CodeMin, CodeMax);
-            } 
-            
+                newCode = generator.Next(CodeMin, CodeMax);
+            }
+
             return newCode;
         }
-
-        private bool IsActuallyNew(int maybeNewCode)
-        {
-            return HostedQuizes.ContainsKey(maybeNewCode);
-        }
-
     }
 }

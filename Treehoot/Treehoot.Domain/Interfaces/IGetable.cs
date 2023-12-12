@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Treehoot.Domain.Models
+namespace Treehoot.Domain.Interfaces
 {
-    public interface IEntity
+    public interface IGetable
     {
     }
 }

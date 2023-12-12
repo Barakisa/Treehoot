@@ -21,48 +21,25 @@ public class PlaygroundController : ControllerBase
     }
 
     //get all currently hosted quizes
-    [HttpGet("{answerId}")]
-    public async Task<ActionResult<GetAnswerResponse>> Get(Guid answerId)
+    [HttpGet]
+    public async Task<ActionResult<GetPlaygroundQuizesResponse>> GetAll()
     {
         //service
-        var answer = await _answerService.GetSingle(answerId);
+        var quizes = await _playgroundService.GetAllHostedQuizes();
 
         //validation
-        if (answer == null)
+        if (quizes == null)
         {
             return NotFound();
         }
 
         //maping
-        var response = answer.ToResponse();
+        var response = quizes.ToResponse();
 
         return Ok(response);
 
 
     }
 
-    [HttpGet("questionId/{questionId}")]
-    public async Task<ActionResult<List<GetAnswerResponse>>> GetByQuestionId(Guid questionId)
-    {
-        try
-        {
-            //service
-            var answers = await _answerService.GetQuestionAnswers(questionId);
-
-            //validation
-            if (!answers.Any())
-            {
-                throw new NotFoundException("answer", "question", questionId);
-            }
-
-            //maping
-            var response = answers.ToResponse();
-
-            return Ok(response);
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFound(new { Message = ex.Message });
-        }
-    }
+    
 }

@@ -1,7 +1,11 @@
-﻿namespace Treehoot.Domain.Models;
+﻿using Treehoot.Domain.Interfaces;
+
+namespace Treehoot.Domain.Models;
 
 public class Quiz : IEntity, IGetable
 {
+    public Quiz() {}
+
     public Quiz(Guid id, string name, string description)
     {
         Id = id;

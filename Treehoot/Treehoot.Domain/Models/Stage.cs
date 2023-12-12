@@ -1,4 +1,6 @@
-﻿namespace Treehoot.Domain.Models;
+﻿using Treehoot.Domain.Interfaces;
+
+namespace Treehoot.Domain.Models;
 
 public class Stage : IEntity, IGetable
 {

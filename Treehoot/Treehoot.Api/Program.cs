@@ -4,6 +4,8 @@ using Treehoot.Api.Controllers;
 using Treehoot.Application.Data;
 using Treehoot.Application.Services;
 using Treehoot.Application.IServices;
+using Treehoot.Domain.Models;
+using Treehoot.Domain.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +37,8 @@ builder.Services.AddTransient<IQuestionService, QuestionService>();
 builder.Services.AddTransient<IStageService, StageService>();
 builder.Services.AddTransient<IQuizService, QuizService>();
 builder.Services.AddTransient<IPlaygroundService, PlaygroundService>();
+builder.Services.AddSingleton<IPlayground, Playground>();
+
 
 
 var app = builder.Build();
@@ -54,6 +58,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapPlaygroundEndpoints();
+//app.MapPlaygroundEndpoints();
 
 app.Run();

@@ -1,4 +1,4 @@
-﻿using Treehoot.Domain.Models;
+﻿using Treehoot.Domain.Interfaces;
 
 namespace Treehoot.Api.Dtos;
 
