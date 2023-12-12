@@ -6,9 +6,9 @@ using Treehoot.Domain.Models;
 
 namespace Treehoot.Api.Mapping
 {
-    public static class PostQuizBodyExtention
+    public static class PostQuizRequestExtention
     {
-        public static Quiz ToModel(this PostQuizBody postQuiz)
+        public static Quiz ToModel(this PostQuizRequest postQuiz)
         {
             var modelQuiz = new Quiz(id: new Guid(), 
                                      name: postQuiz.Name, 
@@ -17,7 +17,7 @@ namespace Treehoot.Api.Mapping
             return modelQuiz;
         }
 
-        private static List<Stage> PostStagesToModel(List<PostStageBody> postStages)
+        private static List<Stage> PostStagesToModel(List<PostStageRequest> postStages)
         {
             var modelStages = new List<Stage>();
 
@@ -33,7 +33,7 @@ namespace Treehoot.Api.Mapping
             return modelStages;
         }
 
-        private static List<Question> PostQuestionsToModel(List<PostQuestionBody>  postQuestions) 
+        private static List<Question> PostQuestionsToModel(List<PostQuestionRequest>  postQuestions) 
         {
             var modelQuestions = new List<Question>();
 
@@ -50,7 +50,7 @@ namespace Treehoot.Api.Mapping
             return modelQuestions;
         }
 
-        private static List<Answer> PostAnswersToModel(List<PostAnswerBody> postAnswers)
+        private static List<Answer> PostAnswersToModel(List<PostAnswerRequest> postAnswers)
         {
             var modelAnswers = new List<Answer>();
 

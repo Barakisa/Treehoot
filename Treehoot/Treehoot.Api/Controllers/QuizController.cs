@@ -82,7 +82,7 @@ public class QuizController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<PostResult>> CreateQuiz([FromBody] PostQuizBody postQuiz)
+    public async Task<ActionResult<PostResult>> CreateQuiz([FromBody] PostQuizRequest postQuiz)
     {
         if (postQuiz == null)
         {

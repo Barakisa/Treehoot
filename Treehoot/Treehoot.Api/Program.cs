@@ -58,6 +58,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.MapPlaygroundEndpoints();
-
 app.Run();

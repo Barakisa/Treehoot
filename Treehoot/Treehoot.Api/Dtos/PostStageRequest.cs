@@ -1,9 +1,9 @@
 ﻿using System;
 namespace Treehoot.Api.Dtos
 {
-	public class PostStageBody
+	public class PostStageRequest
 	{	public string Name { get; set; }
-		public List<PostQuestionBody> Topics { get; set; }
+		public List<PostQuestionRequest> Topics { get; set; }
 	}
 }
 
