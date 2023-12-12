@@ -38,4 +38,19 @@ public class PlaygroundService : IPlaygroundService
         }
         return quizList;
     }
+
+    public int AddHostedQuiz(Guid id)
+    {
+        return _playground.AddHostedQuiz(id);
+    }
+
+    public bool RemoveHostedQuiz(int code)
+    {
+        return _playground.RemoveHostedQuiz(code);
+    }
+
+    public bool RemoveHostedQuiz(Guid id)
+    {
+        return _playground.RemoveHostedQuiz(id);
+    }
 }

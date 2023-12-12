@@ -51,6 +51,9 @@ Todo
 	install react bootstrap
 		npm install react-bootstrap bootstrap
 
+	use enum in put hosted quiz for action (Add|Remove)
+	move to a mapper class code that's in playgroundController.UpdateHostedQuiz
+
 ----------
 
 Tests:

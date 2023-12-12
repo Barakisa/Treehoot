@@ -15,15 +15,48 @@ namespace Treehoot.Domain.Models
 
         public int AddHostedQuiz(Guid quizId)
         {
-            var quizCode = GenerateQuizCode();
-            HostedQuizes.Add(quizCode, quizId);
+            var result = -1;
+            var quizCode = -1;
 
-            return quizCode;
+            if (!HostedQuizes.ContainsValue(quizId))
+            {
+                quizCode = GenerateQuizCode();
+                HostedQuizes.Add(quizCode, quizId);
+            }
+            else
+            {
+                foreach (var quiz in HostedQuizes)
+                {
+                    if (quiz.Value == quizId)
+                    {
+                        quizCode = quiz.Key;
+                    }
+                }
+            }
+
+            if (HostedQuizes.ContainsKey(quizCode) && HostedQuizes.ContainsValue(quizId))
+                result = quizCode;
+            
+            return result;
         }
 
         public bool RemoveHostedQuiz(int quizCode)
         {
             return HostedQuizes.Remove(quizCode);
+        }
+
+        public bool RemoveHostedQuiz(Guid id)
+        {
+            var result = false;
+            foreach (var quiz in HostedQuizes)
+            {
+                if (quiz.Value == id)
+                {
+                    HostedQuizes.Remove(quiz.Key);
+                    result = true;
+                }
+            }
+            return result;
         }
 
         public Dictionary<int, Guid> GetAllHostedQuizes()

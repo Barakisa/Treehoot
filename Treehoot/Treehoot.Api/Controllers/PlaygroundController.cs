@@ -41,5 +41,45 @@ public class PlaygroundController : ControllerBase
 
     }
 
-    
+    [HttpPut]
+    public async Task<ActionResult<PutPlaygroundQuizResponse>> UpdateHostedQuiz([FromBody] PutPlaygroundQuizRequest request)
+    {
+        //validation
+        if (request == null)
+        {
+            return BadRequest("Invalid request body.");
+        }
+
+        var response = new PutPlaygroundQuizResponse();
+        
+        //validation
+        if (request.Action == "Remove")
+        {
+            //service
+            response.Success = _playgroundService.RemoveHostedQuiz(request.Id);
+            //maping
+            response.Action = "Remove";
+            response.Code = request.Code;
+            response.Id = request.Id;
+        }
+        else if (request.Action == "Add")
+        {
+            //service
+            response.Code = _playgroundService.AddHostedQuiz(request.Id);
+            //maping
+            response.Action = "Add";
+            response.Success = response.Code > 0;
+            response.Id = request.Id;
+        }
+        else
+        {
+            return BadRequest("Invalid action. Should be either \"Add\" or \"Remove\"");
+        }
+
+        return Ok(response);
+
+    }
+
+
+
 }

@@ -8,8 +8,9 @@ namespace Treehoot.Domain.Interfaces;
 
 public interface IPlayground
 {
-    public int AddHostedQuiz(Guid quizId);
-    public bool RemoveHostedQuiz(int quizCode);
+    public int AddHostedQuiz(Guid id);
+    public bool RemoveHostedQuiz(int code);
+    public bool RemoveHostedQuiz(Guid id);
     public Dictionary<int, Guid> GetAllHostedQuizes();
     public Guid GetHostedQuizGuidByCode(int code);
     public bool IsHosted(int code);

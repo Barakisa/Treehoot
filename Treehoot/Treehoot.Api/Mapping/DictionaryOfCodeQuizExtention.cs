@@ -7,7 +7,10 @@ namespace Treehoot.Api.Mapping
     {
         public static GetPlaygroundQuizesResponse ToResponse(this Dictionary<int, Quiz> hostedQuizes)
         {
-            var response = new GetPlaygroundQuizesResponse();
+            var response = new GetPlaygroundQuizesResponse()
+            {
+                HostedQuizes = new Dictionary<int, GetQuizResponse>()
+            };
             foreach (var quiz in hostedQuizes)
             {
                 response.HostedQuizes.Add(quiz.Key, quiz.Value.ToResponse());
