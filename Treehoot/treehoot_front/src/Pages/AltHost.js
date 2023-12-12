@@ -49,8 +49,6 @@ export default function AltHost() {
                 {quiz.description}
               </div>
             </div>
-          ))}
-            </div>
             {quiz.id in activeGameIds ? (
               <Button className="active-label" variant="success">
                 Active
