@@ -14,6 +14,7 @@ import RegisterPage from "./Pages/RegisterPage";
 import { UserProvider } from "./UserContext";
 import AltHost from "./Pages/AltHost.js";
 
+
 function App() {
   return (
     <Router>
@@ -30,7 +31,8 @@ function App() {
             <Route path="/new-game" element={<NewGame />} />
             <Route path="/log-in" element={<LogIn />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/alt-host" element={<AltHost />} />
+
+            <Route path="/althost" element={<AltHost />} />
 
           </Routes>
         </QuizProvider>

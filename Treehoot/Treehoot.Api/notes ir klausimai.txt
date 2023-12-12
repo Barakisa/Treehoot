@@ -48,7 +48,8 @@ Todo
 	
 	player class
 
-	plyfield class
+	install react bootstrap
+		npm install react-bootstrap bootstrap
 
 ----------
 
