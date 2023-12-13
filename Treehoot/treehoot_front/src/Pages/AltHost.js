@@ -19,19 +19,15 @@ export default function AltHost() {
     fetchGame();
   }, []);
 
-  const activateGame = async (id) => {
-    console.log(id);
-
-    if (!(id in activeGameIds)) {
-      setActiveGameIds([
-        ...activeGameIds,
-        id
-      ]);
+  const activateGame = (id) => {
+    if (activeGameIds.includes(id)) {
+      setActiveGameIds(activeGameIds.filter((gameId) => gameId !== id));
+    } else {
+      setActiveGameIds([...activeGameIds, id]);
     }
 
-    const response = await postMessage("https://localhost:7219/api/Quiz") ;
-
-    console.log(response);
+    console.log(activeGameIds);
+    // Send the quiz ID to your API endpoint here
   };
 
   return (
@@ -41,7 +37,7 @@ export default function AltHost() {
         {game.map((quiz) => (
           <div
             key={quiz.id}
-            className="d-flex"
+            className="d-flex justify-content-between"
           >
             <div>
               <div className="fs-3">{quiz.name}</div>
@@ -49,12 +45,17 @@ export default function AltHost() {
                 {quiz.description}
               </div>
             </div>
-            {quiz.id in activeGameIds ? (
-              <Button className="active-label" variant="success">
-                Active
-              </Button>
+            {activeGameIds.includes(quiz.id) ? (
+              <>
+                <Button variant="danger" onClick={() => activateGame(quiz.id)}>
+                  Deactivate
+                </Button>
+                <Button variant="success" disabled>
+                  Active
+                </Button>
+              </>
             ) : (
-              <Button onClick={() => activateGame(quiz.id)} variant="secondary">
+              <Button variant="success" onClick={() => activateGame(quiz.id)}>
                 Activate
               </Button>
             )}
