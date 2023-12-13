@@ -6,28 +6,67 @@ import { Button } from "react-bootstrap";
 
 export default function AltHost() {
   const [game, setGame] = useState([]);
-  const [activeGameIds, setActiveGameIds] = useState([]); // New state for active game
+  const [activeGameIdsAndCodes, setActiveGameIdsAndCodes] = useState([]); // New state for active game
+
 
   const fetchGame = async () => {
     const response = await fetch("https://localhost:7219/api/Quiz");
-    const data = await response.json();
-    setGame(data);
-    console.log(data);
+    const allQuizes = await response.json();
+    setGame(allQuizes);
+    console.log({ allQuizes });
   };
 
   useEffect(() => {
     fetchGame();
   }, []);
 
-  const activateGame = (id) => {
-    if (activeGameIds.includes(id)) {
-      setActiveGameIds(activeGameIds.filter((gameId) => gameId !== id));
-    } else {
-      setActiveGameIds([...activeGameIds, id]);
-    }
+  const sendApiRequest = async (action, quizId) => {
+    const requestBody = {
+      code: 0, // Replace with the appropriate code
+      id: quizId, // Replace with the appropriate ID
+      action: action,
+    };
 
-    console.log(activeGameIds);
-    // Send the quiz ID to your API endpoint here
+    try {
+      const response = await fetch("https://localhost:7219/api/Playground", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        console.log(`Quiz ${action} successful.`);
+      } else {
+        console.error("Failed to update quiz.");
+      }
+
+      return response.json();
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log({ activeGameIdsAndCodes });
+  }, [activeGameIdsAndCodes]);
+
+  const activateGame = async (id) => {
+    const response = await sendApiRequest("Add", id);
+    console.log({ response });
+    if (response.success) {
+      setActiveGameIdsAndCodes([...activeGameIdsAndCodes, { id: response.id, code: response.code }]);
+    }
+  };
+
+  const deactivateGame = async (id) => {
+    const response = await sendApiRequest("Remove", id);
+    console.log({ response });
+    if (response.success) {
+      setActiveGameIdsAndCodes(activeGameIdsAndCodes.filter((game) => game.id !== id));
+    }
   };
 
   return (
@@ -45,20 +84,25 @@ export default function AltHost() {
                 {quiz.description}
               </div>
             </div>
-            {activeGameIds.includes(quiz.id) ? (
-              <>
-                <Button variant="danger" onClick={() => activateGame(quiz.id)}>
-                  Deactivate
+            <div>
+              {activeGameIdsAndCodes.some(item => item.id === quiz.id) ? (
+                <>
+                  <Button variant="danger" onClick={() => deactivateGame(quiz.id)}>
+                    Deactivate
+                  </Button>
+                  <Button variant="primary" disabled>
+                    Code:<br />
+                    <span style={{ userSelect: 'text' }}>
+                      {activeGameIdsAndCodes.find(item => item.id === quiz.id)?.code}
+                    </span>
+                  </Button>
+                </>
+              ) : (
+                <Button variant="success" onClick={() => activateGame(quiz.id)}>
+                  Activate
                 </Button>
-                <Button variant="success" disabled>
-                  Active
-                </Button>
-              </>
-            ) : (
-              <Button variant="success" onClick={() => activateGame(quiz.id)}>
-                Activate
-              </Button>
-            )}
+              )}
+            </div>
           </div>
         ))}
       </div>

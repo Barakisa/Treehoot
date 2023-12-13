@@ -10,7 +10,7 @@ namespace Treehoot.Domain.Models
     public class Playground : IPlayground
     {
         private Dictionary<int, Guid> HostedQuizes = new();
-        private const int CodeMin = 1;
+        private const int CodeMin = 100000;
         private const int CodeMax = 999999;
 
         public int AddHostedQuiz(Guid quizId)
