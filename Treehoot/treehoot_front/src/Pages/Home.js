@@ -53,17 +53,9 @@ export default function Home() {
         )}
       </div>
       <div className="d-flex flex-row mt-5 gap-5">
-        <div className="mt-5 ">
-          <Link
-            to="/settings"
-            className="home-page-buttons btn btn-outline-primary fs-2"
-          >
-            Settings
-          </Link>
-        </div>
         <div className="mt-5">
           <Link
-            to="/play"
+            to={user.isLoggedIn ? "/play" : "/log-in"}
             className=" home-page-buttons btn btn-outline-primary fs-2"
           >
             Play
@@ -71,7 +63,7 @@ export default function Home() {
         </div>
         <div className="mt-5">
           <Link
-            to="/new-game"
+            to={user.isLoggedIn ? "/new-game" : "/log-in"}
             className="home-page-buttons btn btn-outline-primary fs-2 "
           >
             New Game
