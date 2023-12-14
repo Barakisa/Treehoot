@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Treehoot.Application.Data;
-using Treehoot.Application.Exceptions;
-using Treehoot.Application.IServices;
+﻿using Treehoot.Application.IServices;
 using Treehoot.Domain.Interfaces;
 using Treehoot.Domain.Models;
 

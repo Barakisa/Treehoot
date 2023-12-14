@@ -37,6 +37,8 @@ builder.Services.AddTransient<IQuestionService, QuestionService>();
 builder.Services.AddTransient<IStageService, StageService>();
 builder.Services.AddTransient<IQuizService, QuizService>();
 builder.Services.AddTransient<IPlaygroundService, PlaygroundService>();
+builder.Services.AddTransient<IUserService, UserService>();
+
 builder.Services.AddSingleton<IPlayground, Playground>();
 
 
