@@ -6,26 +6,26 @@ using Treehoot.Domain.Models;
 
 namespace Treehoot.Api.Mapping
 {
-    public static class PostQuizBodyExtention
+    public static class PostQuizRequestExtention
     {
-        public static Quiz ToModel(this PostQuizBody postQuiz)
+        public static Quiz ToModel(this PostQuizRequest postQuiz)
         {
             var modelQuiz = new Quiz(id: new Guid(), 
                                      name: postQuiz.Name, 
-                                     description: postQuiz.Description);
-            modelQuiz.Stages = postStagesToModel(postQuiz.Stages);
+                                     description: postQuiz.Description)
+                                    {Stages = PostStagesToModel(postQuiz.Stages)};
             return modelQuiz;
         }
 
-        private static List<Stage> postStagesToModel(List<PostStageBody> postStages)
+        private static List<Stage> PostStagesToModel(List<PostStageRequest> postStages)
         {
             var modelStages = new List<Stage>();
 
             foreach (var postStage in postStages)
             {
                 var modelStage = new Stage(id: new Guid(), 
-                                           name: postStage.Name);
-                modelStage.Questions = postQuestionsToModel(postStage.Topics);
+                                           name: postStage.Name)
+                                          {Questions = PostQuestionsToModel(postStage.Topics)};
 
                 modelStages.Add(modelStage);
             }
@@ -33,7 +33,7 @@ namespace Treehoot.Api.Mapping
             return modelStages;
         }
 
-        private static List<Question> postQuestionsToModel(List<PostQuestionBody>  postQuestions) 
+        private static List<Question> PostQuestionsToModel(List<PostQuestionRequest>  postQuestions) 
         {
             var modelQuestions = new List<Question>();
 
@@ -41,8 +41,8 @@ namespace Treehoot.Api.Mapping
             {
                 var modelQuestion = new Question(id: new Guid(), 
                                                  topic: postQuestion.TopicName, 
-                                                 questionText: postQuestion.Question);
-                modelQuestion.Answers = postAnswersToModel(postQuestion.Answers);
+                                                 questionText: postQuestion.Question)
+                                                {Answers = PostAnswersToModel(postQuestion.Answers)};
 
                 modelQuestions.Add(modelQuestion);
             }
@@ -50,7 +50,7 @@ namespace Treehoot.Api.Mapping
             return modelQuestions;
         }
 
-        private static List<Answer> postAnswersToModel(List<PostAnswerBody> postAnswers)
+        private static List<Answer> PostAnswersToModel(List<PostAnswerRequest> postAnswers)
         {
             var modelAnswers = new List<Answer>();
 

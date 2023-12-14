@@ -1,11 +1,11 @@
 ﻿using System;
 namespace Treehoot.Api.Dtos
 {
-	public class PostQuestionBody
+	public class PostQuestionRequest
 	{
 		public string TopicName { get; set; }
 		public string Question { get; set; }
-		public List<PostAnswerBody> Answers { get; set;}
+		public List<PostAnswerRequest> Answers { get; set;}
 	}
 }
 
