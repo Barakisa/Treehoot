@@ -12,10 +12,12 @@ namespace Treehoot.Api.Controllers;
 public class QuizController : ControllerBase
 {
     private readonly IQuizService _quizService;
+    private readonly IPlaygroundService _playgroundService;
 
-    public QuizController(IQuizService quizService)
+    public QuizController(IQuizService quizService, IPlaygroundService playgroundService)
     {
         _quizService = quizService;
+        _playgroundService = playgroundService;
     }
 
 
@@ -59,6 +61,31 @@ public class QuizController : ControllerBase
         catch (NotFoundException ex)
         {
             return NotFound(new {Message = ex.Message});
+        }
+
+    }
+
+    [HttpGet("code/{quizCode}")]
+    public async Task<ActionResult<GetQuizResponse>> GetSingleByCode(int quizCode)
+    {
+        //service
+        try
+        {
+            var quiz = (await _playgroundService.GetSingleHostedQuiz(quizCode)).Value;
+            
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+
+            //maping
+            var response = quiz.ToResponse();
+
+            return Ok(response);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(new { Message = ex.Message });
         }
 
     }
