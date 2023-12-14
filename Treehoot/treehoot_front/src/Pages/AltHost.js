@@ -3,11 +3,9 @@ import "../styles.css";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-
 export default function AltHost() {
   const [game, setGame] = useState([]);
   const [activeGameIdsAndCodes, setActiveGameIdsAndCodes] = useState([]); // New state for active game
-
 
   const fetchGame = async () => {
     const response = await fetch("https://localhost:7219/api/Quiz");
@@ -43,7 +41,6 @@ export default function AltHost() {
       }
 
       return response.json();
-
     } catch (error) {
       console.error("Error:", error);
     }
@@ -57,7 +54,10 @@ export default function AltHost() {
     const response = await sendApiRequest("Add", id);
     console.log({ response });
     if (response.success) {
-      setActiveGameIdsAndCodes([...activeGameIdsAndCodes, { id: response.id, code: response.code }]);
+      setActiveGameIdsAndCodes([
+        ...activeGameIdsAndCodes,
+        { id: response.id, code: response.code },
+      ]);
     }
   };
 
@@ -65,7 +65,9 @@ export default function AltHost() {
     const response = await sendApiRequest("Remove", id);
     console.log({ response });
     if (response.success) {
-      setActiveGameIdsAndCodes(activeGameIdsAndCodes.filter((game) => game.id !== id));
+      setActiveGameIdsAndCodes(
+        activeGameIdsAndCodes.filter((game) => game.id !== id)
+      );
     }
   };
 
@@ -74,29 +76,34 @@ export default function AltHost() {
       <div className="text fs-3 mb-3">Select your game:</div>
       <div className="scroll-box">
         {game.map((quiz) => (
-          <div
-            key={quiz.id}
-            className="d-flex justify-content-between"
-          >
+          <div key={quiz.id} className="d-flex justify-content-between p-2">
             <div>
               <div className="fs-3">{quiz.name}</div>
               <div className="d-flex flex-row align-items-start fs-6 mb-3">
                 {quiz.description}
               </div>
             </div>
-            <div>
-              {activeGameIdsAndCodes.some(item => item.id === quiz.id) ? (
-                <>
-                  <Button variant="danger" onClick={() => deactivateGame(quiz.id)}>
+            <div className="d-flex flex-row justify-content-center align-items-center">
+              {activeGameIdsAndCodes.some((item) => item.id === quiz.id) ? (
+                <div className="d-flex flex-row justify-content-center align-items-center">
+                  <Button
+                    variant="danger"
+                    onClick={() => deactivateGame(quiz.id)}
+                  >
                     Deactivate
                   </Button>
                   <Button variant="primary" disabled>
-                    Code:<br />
-                    <span style={{ userSelect: 'text' }}>
-                      {activeGameIdsAndCodes.find(item => item.id === quiz.id)?.code}
+                    Code:
+                    <br />
+                    <span style={{ userSelect: "text" }}>
+                      {
+                        activeGameIdsAndCodes.find(
+                          (item) => item.id === quiz.id
+                        )?.code
+                      }
                     </span>
                   </Button>
-                </>
+                </div>
               ) : (
                 <Button variant="success" onClick={() => activateGame(quiz.id)}>
                   Activate
