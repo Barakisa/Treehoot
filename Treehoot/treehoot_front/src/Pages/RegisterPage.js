@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -11,7 +12,8 @@ export default function RegisterPage() {
     repeatPassword: "",
     isValid: true,
   });
-  const [responseMsg, setResponseMsg] = useState(false);
+  const [responseMsg, setResponseMsg] = useState({ sucess: "", message: "" });
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail((prevEmail) => ({
@@ -54,32 +56,39 @@ export default function RegisterPage() {
       repeatPassword.isValid
     ) {
       try {
-        const url = "https://jsonplaceholder.typicode.com/posts"; //insert real apiEndpoint
+        const url = "https://localhost:7219/api/User/register/";
         const options = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            username: nickname.nickname,
             email: email.email,
-            nickname: nickname.nickname,
             password: password.password,
           }),
         };
 
         const res = await fetch(url, options);
-        const resData = await res.text();
+        const resData = await res.json();
+        console.log(resData);
 
         if (res.ok) {
-          console.log("Request successful!");
           setEmail({ email: "", isValid: true });
           setNickname({ nickname: "", isValid: true });
           setPassword({ password: "", isValid: true });
           setRepeatPassword({ repeatPassword: "", isValid: true });
-          setResponseMsg(true); //change  to resData
+          setResponseMsg({
+            success: resData.Success,
+            message: resData.Message,
+          });
+          setIsRegistered(true);
         } else {
-          console.log("Error!");
-          setResponseMsg(false); //change to resData
+          setResponseMsg({
+            success: resData.Success,
+            message: resData.Message,
+          });
+          setIsRegistered(false);
         }
       } catch (err) {
         console.error("error:", err);
@@ -123,7 +132,7 @@ export default function RegisterPage() {
               Nickname
             </label>
             <input
-              type="password"
+              type="input"
               class="form-control"
               id="exampleInputPassword1"
               value={nickname.nickname}
@@ -183,18 +192,18 @@ export default function RegisterPage() {
             <button type="submit" className="btn btn-lg btn-primary w-full">
               Register me!
             </button>
-            <div className="text-center">
-              {responseMsg ? (
-                <span className="text-success form-text">Success!</span>
-              ) : (
-                <span
-                  className={
-                    responseMsg.isValid ? "text-sucess" : "text-danger"
-                  }
-                >
-                  {responseMsg.message}
-                </span>
-              )}
+            <div className="text-center mt-2">
+              <span
+                className={responseMsg.success ? "text-success" : "text-danger"}
+              >
+                {responseMsg.success === false ? (
+                  responseMsg.Message
+                ) : isRegistered ? (
+                  <Link to="/log-in">Go to login page</Link>
+                ) : (
+                  ""
+                )}
+              </span>
             </div>
           </div>
         </form>

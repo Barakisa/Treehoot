@@ -12,7 +12,7 @@ export default function Home() {
     username: "",
   });
   const [loading, setLoading] = useState(true);
-  const { user } = useUser();
+  const { user, logout } = useUser();
 
   const fetchData = async () => {
     try {
@@ -36,7 +36,6 @@ export default function Home() {
   };
   useEffect(() => {
     fetchData();
-    console.log("hi");
   }, []);
   return (
     <div className="d-flex flex-column  justify-content-center align-items-center vh-100">
@@ -49,7 +48,7 @@ export default function Home() {
             <LoadingCircle />
           </div>
         ) : (
-          <div style={{ height: "4rem" }}>{formData.username.username}</div>
+          <div style={{ height: "4rem" }}>{user.username}</div>
         )}
       </div>
       <div className="d-flex flex-row mt-5 gap-5">
@@ -71,7 +70,10 @@ export default function Home() {
         </div>
         <div className="mt-5">
           {user.isLoggedIn ? (
-            <button className="home-page-buttons btn btn-outline-primary fs-2">
+            <button
+              className="home-page-buttons btn btn-outline-primary fs-2"
+              onClick={logout}
+            >
               Log out
             </button>
           ) : (

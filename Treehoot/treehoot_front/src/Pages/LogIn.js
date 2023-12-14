@@ -1,5 +1,6 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -7,9 +8,11 @@ const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 export default function LogIn() {
   const [email, setEmail] = useState({ email: "", isValid: true });
   const [password, setPassword] = useState({ password: "", isValid: true });
+  const { user, login } = useUser();
+
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
-    console.log(email);
     setEmail({
       email: e.target.value,
       isValid: EMAIL_REGEX.test(e.target.value),
@@ -23,6 +26,36 @@ export default function LogIn() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const url = "https://localhost:7219/api/User/login";
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.email,
+          password: password.password,
+        }),
+      };
+
+      const res = await fetch(url, options);
+      const resData = await res.json();
+      if (res.ok && resData.success) {
+        console.log("loggedin");
+        login({ username: resData.username, isLoggedIn: resData.success });
+        navigate("/");
+      } else {
+        console.log("login failed");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="d-flex flex-column justify-content-center align-items-center vh-100">
       <div className="border border-1 p-5 rounded" style={{ width: "500px" }}>
@@ -31,7 +64,7 @@ export default function LogIn() {
         </div>
 
         <div>
-          <form>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <div className="mb-3">
               <label for="exampleInputEmail1" className="form-label">
                 Email address
