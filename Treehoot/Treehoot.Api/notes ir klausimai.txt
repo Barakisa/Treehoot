@@ -20,7 +20,18 @@ Seni Klausimai:
 		Kaip del microservisu?
 ----------
 
-Kiap updatinti ef:
+KAIP UPDATINTI DB
+
+First update docker:
+	save changes in docker;
+	docker commit PostgresDB treehoot-postgre-db
+	exportinti docker image: docker save treehoot-postgre-db -o treehoot-postrge-db
+	pasidalinti su draugais lmao
+	loadinti nauja image'a: docker load -i treehoot-postgre-db-1122.tar
+	docker desktop is image containeri reikia pasidaryti: name PostgresDB, port localhost:5432
+	start container per docker desktop
+
+Tada updatinti ef:
 	atsidaryti package manager console
 	defauilt project Treehoot.Infrastructure
 	"add-migrations <name>" komanda
@@ -31,13 +42,7 @@ Kiap updatinti ef:
 	dotnet ef migrations add testnoinfra2 --project .\Treehoot.Infrastructure\ --startup-project .\Treehoot.Api\
 	dotnet ef database update --project .\Treehoot.Infrastructure\ --startup-project .\Treehoot.Api\
 
-Kaip updaitnti db:
-	save changes in docker;
-	docker commit PostgresDB treehoot-postgre-db
-	exportinti docker image: docker save treehoot-postgre-db -o treehoot-postrge-db
-	pasidalinti su draugais lmao
-	loadinti nauja image'a: docker load -i treehoot-postgre-db-1122.tar
-	docker desktop is image containeri reikia pasidaryti: name PostgresDB, port localhost:5432
+
 
 ----------
 
