@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Treehoot.Application.Data;
+using Treehoot.Application.IServices;
 using Treehoot.Domain.Models;
 
 
 namespace Treehoot.Application.Services
 {
-    internal class UserService
+    public class UserService : IUserService
     {
         private readonly TreehootApiContext _treehootApiContext;
 
@@ -19,37 +15,30 @@ namespace Treehoot.Application.Services
             _treehootApiContext = treehootApiContext;
         }
 
-        public async Task<User> LogIn(string username, string password)
+        public async Task<KeyValuePair<string?, string>> LogIn(string email, string password)
         {
             var user = await _treehootApiContext.User
-                                                .FirstOrDefaultAsync(user => (user.Email == username) ||
-                                                                    (user.Name == username))
+                                                .FirstOrDefaultAsync(user => user.Email == email);
             if (user == null || user.Password != password)
             {
-                return new User();
+                return new KeyValuePair<string?, string>(null, "Username or password incorrect");
             }
-            else
-            {
-                return user;
-            }
+            
+            return new KeyValuePair<string?, string>(user.Username, "Login successful");
         }
 
-        public async Task<User> Register(string username, string password)
+        public async Task<KeyValuePair<bool, string>> Register(string email, string username, string password)
         {
-            var userId = new Guid();
+            var userId = Guid.NewGuid();
             _treehootApiContext.User.Add(new User() { Id = userId, 
-                                                            Name = username, 
-                                                            Email = username, 
+                                                            Username = username, 
+                                                            Email = email, 
                                                             Password = password });
             await _treehootApiContext.SaveChangesAsync();
             var newUser = await _treehootApiContext.User.FirstOrDefaultAsync(user => user.Id == userId);
             
-            if (newUser == null)
-            {
-                return new User();
-            }
-
-            return newUser;
+            return newUser == null ? new KeyValuePair<bool, string>(false, "Unexpectedly couldn't create new user (problem with Database)") 
+                                   : new KeyValuePair<bool, string>(true, "Registration successful");
         }
     }
 }
