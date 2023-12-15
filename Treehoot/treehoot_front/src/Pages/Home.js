@@ -12,7 +12,7 @@ export default function Home() {
     username: "",
   });
   const [loading, setLoading] = useState(true);
-  const { user, logout } = useUser();
+  const { user, logout, endGame } = useUser();
 
   const fetchData = async () => {
     try {
@@ -36,6 +36,7 @@ export default function Home() {
   };
   useEffect(() => {
     fetchData();
+    endGame();
   }, []);
   return (
     <div className="d-flex flex-column  justify-content-center align-items-center vh-100">

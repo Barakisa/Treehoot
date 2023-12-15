@@ -9,7 +9,7 @@ import {
 } from "../components/Reducers/FetchDataReducer";
 import { useQuiz } from "../QuizContext";
 export default function ChooseTopicPage() {
-  const remainingTime = 5;
+  const remainingTime = 4;
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const [buttonPairs, setButtonPairs] = useState(null);
@@ -45,16 +45,18 @@ export default function ChooseTopicPage() {
 
   useEffect(() => {
     fetchTopics();
+    const timeoutId = setTimeout(() => {
+      navigate("/question");
+    }, remainingTime * 1000 + 500);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const handleRadioChange = (id, name) => {
     setChosenQuestion({ id: id, name: name });
     console.log(id, name);
   };
-
-  setTimeout(() => {
-    navigate("/question");
-  }, remainingTime * 1000 + 500);
 
   return (
     <div style={{ marginTop: 50 }} className="text container text-center">

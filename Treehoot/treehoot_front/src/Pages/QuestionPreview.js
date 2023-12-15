@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 import { useNavigate } from "react-router";
 import "../styles.css";
 
 export default function QuestionPreview(props) {
-  const remainingTime = 7;
+  const remainingTime = 3;
   const navigate = useNavigate();
 
-  setTimeout(() => {
-    navigate("/choose_topic");
-  }, remainingTime * 1000 + 500);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      navigate("/choose_topic");
+    }, remainingTime * 1000 + 500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <div className="container text" style={{ height: "100vh", marginTop: 50 }}>

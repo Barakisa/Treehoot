@@ -5,6 +5,7 @@ const USER_STORAGE_KEY = "user";
 const INITIAL_STATE = {
   username: "Anonymous",
   isLoggedIn: false,
+  score: 0,
 };
 
 const UserContext = createContext();
@@ -28,13 +29,26 @@ export const UserProvider = ({ children }) => {
     setUser(INITIAL_STATE);
   };
 
+  const calculateScore = (isCorrect) => {
+    isCorrect
+      ? setUser((prev) => ({ ...prev, score: user.score + 1 }))
+      : setUser((prev) => ({ ...prev, score: user.score - 1 }));
+    console.log("answered!");
+  };
+
+  const endGame = () => {
+    setUser((prev) => ({ ...prev, score: 0 }));
+  };
+
   useEffect(() => {
     // Save user information to localStorage whenever it changes
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider
+      value={{ user, login, logout, calculateScore, endGame }}
+    >
       {children}
     </UserContext.Provider>
   );
