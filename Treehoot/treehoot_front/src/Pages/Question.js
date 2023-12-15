@@ -6,11 +6,18 @@ import {
 } from "../components/Reducers/FetchDataReducer";
 import LoadingCircle from "../components/LoadingCircle";
 import { useQuiz } from "../QuizContext";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext";
+
+const TIME_LEFT = 5;
 
 export default function Question() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { chosenQuestion } = useQuiz();
+  const { chosenQuestion, nextStage, setCurrentIndex, currentIndex } =
+    useQuiz();
+  const { calculateScore } = useUser();
   const [isChosenAnswerCorrect, setIsChosenAnswerCorrect] = useState(false);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -34,6 +41,18 @@ export default function Question() {
 
   useEffect(() => {
     fetchData();
+    const timeoutId = setTimeout(() => {
+      setCurrentIndex((prev) => prev + 1);
+      const hasEnded = nextStage();
+      if (hasEnded) {
+        navigate("/score");
+      } else {
+        navigate("/question_preview");
+      }
+    }, TIME_LEFT * 1000 + 500);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const handleSelectedAnswer = (e) => {
@@ -42,7 +61,7 @@ export default function Question() {
     const isCorrect = state.data.some(
       (answer) => answer.id == selectedAnswerId && answer.isCorrect === true
     );
-
+    if (isCorrect) calculateScore(isCorrect);
     setIsChosenAnswerCorrect(isCorrect);
   };
 
@@ -52,8 +71,7 @@ export default function Question() {
         state.data ? (
           <div className="d-flex flex-column justify-content-between align-items-center">
             <div className="d-flex flex-row mb-3 mt-3">
-              {/* Going to pass time from questionInfo object */}
-              <Timer timeLeft={10} />
+              <Timer timeLeft={TIME_LEFT} />
             </div>
             <div className="d-flex flex-row mb-3 mt-3">
               <span className="fs-2">{chosenQuestion.name}</span>
@@ -88,10 +106,6 @@ export default function Question() {
                   </div>
                 </div>
               ))}
-              <span>
-                Chosen answer is{" "}
-                {isChosenAnswerCorrect ? "correct" : "incorrect"}
-              </span>
             </div>
           </div>
         ) : (

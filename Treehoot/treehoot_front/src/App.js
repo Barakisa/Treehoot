@@ -11,6 +11,7 @@ import LogIn from "./Pages/LogIn";
 import RegisterPage from "./Pages/RegisterPage";
 import { UserProvider } from "./UserContext";
 import AltHost from "./Pages/AltHost.js";
+import Score from "./Pages/Score.js";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/log-in" element={<LogIn />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/althost" element={<AltHost />} />
+            <Route path="/score" element={<Score />} />
           </Routes>
         </QuizProvider>
       </UserProvider>
