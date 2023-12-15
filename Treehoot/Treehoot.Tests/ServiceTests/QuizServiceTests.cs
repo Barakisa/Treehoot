@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Treehoot.Application.Data;
+using Treehoot.Application.Exceptions;
 using Treehoot.Application.IServices;
 using Treehoot.Application.Services;
 using Treehoot.Domain.Models;
@@ -10,7 +11,7 @@ namespace Treehoot.Tests.ServiceTests
     public class QuizServiceTests
     {
         [Fact]
-        public async Task GetAll_ReturnsAllQuizzes()
+        public async Task GetAll_WhenQuizzesExist_ReturnsAllQuizzes()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<TreehootApiContext>()
@@ -34,7 +35,7 @@ namespace Treehoot.Tests.ServiceTests
             // Assert
             Assert.Equal(2, result.Count);
         }
-        
+
         [Fact]
         public async Task GetSingle_ReturnsSpecificQuiz()
         {
@@ -63,9 +64,30 @@ namespace Treehoot.Tests.ServiceTests
         }
 
         [Fact]
+        public async Task GetSingle_WhenQuizDoesntExist_ReturnsNotFoundException()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<TreehootApiContext>()
+                .UseInMemoryDatabase(databaseName: "GetSingle_WhenQuizDoesntExist_ReturnsNotFoundException")
+                .Options;
+
+            var context = new TreehootApiContext(options);
+
+            SeedTestData(context, new List<Quiz>());
+
+            IQuizService quizService = new QuizService(context);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<NotFoundException>(async () =>
+            {
+                var result = await quizService.GetSingle(new Guid());
+            });
+        }
+
+        [Fact]
         public async Task GetSingle_ReturnsSpecificQuizWithRelations()
         {
-            //Arrange
+            // Arrange
             var options = new DbContextOptionsBuilder<TreehootApiContext>()
                 .UseInMemoryDatabase(databaseName: "GetSingle_ReturnsSpecificQuizWithRelations")
                 .Options;
@@ -139,6 +161,112 @@ namespace Treehoot.Tests.ServiceTests
                     }
                 }
             }
+        }
+
+        [Fact]
+        public async Task ValidatePost_WithValidQuiz_ReturnsTrue()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<TreehootApiContext>()
+                .UseInMemoryDatabase(databaseName: "ValidatePost_WithValidQuiz_ReturnsTrue")
+                .Options;
+
+            var context = new TreehootApiContext(options);
+
+            var expectedResult = new PostResult(true, "Quiz is valid!");
+
+            var quiz = new Quiz(Guid.NewGuid(), "Quiz 1", "Description 1")
+            {
+                Stages = new List<Stage>
+                {
+                    new Stage(Guid.NewGuid(), "Stage 1")
+                    {
+                        Questions = new List<Question>
+                        {
+                            new Question(Guid.NewGuid(), "Topic 1", "Text")
+                            {
+                                Answers = new List<Answer>
+                                {
+                                new Answer(Guid.NewGuid(), true, "Answer Text 1"),
+                                new Answer(Guid.NewGuid(), false, "Answer Text 2")
+                                }
+                            }
+                        }
+                    },
+                    new Stage(Guid.NewGuid(), "Stage 2")
+                    {
+                        Questions = new List<Question>
+                        {
+                            new Question(Guid.NewGuid(), "Topic 2", "Text")
+                            {
+                                Answers = new List<Answer>
+                                {
+                                    new Answer(Guid.NewGuid(), false, "Answer Text 1"),
+                                    new Answer(Guid.NewGuid(), true, "Answer Text 2")
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var quizService = new QuizService(context);
+
+            // Act
+            var result = await quizService.ValidatePost(quiz);
+
+            // Assert
+            Assert.True(result.Success);
+            Assert.Equal("Quiz is valid!", result.Message);
+        }
+        
+        [Fact]
+        public async Task ValidatePost_MissingStages_ReturnsAppropriateMessage()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<TreehootApiContext>()
+                .UseInMemoryDatabase(databaseName: "ValidatePost_WithValidQuiz_ReturnsTrue")
+                .Options;
+
+            var context = new TreehootApiContext(options);
+
+            var invalidQuiz = new Quiz(Guid.NewGuid(), "Name", "Description");
+
+            var quizService = new QuizService(context);
+
+            // Act
+            var result = await quizService.ValidatePost(invalidQuiz);
+
+            // Assert
+            Assert.False(result.Success);
+            Assert.Equal("At least one stage is required!", result.Message);
+        }
+
+        [Fact]
+        public async Task Create_WithValidQuiz_ReturnsSuccessResult()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<TreehootApiContext>()
+                .UseInMemoryDatabase(databaseName: "Create_WithValidQuiz_ReturnsSuccessResult")
+                .Options;
+
+            var context = new TreehootApiContext(options);
+            var quizService = new QuizService(context);
+
+            var validQuiz = new Quiz(Guid.NewGuid(), "Quiz", "Description");
+
+            // Act
+            var result = await quizService.Create(validQuiz);
+
+            // Assert
+            Assert.True(result.Success);
+            Assert.Equal("Quiz added", result.Message);
+
+            var addedQuiz = await context.Quiz.FindAsync(validQuiz.Id);
+            Assert.NotNull(addedQuiz);
+            Assert.Equal(validQuiz.Id, addedQuiz.Id);
+            Assert.Equal(validQuiz.Name, addedQuiz.Name);
+            Assert.Equal(validQuiz.Description, addedQuiz.Description);
         }
 
 
